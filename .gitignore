@@ -1,0 +1,25 @@
+# Environment & secrets
+env/
+.env
+*.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temp files
+.tmp/
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+*.swp
+
+# MCP config (contains API keys)
+.mcp.json
