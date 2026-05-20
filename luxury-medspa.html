@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Luxury aesthetic medical spa offering advanced beauty treatments by board-certified providers. Botox, fillers, CoolSculpting, and more. Book your consultation today.">
+  <meta property="og:title" content="Luxury Medical Spa | Premium Aesthetic Treatments">
+  <meta property="og:description" content="Advanced aesthetic treatments designed for natural results. Explore our full range of services.">
+  <meta property="og:type" content="website">
+  <title>Luxury Medical Spa | Premium Aesthetic Treatments & Consultations</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --cream: #FAF7F2;
+      --ivory: #F5EFE6;
+      --charcoal: #1C1C1E;
+      --ash: #6B6B6B;
+      --gold: #C9A96E;
+      --gold-lt: #E8D5B0;
+      --rose: #D4A0A0;
+      --teal: #5B8A8A;
+      --white: #FFFFFF;
+      --border: rgba(201, 169, 110, 0.18);
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.16);
+      --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garant', serif;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--charcoal);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+    }
+
+    p {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--charcoal);
+      font-weight: 300;
+    }
+
+    .text-muted {
+      color: var(--ash);
+      font-weight: 300;
+    }
+
+    /* Utility */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+    }
+
+    .section {
+      padding: clamp(4rem, 8vw, 8rem) 0;
+    }
+
+    .reveal {
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+    }
+
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: var(--transition);
+    }
+
+    .reveal-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 0;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(12px);
+      transition: var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1rem, 3vw, 1.75rem);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      transition: color 0.3s ease;
+    }
+
+    nav.scrolled .logo {
+      color: var(--charcoal);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(0.8rem, 2vw, 3rem);
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.95);
+      font-weight: 400;
+      font-size: clamp(0.8rem, 2vw, 0.95rem);
+      position: relative;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    nav.scrolled .nav-links a {
+      color: var(--charcoal);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .btn-nav {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.95);
+      padding: 0.75rem 1.75rem;
+      border-radius: 100px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    nav.scrolled .btn-nav {
+      background: var(--gold);
+      color: var(--charcoal);
+      border-color: var(--gold);
+    }
+
+    .btn-nav:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+    }
+
+    nav.scrolled .btn-nav:hover {
+      background: var(--gold-lt);
+      box-shadow: 0 8px 24px rgba(201, 169, 110, 0.2);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 6px;
+      background: none;
+      border: none;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--charcoal);
+      transition: var(--transition);
+    }
+
+    @media (max-width: 1200px) {
+      .hamburger {
+        display: flex !important;
+      }
+
+      .nav-links {
+        display: none !important;
+      }
+
+      .btn-nav {
+        display: none !important;
+      }
+
+      nav.menu-open .hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(10px, 10px);
+      }
+
+      nav.menu-open .hamburger span:nth-child(2) {
+        opacity: 0;
+      }
+
+      nav.menu-open .hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+    }
+
+    @media (min-width: 1201px) {
+      .hamburger {
+        display: none !important;
+      }
+
+      .nav-links {
+        display: flex !important;
+      }
+
+      .btn-nav {
+        display: block !important;
+      }
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--cream);
+      z-index: 999;
+      padding: 8rem 2rem 2rem;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 1rem 0;
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 1.2rem;
+      font-family: 'Cormorant Garant', serif;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Hero Section */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/hero-bg.png') center/cover no-repeat;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      mix-blend-mode: screen;
+      opacity: 0.4;
+    }
+
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.3) 0%, transparent 70%);
+      top: -100px;
+      right: -50px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(212, 160, 160, 0.2) 0%, transparent 70%);
+      bottom: -50px;
+      left: 10%;
+      animation: float 10s ease-in-out infinite 1s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-30px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    #hero h1 {
+      margin-bottom: 1rem;
+      color: var(--white) !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    #hero p {
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.95) !important;
+      font-size: 1.2rem;
+      font-weight: 300;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .trust-badges span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .trust-badges span::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    #hero .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-lt);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(201, 169, 110, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal);
+      border: 2px solid var(--gold);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    #hero .btn-secondary {
+      color: rgba(255, 255, 255, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    #hero .btn-secondary:hover {
+      background: rgba(201, 169, 110, 0.3);
+      border-color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .provider-chip {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 1rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.95);
+      margin-top: 1rem;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+/* Featured Treatments */
+    #treatments {
+      background: var(--white);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--ash);
+    }
+
+    .treatments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .treatment-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .treatment-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201, 169, 110, 0.05), transparent);
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .treatment-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-lg), 0 0 24px rgba(201, 169, 110, 0.15);
+    }
+
+    .treatment-card:hover::before {
+      opacity: 1;
+    }
+
+    .treatment-image {
+      width: calc(100% + 4rem);
+      height: auto;
+      max-height: 260px;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 8px 8px 0 0;
+      margin: -2rem -2rem 1.5rem -2rem;
+      padding: 0;
+      display: block;
+      background: var(--ivory);
+    }
+
+    .treatment-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .treatment-card h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+    }
+
+    .treatment-card p {
+      color: var(--ash);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .treatment-price {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .treatment-badge {
+      display: inline-block;
+      background: rgba(212, 160, 160, 0.1);
+      color: var(--rose);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .treatment-card a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .treatment-card a:hover {
+      color: var(--charcoal);
+    }
+
+    /* Before & After */
+    #before-after {
+      background: var(--ivory);
+    }
+
+    .ba-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    .ba-slider {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 400px;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: grab;
+      border: 1px solid var(--border);
+    }
+
+    .ba-slider.dragging {
+      cursor: grabbing;
+    }
+
+    .ba-before, .ba-after {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .ba-after {
+      clip-path: inset(0 0 0 var(--slider-pos, 50%));
+    }
+
+    .ba-slider-handle {
+      position: absolute;
+      top: 0;
+      left: var(--slider-pos, 50%);
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      z-index: 10;
+    }
+
+    .ba-slider-handle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
+    }
+
+    .ba-label {
+      position: absolute;
+      top: 1rem;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: var(--white);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      z-index: 5;
+    }
+
+    .ba-label.before {
+      left: 1rem;
+    }
+
+    .ba-label.after {
+      right: 1rem;
+    }
+
+    .ba-caption {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--ash);
+    }
+
+    .ba-caption strong {
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+
+    /* Stats Section */
+    #stats {
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .stat-item p {
+      color: var(--gold-lt);
+      font-weight: 400;
+    }
+
+    /* Testimonials */
+    #testimonials {
+      background: var(--white);
+    }
+
+    .testimonials-carousel {
+      position: relative;
+      margin-top: 3rem;
+      width: 100%;
+    }
+
+    .carousel-track {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    @media (max-width: 1024px) {
+      .testimonial-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .testimonial-card {
+        padding: 1.5rem;
+      }
+    }
+
+    .testimonial-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .testimonial-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-header {
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-name {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .testimonial-treatment {
+      font-size: 0.85rem;
+      color: var(--ash);
+      font-weight: 400;
+    }
+
+    .testimonial-stars {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    .testimonial-text {
+      color: var(--charcoal);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .carousel-nav {
+      display: none;
+    }
+
+    .carousel-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .carousel-dot.active {
+      background: var(--gold);
+      width: 32px;
+      border-radius: 100px;
+    }
+
+    /* How It Works */
+    #how-it-works {
+      background: var(--ivory);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .process-step h3 {
+      margin-bottom: 1rem;
+      color: var(--charcoal);
+    }
+
+    .process-step p {
+      color: var(--ash);
+      font-size: 0.95rem;
+    }
+
+    /* About Section */
+    #about {
+      background: var(--white);
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .about-image {
+      width: 100%;
+      height: 400px;
+      background: url('images/about-image.png') center/cover no-repeat;
+      border-radius: 12px;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+    }
+
+    .about-text h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+      margin-bottom: 1.5rem;
+      color: var(--ash);
+    }
+
+    .credentials-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .credentials-list li {
+      padding: 0.75rem 0;
+      color: var(--charcoal);
+      font-size: 0.95rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .credentials-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    /* Promotions */
+    #promotions {
+      background: linear-gradient(135deg, rgba(201, 169, 110, 0.08), rgba(212, 160, 160, 0.08));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .promo-card {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .promo-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-md);
+    }
+
+    .promo-card h3 {
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .promo-card p {
+      color: var(--ash);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* FAQ */
+    #faq {
+      background: var(--ivory);
+    }
+
+    .faq-list {
+      max-width: 700px;
+      margin: 3rem auto;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .faq-question {
+      padding: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--white);
+      border: none;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--cream);
+    }
+
+    .faq-toggle {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-weight: bold;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 1.5rem;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 500px;
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    .faq-answer p {
+      color: var(--ash);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    /* Final CTA */
+    #final-cta {
+      background: linear-gradient(135deg, var(--charcoal), rgba(28, 28, 30, 0.95));
+      color: var(--white);
+      text-align: center;
+    }
+
+    #final-cta h2 {
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    #final-cta p {
+      color: var(--gold-lt);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-buttons .btn {
+      padding: 1rem 2.5rem;
+    }
+
+    #final-cta .btn-secondary {
+      background: var(--gold);
+      color: var(--charcoal);
+      border: 2px solid var(--gold);
+    }
+
+    #final-cta .btn-secondary:hover {
+      background: var(--gold-lt);
+      border-color: var(--gold-lt);
+    }
+
+    .cta-phone {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-top: 2rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .cta-phone:hover {
+      color: var(--gold-lt);
+    }
+
+    /* Contact & Footer */
+    footer {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: var(--gold-lt);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--white);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.2);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+
+    .social-icons a:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+      text-align: center;
+      color: var(--ash);
+      font-size: 0.85rem;
+    }
+
+    .hipaa-notice {
+      font-size: 0.8rem;
+      color: var(--ash);
+      margin-top: 2rem;
+    }
+
+    /* Mobile Bottom Bar */
+    .mobile-bottom-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      z-index: 999;
+      padding: 0.75rem;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-bottom-bar {
+        display: flex;
+      }
+
+      body {
+        padding-bottom: 80px;
+      }
+    }
+
+    .mobile-bottom-bar a, .mobile-bottom-bar button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      background: var(--gold);
+      color: var(--charcoal);
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .mobile-bottom-bar a:hover, .mobile-bottom-bar button:hover {
+      background: var(--gold-lt);
+    }
+
+    /* Consultation Form */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--charcoal);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-submit {
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    .form-submit:hover {
+      background: var(--gold-lt);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .about-content {
+        gap: 2rem;
+      }
+
+      .section {
+        padding: 3rem 0;
+      }
+    }
+
+    /* Chatbot Widget */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      border: 3px solid var(--white);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(201, 169, 110, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      z-index: 999;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(201, 169, 110, 0.4);
+      }
+      50% {
+        box-shadow: 0 8px 40px rgba(201, 169, 110, 0.7);
+      }
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.15);
+      animation: none;
+      box-shadow: 0 12px 32px rgba(201, 169, 110, 0.8);
+    }
+
+    .chatbot-widget {
+      position: fixed;
+      bottom: 5rem;
+      right: 2rem;
+      width: 350px;
+      max-width: calc(100vw - 2rem);
+      height: 500px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow-lg);
+      display: none;
+      flex-direction: column;
+      z-index: 999;
+      border: 1px solid var(--border);
+    }
+
+    .chatbot-header {
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 1.5rem;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    .chatbot-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .chatbot-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--charcoal);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-message {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background: var(--gold-lt);
+      color: var(--charcoal);
+    }
+
+    .chat-message.bot {
+      align-self: flex-start;
+      background: var(--ivory);
+      color: var(--charcoal);
+      border: 1px solid var(--border);
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.1);
+    }
+
+    .chat-send {
+      background: var(--gold);
+      color: var(--charcoal);
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .chat-send:hover {
+      background: var(--gold-lt);
+    }
+
+    @media (max-width: 768px) {
+      .chatbot-widget {
+        width: calc(100vw - 1rem);
+        height: 400px;
+        bottom: 4.5rem;
+        right: 0.5rem;
+      }
+
+      .chatbot-btn {
+        bottom: 1rem;
+        right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">LUXE</a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#treatments">Treatments</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="btn-nav" onclick="document.getElementById('consultation-form').scrollIntoView({behavior: 'smooth'})">Book Consultation</button>
+      <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#hero">Home</a>
+    <a href="#treatments">Treatments</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:+17863214991" style="color: var(--gold); margin-top: 1rem;">Call Now</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Premium Aesthetic Medicine</div>
+        <h1>Natural Results.<br>Elevated Confidence.</h1>
+        <p class="text-muted">Advanced aesthetic treatments by board-certified providers. Personalized care for timeless beauty.</p>
+        <div class="trust-badges">
+          <span>Board Certified</span>
+          <span>FDA-Approved</span>
+          <span>5-Star Rated</span>
+          <span>10K+ Clients</span>
+        </div>
+        <div class="hero-buttons">
+          <a href="#consultation-form" class="btn btn-primary">Book Your Consultation</a>
+          <a href="#treatments" class="btn btn-secondary">Explore Treatments</a>
+        </div>
+        <div class="provider-chip">
+          🏆 Allergan Diamond Partner | 12+ Years Experience
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Featured Treatments -->
+  <section id="treatments" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Treatments</h2>
+        <p>Our most popular aesthetic procedures, expertly administered for natural, transformative results.</p>
+      </div>
+      <div class="treatments-grid">
+        <div class="treatment-card reveal-up">
+          <img src="images/botox-treatment.jpg" alt="Botox treatment results" class="treatment-image">
+          <h3>Botox</h3>
+          <p>Smooth dynamic wrinkles and prevent new lines from forming.</p>
+          <div class="treatment-price">From $150</div>
+          <span class="treatment-badge">No Downtime</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+
+        <div class="treatment-card reveal-up">
+          <img src="images/lip-fillers-before-after.jpg" alt="Lip Fillers Before & After" style="width: calc(100% + 4rem); height: 200px; object-fit: cover; margin: -2rem -2rem 1.5rem -2rem; border-radius: 12px 12px 0 0;">
+          <h3>Lip Fillers</h3>
+          <p>Full, defined lips with natural results using premium fillers.</p>
+          <div class="treatment-price">From $500</div>
+          <span class="treatment-badge">Minimal Downtime</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+
+        <div class="treatment-card reveal-up">
+          <img src="images/coolsculpting.jpg" alt="CoolSculpting treatment results" class="treatment-image">
+          <h3>CoolSculpting</h3>
+          <p>Non-invasive fat reduction without surgery or downtime.</p>
+          <div class="treatment-price">From $1,200</div>
+          <span class="treatment-badge">No Surgery</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+
+        <div class="treatment-card reveal-up">
+          <img src="images/emsculpt-neo-before-after.jpg" alt="EMSculpt NEO Before & After" style="width: calc(100% + 4rem); height: 200px; object-fit: cover; margin: -2rem -2rem 1.5rem -2rem; border-radius: 12px 12px 0 0;">
+          <h3>EMSculpt NEO</h3>
+          <p>Build muscle and burn fat simultaneously with advanced technology.</p>
+          <div class="treatment-price">From $800</div>
+          <span class="treatment-badge">No Downtime</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+
+        <div class="treatment-card reveal-up">
+          <img src="images/laser-resurfacing-before-after.jpg" alt="Laser Resurfacing Before & After" style="width: calc(100% + 4rem); height: 200px; object-fit: cover; margin: -2rem -2rem 1.5rem -2rem; border-radius: 12px 12px 0 0;">
+          <h3>Laser Resurfacing</h3>
+          <p>Rejuvenate skin texture, tone, and clarity with precision laser.</p>
+          <div class="treatment-price">From $400</div>
+          <span class="treatment-badge">Minimal Downtime</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+
+        <div class="treatment-card reveal-up">
+          <img src="images/hydrafacial-before-after.jpg" alt="HydraFacial Before & After" style="width: calc(100% + 4rem); height: 200px; object-fit: cover; margin: -2rem -2rem 1.5rem -2rem; border-radius: 12px 12px 0 0;">
+          <h3>HydraFacial</h3>
+          <p>Deep cleanse, extract, and infuse skin with nourishing serums.</p>
+          <div class="treatment-price">From $200</div>
+          <span class="treatment-badge">No Downtime</span>
+          <a href="#consultation-form">Learn More →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before & After -->
+  <section id="before-after" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Real Transformations</h2>
+        <p>Drag to see the remarkable results our clients achieve.</p>
+      </div>
+      <div class="ba-container">
+        <div class="ba-slider" data-slider="0">
+          <div class="ba-before" style="background: url('images/transformation-before.jpg') center/cover no-repeat;"></div>
+          <div class="ba-after" style="background: url('images/transformation-after.jpg') center/cover no-repeat; clip-path: inset(0 0 0 var(--slider-pos, 50%));"></div>
+          <div class="ba-slider-handle"></div>
+          <div class="ba-label before">BEFORE</div>
+          <div class="ba-label after">AFTER</div>
+          <p class="ba-caption"><strong>Botox</strong><br>Natural rejuvenation with zero overdone look.</p>
+        </div>
+
+        <div class="ba-slider" data-slider="1">
+          <div class="ba-before" style="background: url('images/second-before.jpg') center/cover no-repeat;"></div>
+          <div class="ba-after" style="background: url('images/second-after.jpg') center/cover no-repeat; clip-path: inset(0 0 0 var(--slider-pos, 50%));"></div>
+          <div class="ba-slider-handle"></div>
+          <div class="ba-label before">BEFORE</div>
+          <div class="ba-label after">AFTER</div>
+          <p class="ba-caption"><strong>CoolSculpting</strong><br>Sculpted contours without surgery.</p>
+        </div>
+
+        <div class="ba-slider" data-slider="2">
+          <div class="ba-before" style="background: url('images/third-before.jpg') center/cover no-repeat;"></div>
+          <div class="ba-after" style="background: url('images/third-after.jpg') center/cover no-repeat; clip-path: inset(0 0 0 var(--slider-pos, 50%));"></div>
+          <div class="ba-slider-handle"></div>
+          <div class="ba-label before">BEFORE</div>
+          <div class="ba-label after">AFTER</div>
+          <p class="ba-caption"><strong>HydraFacial</strong><br>Deep cleanse, hydrate, and rejuvenate skin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section id="stats" class="section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3 data-target="10000">0</h3>
+          <p>Treatments Performed</p>
+        </div>
+        <div class="stat-item">
+          <h3 data-target="49">4.9</h3>
+          <p>★ Average Rating</p>
+        </div>
+        <div class="stat-item">
+          <h3 data-target="12">0</h3>
+          <p>Years Experience</p>
+        </div>
+        <div class="stat-item">
+          <h3 data-target="98">0</h3>
+          <p>% Satisfaction</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>What Clients Say</h2>
+        <p>Real stories from patients who've transformed their confidence.</p>
+      </div>
+      <div class="testimonials-carousel">
+        <div class="carousel-track" id="carousel-track">
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Sarah M." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Sarah M.</div>
+              <div class="testimonial-treatment">Botox & Cheek Fillers</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"My results look completely natural. Everyone asked what I was doing differently, but nobody could tell I'd had work done. Truly the best investment."</p>
+          </div>
+
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Jessica L." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Jessica L.</div>
+              <div class="testimonial-treatment">Lip Fillers</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The provider listened to exactly what I wanted. My lips look full but not overdone. I couldn't be happier with the artistry and precision."</p>
+          </div>
+
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Michelle T." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Michelle T.</div>
+              <div class="testimonial-treatment">CoolSculpting</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Non-invasive, no downtime, and I actually saw real results. It's been three months and the changes are still improving. Fantastic!"</p>
+          </div>
+
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Emily R." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Emily R.</div>
+              <div class="testimonial-treatment">Laser Resurfacing</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"My skin has never looked better. The texture, clarity, and glow are incredible. Worth every penny and every moment of recovery."</p>
+          </div>
+
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Amanda K." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Amanda K.</div>
+              <div class="testimonial-treatment">HydraFacial</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"I get a HydraFacial every month. My skin is glowing, hydrated, and so clear. It's like a spa day that actually delivers results!"</p>
+          </div>
+
+          <div class="testimonial-card">
+            <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Victoria P." class="testimonial-avatar" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div class="testimonial-header">
+              <div class="testimonial-name">Victoria P.</div>
+              <div class="testimonial-treatment">EMSculpt NEO</div>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Built muscle and lost fat without hitting the gym extra hard. My abs are more defined than ever. This technology is incredible!"</p>
+          </div>
+
+        </div>
+        <div class="carousel-nav" id="carousel-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Your Transformation Journey</h2>
+        <p>Simple, straightforward steps to achieve your aesthetic goals.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal-up">
+          <div class="step-number">01</div>
+          <h3>Consultation</h3>
+          <p>Discuss your goals in depth. We listen, analyze, and recommend personalized treatment options that align with your vision.</p>
+        </div>
+        <div class="process-step reveal-up">
+          <div class="step-number">02</div>
+          <h3>Custom Plan</h3>
+          <p>We create a tailored treatment plan with realistic timelines, expected outcomes, and transparent pricing.</p>
+        </div>
+        <div class="process-step reveal-up">
+          <div class="step-number">03</div>
+          <h3>Transform</h3>
+          <p>Expert administration of your chosen treatments, followed by comprehensive aftercare guidance and follow-up support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-image"></div>
+        <div class="about-text">
+          <h2>Aesthetic Medicine Excellence</h2>
+          <p>With over 12 years of experience in aesthetic medicine, our board-certified provider has helped thousands of patients achieve natural, beautiful results. Specializing in injectables, facial rejuvenation, and body contouring, we combine medical expertise with an artistic eye.</p>
+          <p>Every treatment is customized to enhance your unique features—never to change who you are. We believe in the power of subtle, sophisticated transformation that makes you feel more like yourself.</p>
+          <ul class="credentials-list">
+            <li>Board Certified Dermatologist</li>
+            <li>Allergan Diamond Partner</li>
+            <li>RealSelf Top Provider</li>
+            <li>12+ Years Experience</li>
+            <li>10,000+ Successful Treatments</li>
+            <li>Continued Education & Training</li>
+          </ul>
+          <a href="#consultation-form" class="btn btn-primary">Schedule Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promotions -->
+  <section id="promotions" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Current Offers</h2>
+        <p>Limited-time promotions for new and existing clients.</p>
+      </div>
+      <div class="promo-grid">
+        <div class="promo-card reveal-up">
+          <h3>🌟 Summer Glow Package</h3>
+          <p>20% off any combination of Botox, fillers, or HydraFacial when booked as a package.</p>
+          <a href="#consultation-form" class="btn btn-primary" style="width: 100%;">Claim Offer</a>
+        </div>
+        <div class="promo-card reveal-up">
+          <h3>💳 Flexible Financing</h3>
+          <p>As low as $99/month with CareCredit. Zero-interest financing available on qualified treatments.</p>
+          <a href="#consultation-form" class="btn btn-primary" style="width: 100%;">Learn More</a>
+        </div>
+        <div class="promo-card reveal-up">
+          <h3>✨ First-Time Special</h3>
+          <p>Free comprehensive skin analysis + $100 credit toward your first treatment. New clients only.</p>
+          <a href="#consultation-form" class="btn btn-primary" style="width: 100%;">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Common questions about our treatments and care.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How long do Botox results last?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Botox typically lasts 3–4 months. Results are gradual, appearing over 5–7 days and reaching full effect at 2 weeks. Many clients schedule treatments every 3 months for consistent results.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Is there downtime after dermal fillers?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Minimal downtime. You may experience mild swelling, redness, or bruising for 24–48 hours. Most clients return to normal activities immediately and apply makeup within a few hours.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Are the results natural-looking?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. Our philosophy is subtle enhancement. We enhance your natural features rather than creating an overdone look. Many clients get complimented on looking "refreshed" without anyone knowing why.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How much does CoolSculpting cost?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>CoolSculpting pricing starts at $1,200 per treatment area. Most clients see optimal results with 1–2 sessions per area. We offer package pricing and flexible financing options.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Is it safe? Are there side effects?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, all our treatments are FDA-approved and administered by board-certified professionals. Side effects are minimal and temporary. We'll discuss any risks and aftercare during your consultation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How do I maintain my results?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Consistency is key. Schedule maintenance treatments before results fade completely. Sunscreen, hydration, and a good skincare routine will extend the longevity of your results.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I combine different treatments?</span>
+            <span class="faq-toggle">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. Many clients benefit from combining treatments—like Botox with fillers or laser resurfacing with skincare. We'll recommend the best combination during your consultation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="final-cta" class="section">
+    <div class="container">
+      <h2>Begin Your Transformation Today</h2>
+      <p>Complimentary consultations available this week. Let's create your personalized aesthetic plan.</p>
+      <div class="cta-buttons">
+        <a href="#consultation-form" class="btn btn-primary">Schedule Consultation</a>
+        <a href="tel:+17863214991" class="btn btn-secondary">Call Now</a>
+      </div>
+      <a href="tel:+17863214991" class="cta-phone">(786) 321-4991</a>
+    </div>
+  </section>
+
+  <!-- Consultation Form -->
+  <section id="consultation-form" class="section" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Book Your Free Consultation</h2>
+        <p>Schedule an appointment with our aesthetic specialists today.</p>
+      </div>
+      <form style="max-width: 600px; margin: 0 auto;">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="treatment">Interested Treatment</label>
+          <select id="treatment" name="treatment" required>
+            <option value="">Select a treatment</option>
+            <option value="botox">Botox</option>
+            <option value="fillers">Dermal Fillers</option>
+            <option value="coolsculpting">CoolSculpting</option>
+            <option value="laser">Laser Resurfacing</option>
+            <option value="hydrafacial">HydraFacial</option>
+            <option value="emsculpt">EMSculpt NEO</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell us about your goals</label>
+          <textarea id="message" name="message" placeholder="Describe your aesthetic goals..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Schedule Consultation</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Contact & Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <div class="contact-info">
+            <p><strong>Phone</strong></p>
+            <a href="tel:+17863214991">(786) 321-4991</a>
+            <p style="margin-top: 1rem;"><strong>Email</strong></p>
+            <a href="mailto:info@luxemedspa.com">info@luxemedspa.com</a>
+            <p style="margin-top: 1rem;"><strong>Hours</strong></p>
+            <p>Mon–Fri: 9am–6pm<br>Sat: 10am–4pm<br>Sun: Closed</p>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Visit Us</h3>
+          <p><strong>Miami Beach, FL</strong></p>
+          <p>123 Ocean Drive<br>Miami Beach, FL 33139</p>
+          <p style="margin-top: 1rem;">Parking available • Street access • Wheelchair accessible</p>
+        </div>
+
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <p>Connect with us on social media for before & afters, tips, and special offers.</p>
+          <div class="social-icons">
+            <a href="https://facebook.com" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://instagram.com" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://youtube.com" title="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <p><a href="#treatments">Treatments</a></p>
+          <p><a href="#about">About</a></p>
+          <p><a href="#faq">FAQ</a></p>
+          <p><a href="#consultation-form">Book Consultation</a></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Luxury Medical Spa. All rights reserved.</p>
+        <p class="hipaa-notice">This website and communication are confidential and may contain protected health information. HIPAA compliance maintained for all patient data.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Bar -->
+  <div class="mobile-bottom-bar">
+    <a href="tel:+17863214991">☎️ Call</a>
+    <a href="#consultation-form">📅 Book</a>
+    <a href="sms:+17863214991">💬 Text</a>
+  </div>
+
+  <script>
+    // Mobile Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    hamburger.addEventListener('click', () => {
+      navbar.classList.toggle('menu-open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navbar.classList.remove('menu-open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Sticky Nav
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll Reveals
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .reveal-up').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Animated Counters
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = true;
+          const target = parseFloat(entry.target.dataset.target);
+          const element = entry.target;
+          const duration = 2000;
+          const start = Date.now();
+
+          const animate = () => {
+            const elapsed = Date.now() - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            const current = target * easeProgress;
+            element.textContent = current.toFixed(current % 1 !== 0 ? 1 : 0);
+
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          animate();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-target]').forEach(el => {
+      counterObserver.observe(el);
+    });
+
+    // Before & After Sliders
+    document.querySelectorAll('.ba-slider').forEach(slider => {
+      slider.addEventListener('mousemove', (e) => {
+        const rect = slider.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        slider.style.setProperty('--slider-pos', Math.max(0, Math.min(100, percentage)) + '%');
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        const rect = slider.getBoundingClientRect();
+        const x = e.touches[0].clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        slider.style.setProperty('--slider-pos', Math.max(0, Math.min(100, percentage)) + '%');
+      });
+    });
+
+    // Testimonials Carousel - Disabled (showing all testimonials in grid)
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    // Smooth Scroll for All Anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+
+  <!-- Chatbot Widget -->
+  <button id="chatbot-toggle" class="chatbot-btn">
+    <i class="fas fa-comments" style="font-size: 1.8rem;"></i>
+  </button>
+  <div id="chatbot-widget" class="chatbot-widget">
+    <div class="chatbot-header">
+      <h3>Medical Spa Assistant</h3>
+      <button id="chatbot-close" class="chatbot-close">×</button>
+    </div>
+    <div id="chat-messages" class="chat-messages">
+      <div class="chat-message bot">Hello! How can I help you today? Ask about our treatments, hours, or schedule an appointment.</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask about treatments..." class="chat-input">
+      <button id="chat-send" class="chat-send">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // AI Chatbot
+    const chatbotBtn = document.getElementById('chatbot-toggle');
+    const chatbotWidget = document.getElementById('chatbot-widget');
+    const closeBtn = document.getElementById('chatbot-close');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('chat-send');
+    const messagesContainer = document.getElementById('chat-messages');
+
+    chatbotBtn.addEventListener('click', () => {
+      chatbotWidget.style.display = chatbotWidget.style.display === 'none' ? 'flex' : 'none';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      chatbotWidget.style.display = 'none';
+    });
+
+    const responses = {
+      'botox': 'Botox smooths wrinkles and fine lines, particularly on the forehead, between eyebrows, and around eyes. Results appear within 3-7 days and last 3-4 months.',
+      'fillers': 'Dermal fillers add volume to lips, cheeks, and under-eye areas. Results are immediate and typically last 6-12 months depending on the product.',
+      'coolsculpting': 'CoolSculpting is a non-invasive fat reduction treatment. It freezes fat cells that are then naturally eliminated. Results appear gradually over 2-3 months.',
+      'laser': 'Laser Resurfacing improves skin texture, tone, and clarity by removing damaged outer layers. Perfect for wrinkles, scars, and sun damage.',
+      'hydrafacial': 'HydraFacial is a hydradermabrasion treatment that cleanses, extracts, and infuses skin with nourishing serums. Results are immediate with no downtime.',
+      'emsculpt': 'EMSculpt NEO builds muscle and reduces fat simultaneously using electromagnetic technology. Results improve over 2-4 weeks.',
+      'hours': 'We are open Monday-Friday 9am-6pm, Saturday 10am-4pm. Closed Sundays.',
+      'appointment': 'To schedule a consultation, call us or visit our Contact section. We offer flexible appointment times to suit your schedule.',
+      'price': 'Pricing varies by treatment. Contact us for a personalized quote based on your aesthetic goals.',
+      'default': 'Hello! I\'m here to help. Ask me about our treatments (Botox, Fillers, CoolSculpting, Laser, HydraFacial, EMSculpt), hours, appointments, or pricing.'
+    };
+
+    function getResponse(message) {
+      const msg = message.toLowerCase();
+      for (const [key, response] of Object.entries(responses)) {
+        if (msg.includes(key)) return response;
+      }
+      return responses.default;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = message;
+      messagesContainer.appendChild(userMsg);
+      chatInput.value = '';
+
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.textContent = getResponse(message);
+        messagesContainer.appendChild(botMsg);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 500);
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  </script>
+</body>
+</html>
