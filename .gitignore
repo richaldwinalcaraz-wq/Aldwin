@@ -23,3 +23,6 @@ desktop.ini
 
 # MCP config (contains API keys)
 .mcp.json
+
+# Dependencies (regenerate with npm install)
+node_modules/

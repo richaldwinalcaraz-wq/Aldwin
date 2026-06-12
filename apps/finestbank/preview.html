@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinestBank — Dashboard Preview</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --surface-950: #0b0f1a;
+      --surface-900: #0f1629;
+      --surface-800: #1a2236;
+      --surface-700: #243048;
+      --slate-50:  #f8fafc;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --green:  #22c55e;
+      --blue:   #3b82f6;
+      --purple: #a855f7;
+      --amber:  #f59e0b;
+      --red:    #ef4444;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--surface-950);
+      color: var(--slate-300);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: 224px;
+      flex-shrink: 0;
+      background: var(--surface-900);
+      border-right: 1px solid var(--surface-700);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-logo {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--surface-800);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-50);
+      letter-spacing: -0.3px;
+    }
+    .sidebar-logo span { color: var(--green); }
+    nav { padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--slate-400);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    nav a:hover, nav a.active {
+      background: var(--surface-800);
+      color: var(--slate-50);
+    }
+    nav a.active { color: var(--slate-50); font-weight: 500; }
+    .nav-icon { width: 16px; height: 16px; opacity: 0.7; }
+
+    /* ── MAIN ── */
+    .main-wrap { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    header {
+      height: 64px;
+      background: var(--surface-900);
+      border-bottom: 1px solid var(--surface-800);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    header .subtitle { font-size: 13px; color: var(--slate-400); }
+    .user-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 600; color: #fff;
+      cursor: pointer;
+    }
+
+    main { flex: 1; padding: 24px; overflow-y: auto; }
+
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .page-header-left { display: flex; align-items: center; gap: 12px; }
+    .page-title { font-size: 22px; font-weight: 700; color: var(--slate-50); }
+    .role-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px; font-weight: 500;
+    }
+    .role-badge.cfo {
+      background: rgba(34,197,94,0.15);
+      color: #4ade80;
+      box-shadow: inset 0 0 0 1px rgba(34,197,94,0.25);
+    }
+    .role-badge.analyst {
+      background: rgba(59,130,246,0.15);
+      color: #60a5fa;
+      box-shadow: inset 0 0 0 1px rgba(59,130,246,0.25);
+    }
+    .period-label { font-size: 13px; color: var(--slate-500); }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 24px; flex-wrap: wrap;
+    }
+    .filter-bar select, .filter-bar input {
+      background: var(--surface-800);
+      border: 1px solid var(--surface-700);
+      color: var(--slate-300);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-bar select:focus, .filter-bar input:focus {
+      border-color: var(--blue);
+    }
+    .filter-bar label { font-size: 12px; color: var(--slate-500); }
+
+    /* ── KPI GRID ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--surface-700);
+      background: var(--surface-900);
+      padding: 20px 20px 20px 24px;
+    }
+    .kpi-stripe {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      border-radius: 12px 0 0 12px;
+    }
+    .kpi-label { font-size: 13px; color: var(--slate-400); margin-bottom: 8px; }
+    .kpi-row { display: flex; align-items: center; gap: 10px; }
+    .kpi-value { font-size: 26px; font-weight: 700; color: var(--slate-50); }
+    .kpi-change {
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px; font-weight: 500;
+    }
+    .kpi-change.up   { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .kpi-change.down { background: rgba(239,68,68,0.15);  color: #f87171; }
+    .kpi-change.flat { background: rgba(100,116,139,0.15); color: var(--slate-400); }
+
+    /* ── CHART GRID ── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+    .chart-card {
+      border-radius: 12px;
+      background: var(--surface-900);
+      border: 1px solid var(--surface-700);
+      padding: 20px;
+    }
+    .chart-card h2 {
+      font-size: 13px; font-weight: 600;
+      color: var(--slate-300); margin-bottom: 16px;
+    }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-header h2 { font-size: 16px; font-weight: 600; color: var(--slate-200); }
+    .section-header span { font-size: 13px; color: var(--slate-500); }
+
+    /* ── LIVE FEED ── */
+    .live-feed {
+      border-radius: 10px;
+      border: 1px solid var(--surface-700);
+      background: var(--surface-900);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .live-feed-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .live-feed-header h2 { font-size: 16px; font-weight: 600; color: var(--slate-200); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 2px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 500;
+    }
+    .badge.connecting {
+      background: rgba(100,116,139,0.2);
+      color: var(--slate-400);
+      box-shadow: inset 0 0 0 1px rgba(100,116,139,0.3);
+    }
+    .badge.live {
+      background: rgba(34,197,94,0.15);
+      color: #4ade80;
+      box-shadow: inset 0 0 0 1px rgba(34,197,94,0.25);
+    }
+    .badge.disconnected {
+      background: rgba(239,68,68,0.15);
+      color: #f87171;
+      box-shadow: inset 0 0 0 1px rgba(239,68,68,0.25);
+    }
+    .pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.8); }
+    }
+    .feed-list { max-height: 192px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+    .feed-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 12px; border-radius: 6px; font-size: 13px;
+    }
+    .feed-item:hover { background: rgba(26,34,54,0.6); }
+    .feed-time { font-family: monospace; font-size: 11px; color: var(--slate-500); width: 72px; flex-shrink: 0; }
+    .feed-empty { text-align: center; padding: 24px; font-size: 13px; color: var(--slate-600); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      border-radius: 10px;
+      border: 1px solid var(--surface-700);
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--slate-300); }
+    thead tr { background: var(--surface-800); }
+    thead th {
+      padding: 10px 16px; text-align: left;
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--slate-500);
+    }
+    tbody tr { border-top: 1px solid var(--surface-700); }
+    tbody tr:hover { background: rgba(26,34,54,0.5); }
+    tbody td { padding: 10px 16px; }
+    td.mono { font-family: monospace; }
+
+    .type-pill {
+      display: inline-flex; padding: 2px 8px;
+      border-radius: 999px; font-size: 11px; font-weight: 500;
+    }
+    .type-pill.credit { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .type-pill.debit  { background: rgba(239,68,68,0.15);  color: #f87171; }
+
+    .status-pill {
+      display: inline-flex; padding: 2px 8px;
+      border-radius: 999px; font-size: 11px; font-weight: 500;
+    }
+    .status-pill.completed { background: rgba(34,197,94,0.1); color: #86efac; }
+    .status-pill.pending   { background: rgba(245,158,11,0.1); color: #fcd34d; }
+    .status-pill.failed    { background: rgba(239,68,68,0.1);  color: #fca5a5; }
+
+    .pnl-pos { color: #4ade80; }
+    .pnl-neg { color: #f87171; }
+
+    /* ── PAGINATION ── */
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; color: var(--slate-400);
+      margin-bottom: 24px;
+    }
+    .page-btns { display: flex; gap: 8px; }
+    .page-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: var(--surface-800);
+      border: 1px solid var(--surface-700);
+      color: var(--slate-300);
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .page-btn:hover { background: var(--surface-700); }
+    .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── PORTFOLIO LAYOUT ── */
+    .portfolio-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1100px) { .portfolio-layout { grid-template-columns: 1fr; } }
+    .donut-card {
+      border-radius: 10px;
+      border: 1px solid var(--surface-700);
+      background: var(--surface-900);
+      padding: 20px;
+    }
+    .donut-card h3 { font-size: 13px; font-weight: 500; color: var(--slate-400); margin-bottom: 16px; }
+    .donut-wrap { height: 200px; position: relative; margin-bottom: 16px; }
+    .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+    .legend-item {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px;
+    }
+    .legend-dot-label { display: flex; align-items: center; gap: 8px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .legend-pct { font-weight: 600; color: var(--slate-200); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface-700); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════════════ -->
+<aside>
+  <div class="sidebar-logo">Finest<span>Bank</span></div>
+  <nav>
+    <a onclick="showView('cfo')" id="nav-cfo" class="active">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5l4.5-4.5 4 4L15 9l4.5 4.5M3 21h18"/>
+      </svg>
+      CFO Overview
+    </a>
+    <a onclick="showView('analyst')" id="nav-analyst">
+      <svg class="nav-icon" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+      </svg>
+      Analyst View
+    </a>
+  </nav>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════ -->
+<div class="main-wrap">
+  <header>
+    <span class="subtitle">Financial Intelligence Dashboard</span>
+    <div class="user-btn" title="Signed in as demo@finestbank.com">JD</div>
+  </header>
+
+  <main>
+
+    <!-- ══════════════════════════════════════
+         CFO VIEW
+    ══════════════════════════════════════ -->
+    <div id="view-cfo" class="view active">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">CFO Overview</h1>
+          <span class="role-badge cfo">Role: CFO</span>
+        </div>
+        <span class="period-label">Period: 2024-01</span>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <label>Division</label>
+        <select>
+          <option value="">All Divisions</option>
+          <option>Retail Banking</option>
+          <option>Corporate Banking</option>
+          <option>Treasury</option>
+          <option>Wealth Management</option>
+        </select>
+        <label>From</label>
+        <select>
+          <option>2023-06</option>
+          <option>2023-07</option>
+          <option>2023-08</option>
+          <option>2023-09</option>
+          <option>2023-10</option>
+          <option selected>2023-11</option>
+          <option>2023-12</option>
+          <option>2024-01</option>
+        </select>
+        <label>To</label>
+        <select>
+          <option>2023-11</option>
+          <option>2023-12</option>
+          <option selected>2024-01</option>
+        </select>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--green)"></div>
+          <div class="kpi-label">Total Revenue</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$124.7M</span>
+            <span class="kpi-change up">↑ 8.4%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--blue)"></div>
+          <div class="kpi-label">Net Income</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$38.2M</span>
+            <span class="kpi-change up">↑ 5.1%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--purple)"></div>
+          <div class="kpi-label">Total Assets</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$2.1B</span>
+            <span class="kpi-change up">↑ 2.8%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--amber)"></div>
+          <div class="kpi-label">Loan Portfolio</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$867.4M</span>
+            <span class="kpi-change flat">— 0.0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h2>Revenue &amp; Net Income Trend</h2>
+          <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h2>Division Comparison — 2024-01</h2>
+          <div class="chart-wrap"><canvas id="divisionChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         ANALYST VIEW
+    ══════════════════════════════════════ -->
+    <div id="view-analyst" class="view">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">Retail Banking</h1>
+          <span class="role-badge analyst">Role: Analyst</span>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--blue)"></div>
+          <div class="kpi-label">Transactions (30d)</div>
+          <div class="kpi-row">
+            <span class="kpi-value">1,248</span>
+            <span class="kpi-change flat">— 0.0%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--green)"></div>
+          <div class="kpi-label">Transaction Volume</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$28.4M</span>
+            <span class="kpi-change flat">— 0.0%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--purple)"></div>
+          <div class="kpi-label">Portfolio Value</div>
+          <div class="kpi-row">
+            <span class="kpi-value">$94.1M</span>
+            <span class="kpi-change flat">— 0.0%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-stripe" style="background:var(--amber)"></div>
+          <div class="kpi-label">Active Loans</div>
+          <div class="kpi-row">
+            <span class="kpi-value">342</span>
+            <span class="kpi-change flat">— 0.0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Feed -->
+      <div class="live-feed">
+        <div class="live-feed-header">
+          <h2>Live Transactions</h2>
+          <span class="badge connecting" id="feedBadge">Connecting…</span>
+        </div>
+        <div class="feed-list" id="feedList">
+          <div class="feed-empty" id="feedEmpty">No events.</div>
+        </div>
+      </div>
+
+      <!-- Transactions Section -->
+      <div class="section-header">
+        <h2>Transactions</h2>
+        <span>2,496 total</span>
+      </div>
+
+      <!-- Transaction Filter -->
+      <div class="filter-bar" style="margin-bottom:12px;">
+        <select><option value="">All Types</option><option>credit</option><option>debit</option></select>
+        <select><option value="">All Categories</option><option>salary</option><option>transfer</option><option>loan payment</option><option>investment</option><option>fee</option></select>
+        <label>From</label><input type="date" value="2024-01-01" />
+        <label>To</label><input type="date" value="2024-01-31" />
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Type</th><th>Category</th><th>Amount</th><th>Currency</th><th>Description</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1/28/2024</td><td><span class="type-pill credit">credit</span></td><td>salary</td><td class="mono">48,500.00</td><td>USD</td><td>Monthly salary disbursement — Retail Q4</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/27/2024</td><td><span class="type-pill debit">debit</span></td><td>transfer</td><td class="mono">12,300.00</td><td>USD</td><td>Inter-division fund transfer</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/26/2024</td><td><span class="type-pill credit">credit</span></td><td>investment</td><td class="mono">250,000.00</td><td>USD</td><td>Bond coupon payment — AAPL 2026</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/25/2024</td><td><span class="type-pill debit">debit</span></td><td>loan payment</td><td class="mono">8,750.00</td><td>USD</td><td>Commercial loan repayment #LN-2847</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/24/2024</td><td><span class="type-pill debit">debit</span></td><td>fee</td><td class="mono">1,200.00</td><td>USD</td><td>Processing fee — ACH batch 01/24</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/23/2024</td><td><span class="type-pill credit">credit</span></td><td>transfer</td><td class="mono">75,000.00</td><td>USD</td><td>Incoming wire — client deposit</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/22/2024</td><td><span class="type-pill debit">debit</span></td><td>investment</td><td class="mono">100,000.00</td><td>USD</td><td>Equity purchase — MSFT 500 shares</td><td><span class="status-pill pending">pending</span></td></tr>
+            <tr><td>1/21/2024</td><td><span class="type-pill credit">credit</span></td><td>loan payment</td><td class="mono">15,400.00</td><td>USD</td><td>Retail mortgage collection — Jan batch</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/20/2024</td><td><span class="type-pill debit">debit</span></td><td>transfer</td><td class="mono">34,800.00</td><td>USD</td><td>Outgoing wire — vendor settlement</td><td><span class="status-pill completed">completed</span></td></tr>
+            <tr><td>1/19/2024</td><td><span class="type-pill credit">credit</span></td><td>fee</td><td class="mono">4,600.00</td><td>USD</td><td>Service fee income — account maintenance</td><td><span class="status-pill failed">failed</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <span>Page 1 of 125</span>
+        <div class="page-btns">
+          <button class="page-btn" disabled>← Prev</button>
+          <button class="page-btn">Next →</button>
+        </div>
+      </div>
+
+      <!-- Portfolio Holdings -->
+      <div class="section-header">
+        <h2>Portfolio Holdings</h2>
+        <span>8 positions &middot; Total $94,128,400</span>
+      </div>
+      <div class="portfolio-layout">
+        <div class="table-wrap" style="margin-bottom:0">
+          <table>
+            <thead>
+              <tr>
+                <th>Asset</th><th>Type</th><th>Ticker</th><th>Qty</th><th>Unit Cost</th><th>Current Price</th><th>Market Value</th><th>P&amp;L</th><th>Weight%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Apple Inc.</td><td style="color:var(--slate-400)">equity</td><td class="mono" style="font-size:11px">AAPL</td>
+                <td class="mono">5,000</td><td class="mono">148.20</td><td class="mono">187.65</td>
+                <td class="mono">938,250</td><td class="mono pnl-pos">+197,250.00</td><td class="mono">1.0%</td>
+              </tr>
+              <tr>
+                <td>Microsoft Corp.</td><td style="color:var(--slate-400)">equity</td><td class="mono" style="font-size:11px">MSFT</td>
+                <td class="mono">3,200</td><td class="mono">312.40</td><td class="mono">405.12</td>
+                <td class="mono">1,296,384</td><td class="mono pnl-pos">+296,704.00</td><td class="mono">1.4%</td>
+              </tr>
+              <tr>
+                <td>US Treasury 2026</td><td style="color:var(--slate-400)">bond</td><td class="mono" style="font-size:11px">—</td>
+                <td class="mono">50,000</td><td class="mono">98.50</td><td class="mono">97.20</td>
+                <td class="mono">4,860,000</td><td class="mono pnl-neg">-65,000.00</td><td class="mono">5.2%</td>
+              </tr>
+              <tr>
+                <td>Vanguard S&amp;P 500 ETF</td><td style="color:var(--slate-400)">etf</td><td class="mono" style="font-size:11px">VOO</td>
+                <td class="mono">12,000</td><td class="mono">380.00</td><td class="mono">456.20</td>
+                <td class="mono">5,474,400</td><td class="mono pnl-pos">+914,400.00</td><td class="mono">5.8%</td>
+              </tr>
+              <tr>
+                <td>BlackRock Real Estate Fund</td><td style="color:var(--slate-400)">reit</td><td class="mono" style="font-size:11px">—</td>
+                <td class="mono">25,000</td><td class="mono">105.00</td><td class="mono">98.40</td>
+                <td class="mono">2,460,000</td><td class="mono pnl-neg">-165,000.00</td><td class="mono">2.6%</td>
+              </tr>
+              <tr>
+                <td>JPMorgan Corporate Bond</td><td style="color:var(--slate-400)">bond</td><td class="mono" style="font-size:11px">—</td>
+                <td class="mono">80,000</td><td class="mono">100.00</td><td class="mono">99.10</td>
+                <td class="mono">7,928,000</td><td class="mono pnl-neg">-72,000.00</td><td class="mono">8.4%</td>
+              </tr>
+              <tr>
+                <td>Nvidia Corp.</td><td style="color:var(--slate-400)">equity</td><td class="mono" style="font-size:11px">NVDA</td>
+                <td class="mono">2,500</td><td class="mono">480.00</td><td class="mono">612.40</td>
+                <td class="mono">1,531,000</td><td class="mono pnl-pos">+331,000.00</td><td class="mono">1.6%</td>
+              </tr>
+              <tr>
+                <td>Diversified Loan Portfolio</td><td style="color:var(--slate-400)">loan</td><td class="mono" style="font-size:11px">—</td>
+                <td class="mono">1</td><td class="mono">70,000,000</td><td class="mono">70,640,766</td>
+                <td class="mono">70,640,766</td><td class="mono pnl-pos">+640,766.00</td><td class="mono">75.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="donut-card">
+          <h3>Allocation by Asset Type</h3>
+          <div class="donut-wrap"><canvas id="donutChart"></canvas></div>
+          <div class="donut-legend" id="donutLegend"></div>
+        </div>
+      </div>
+    </div><!-- /analyst -->
+
+  </main>
+</div>
+
+<script>
+/* ── CHART.JS THEME ── */
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = '#243048';
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+Chart.defaults.font.size = 12;
+
+/* ── REVENUE TREND CHART ── */
+const revCtx = document.getElementById('revenueChart').getContext('2d');
+new Chart(revCtx, {
+  type: 'line',
+  data: {
+    labels: ['2023-06','2023-07','2023-08','2023-09','2023-10','2023-11','2023-12','2024-01'],
+    datasets: [
+      {
+        label: 'Revenue',
+        data: [98.2, 103.5, 108.1, 110.4, 115.8, 118.2, 121.0, 124.7],
+        borderColor: '#22c55e',
+        backgroundColor: 'rgba(34,197,94,0.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: '#22c55e',
+        tension: 0.4,
+        fill: true,
+      },
+      {
+        label: 'Net Income',
+        data: [30.1, 31.8, 33.2, 33.9, 35.4, 36.1, 37.4, 38.2],
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59,130,246,0.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: '#3b82f6',
+        tension: 0.4,
+        fill: true,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 16 } }, tooltip: { mode: 'index', intersect: false } },
+    scales: {
+      x: { grid: { color: '#1a2236' } },
+      y: { grid: { color: '#1a2236' }, ticks: { callback: v => '$' + v + 'M' } }
+    },
+    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+  }
+});
+
+/* ── DIVISION COMPARISON CHART ── */
+const divCtx = document.getElementById('divisionChart').getContext('2d');
+new Chart(divCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Retail Banking', 'Corporate Banking', 'Treasury', 'Wealth Mgmt'],
+    datasets: [
+      {
+        label: 'Revenue',
+        data: [42.3, 38.7, 24.1, 19.6],
+        backgroundColor: 'rgba(34,197,94,0.7)',
+        borderRadius: 4,
+      },
+      {
+        label: 'Net Income',
+        data: [13.1, 11.8, 7.4, 5.9],
+        backgroundColor: 'rgba(59,130,246,0.7)',
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: true, position: 'top', labels: { boxWidth: 10, padding: 16 } }, tooltip: { mode: 'index', intersect: false } },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: '#1a2236' }, ticks: { callback: v => '$' + v + 'M' } }
+    }
+  }
+});
+
+/* ── PORTFOLIO DONUT CHART ── */
+const allocation = [
+  { label: 'loan',   pct: 75.0, color: '#f59e0b' },
+  { label: 'bond',   pct: 13.6, color: '#3b82f6' },
+  { label: 'etf',    pct: 5.8,  color: '#22c55e' },
+  { label: 'reit',   pct: 2.6,  color: '#a855f7' },
+  { label: 'equity', pct: 3.0,  color: '#ec4899' },
+];
+
+const donutCtx = document.getElementById('donutChart').getContext('2d');
+new Chart(donutCtx, {
+  type: 'doughnut',
+  data: {
+    labels: allocation.map(a => a.label),
+    datasets: [{
+      data: allocation.map(a => a.pct),
+      backgroundColor: allocation.map(a => a.color),
+      borderColor: '#0f1629',
+      borderWidth: 2,
+      hoverOffset: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    cutout: '68%',
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}%` } } }
+  }
+});
+
+const legend = document.getElementById('donutLegend');
+allocation.forEach(a => {
+  legend.innerHTML += `
+    <div class="legend-item">
+      <div class="legend-dot-label">
+        <div class="legend-dot" style="background:${a.color}"></div>
+        <span style="color:var(--slate-400)">${a.label}</span>
+      </div>
+      <span class="legend-pct">${a.pct}%</span>
+    </div>`;
+});
+
+/* ── LIVE FEED SIMULATION ── */
+const categories = ['transfer','salary','loan payment','investment','fee','settlement'];
+const descriptions = [
+  'ACH credit — payroll batch', 'Wire transfer inbound', 'Mortgage collection Jan',
+  'Bond coupon AAPL 2026', 'Inter-division fund move', 'ATM fee reversal',
+  'SWIFT incoming — correspondent bank', 'Equity dividend reinvestment',
+];
+
+let feedActive = false;
+let feedInterval;
+
+function startFeed() {
+  const badge = document.getElementById('feedBadge');
+  setTimeout(() => {
+    badge.className = 'badge live';
+    badge.innerHTML = '<span class="pulse-dot"></span> Live';
+    feedActive = true;
+    addFeedEvent(); // first event immediately
+    feedInterval = setInterval(addFeedEvent, 3200);
+  }, 1200);
+}
+
+function addFeedEvent() {
+  const list = document.getElementById('feedList');
+  const empty = document.getElementById('feedEmpty');
+  if (empty) empty.remove();
+
+  const isCredit = Math.random() > 0.4;
+  const amount = (Math.random() * 98000 + 2000).toFixed(2);
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const desc = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+  const el = document.createElement('div');
+  el.className = 'feed-item';
+  el.innerHTML = `
+    <span class="feed-time">${time}</span>
+    <span class="type-pill ${isCredit ? 'credit' : 'debit'}">${isCredit ? 'credit' : 'debit'}</span>
+    <span class="mono" style="color:var(--slate-300);font-size:13px">${parseFloat(amount).toLocaleString('en-US',{minimumFractionDigits:2})} USD</span>
+    <span style="color:var(--slate-400);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${desc}</span>`;
+
+  list.insertBefore(el, list.firstChild);
+
+  // cap at 50 items
+  while (list.children.length > 50) list.removeChild(list.lastChild);
+}
+
+/* ── NAV SWITCHING ── */
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+
+  if (name === 'analyst' && !feedActive) startFeed();
+  if (name === 'cfo' && feedInterval) {
+    // pause feed when not visible
+  }
+}
+
+// Kick off feed automatically if analyst tab is opened first (not default)
+</script>
+</body>
+</html>

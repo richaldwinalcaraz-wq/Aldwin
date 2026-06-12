@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadForge AI Scraper</title>
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="shortcut icon" href="/logo.svg">
+<style>
+  :root {
+    --bg: #050505;
+    --surface: #0B0B0B;
+    --surface2: #111111;
+    --border: rgba(255,255,255,0.08);
+    --text: #FFFFFF;
+    --secondary: #A1A1AA;
+    --muted: #71717A;
+    --accent: rgba(255,255,255,0.9);
+    --accent-glow: rgba(255,255,255,0.05);
+    --hot: #f87171;
+    --hot-bg: rgba(248,113,113,0.08);
+    --warm: #d97706;
+    --warm-bg: rgba(217,119,6,0.08);
+    --cold: #6b7280;
+    --cold-bg: rgba(107,114,128,0.1);
+    --green: #a3a3a3;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 14px; min-height: 100vh; }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 20px; display: flex; flex-direction: column; gap: 24px; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .main { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+  /* Logo */
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 36px; height: 36px; background: #111111; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .logo-text { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+  .logo-sub { font-size: 11px; color: var(--muted); }
+
+  /* Form */
+  .section-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .niche-grid { display: grid; gap: 6px; }
+  .niche-btn { background: transparent; border: 1px solid var(--border); color: var(--secondary); padding: 9px 12px; border-radius: var(--radius); cursor: pointer; text-align: left; font-size: 13px; transition: all 0.15s; display: flex; align-items: center; gap: 8px; }
+  .niche-btn:hover { border-color: rgba(255,255,255,0.2); background: var(--accent-glow); color: var(--text); }
+  .niche-btn.active { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); color: var(--text); }
+  .niche-emoji { font-size: 14px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 12px; color: var(--muted); }
+  input[type="text"], input[type="number"] {
+    background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 12px; border-radius: var(--radius); font-size: 13px; width: 100%;
+    outline: none; transition: border-color 0.15s;
+  }
+  input:focus { border-color: rgba(255,255,255,0.25); }
+  input::placeholder { color: var(--muted); }
+
+  .scrape-btn {
+    background: #FFFFFF; color: #050505; border: none; padding: 12px;
+    border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer;
+    width: 100%; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .scrape-btn:hover { background: #E4E4E7; transform: translateY(-1px); }
+  .scrape-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; transform: none; border: 1px solid var(--border); }
+  .scrape-btn.running { background: var(--surface2); color: var(--hot); border: 1px solid rgba(248,113,113,0.3); }
+
+  .scrape-all-btn {
+    background: transparent; color: var(--secondary); border: 1px solid var(--border); padding: 10px;
+    border-radius: var(--radius); font-size: 13px; font-weight: 500; cursor: pointer;
+    width: 100%; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .scrape-all-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); background: var(--accent-glow); }
+  .scrape-all-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .scrape-all-btn.running { color: var(--hot); border-color: rgba(248,113,113,0.3); }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .stat-total .stat-value { color: var(--text); }
+  .stat-hot .stat-value { color: var(--hot); }
+  .stat-warm .stat-value { color: var(--warm); }
+  .stat-cold .stat-value { color: var(--cold); }
+
+  /* Progress */
+  .progress-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: none; }
+  .progress-box.visible { display: block; }
+  .progress-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .progress-bar-wrap { background: var(--surface2); border-radius: 4px; height: 4px; overflow: hidden; }
+  .progress-bar { height: 100%; background: rgba(255,255,255,0.7); width: 0%; transition: width 0.3s; border-radius: 4px; }
+  .progress-log { margin-top: 12px; max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+  .log-line { font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 6px; }
+  .log-line.found { color: var(--secondary); }
+  .log-line.error { color: var(--hot); }
+  .log-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); margin-top: 5px; flex-shrink: 0; }
+  .log-line.found .log-dot { background: var(--secondary); }
+
+  /* Controls bar */
+  .controls-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .filter-select { background: var(--surface); border: 1px solid var(--border); color: var(--secondary); padding: 8px 12px; border-radius: var(--radius); font-size: 13px; cursor: pointer; outline: none; }
+  .export-btn { background: var(--surface); border: 1px solid var(--border); color: var(--secondary); padding: 8px 14px; border-radius: var(--radius); font-size: 13px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+  .export-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+  .count-badge { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+  /* Table */
+  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: var(--surface2); padding: 11px 14px; text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  tbody td { padding: 12px 14px; font-size: 13px; vertical-align: middle; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--secondary); }
+  tbody td:first-child { color: var(--text); }
+  .empty-row td { text-align: center; color: var(--muted); padding: 40px; }
+
+  /* Badges */
+  .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-hot { background: var(--hot-bg); color: var(--hot); border: 1px solid rgba(248,113,113,0.15); }
+  .badge-warm { background: var(--warm-bg); color: var(--warm); border: 1px solid rgba(217,119,6,0.15); }
+  .badge-cold { background: var(--cold-bg); color: var(--cold); border: 1px solid rgba(107,114,128,0.2); }
+
+  /* Score bar */
+  .score-wrap { display: flex; align-items: center; gap: 8px; }
+  .score-num { font-weight: 600; min-width: 28px; }
+  .score-bar { flex: 1; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; min-width: 50px; }
+  .score-fill { height: 100%; border-radius: 2px; }
+
+  /* Links */
+  a.cell-link { color: var(--secondary); text-decoration: none; }
+  a.cell-link:hover { color: var(--text); text-decoration: underline; }
+
+  /* Gaps pill */
+  .gaps-wrap { display: flex; flex-wrap: wrap; gap: 4px; max-width: 240px; }
+  .gap-pill { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 10px; white-space: nowrap; }
+
+  /* Spinner */
+  .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.15); border-top-color: var(--hot); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <div>
+        <div class="logo-text">LeadForge</div>
+        <div class="logo-sub">AI Lead Scraper</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Select Niche</div>
+      <div class="niche-grid">
+        <button class="niche-btn active" data-niche="med spa"><span class="niche-emoji">💆</span> Med Spa</button>
+        <button class="niche-btn" data-niche="roofing"><span class="niche-emoji">🏠</span> Roofing</button>
+        <button class="niche-btn" data-niche="aesthetic clinic"><span class="niche-emoji">✨</span> Aesthetic Clinic</button>
+        <button class="niche-btn" data-niche="dental clinic"><span class="niche-emoji">🦷</span> Dental Clinic</button>
+        <button class="niche-btn" data-niche="realtor"><span class="niche-emoji">🏡</span> Realtors</button>
+        <button class="niche-btn" data-niche="law firm"><span class="niche-emoji">⚖️</span> Law Firms</button>
+        <button class="niche-btn" data-niche="insurance agency"><span class="niche-emoji">🛡️</span> Insurance</button>
+        <button class="niche-btn" data-niche="gym"><span class="niche-emoji">💪</span> Gyms</button>
+        <button class="niche-btn" data-niche="car dealership"><span class="niche-emoji">🚗</span> Car Dealerships</button>
+        <button class="niche-btn" data-niche="hvac"><span class="niche-emoji">❄️</span> HVAC</button>
+        <button class="niche-btn" data-niche="travel agency"><span class="niche-emoji">✈️</span> Travel Agencies</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" id="location" placeholder="Miami, FL" value="">
+    </div>
+
+    <div class="form-group">
+      <label>Max Leads</label>
+      <input type="number" id="limit" value="20" min="1" max="100" placeholder="1–100">
+    </div>
+
+    <button class="scrape-btn" id="scrapeBtn" onclick="startScrape()">
+      <span id="btnIcon">▶</span>
+      <span id="btnText">Start Scrape</span>
+    </button>
+
+    <button class="scrape-all-btn" id="scrapeAllBtn" onclick="startScrapeAll()">
+      <span id="allBtnIcon">⚡</span>
+      <span id="allBtnText">Scrape All Niches</span>
+    </button>
+
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border);">
+      <div class="section-title" style="margin-bottom: 8px;">Quick Commands</div>
+      <div style="font-size: 12px; color: var(--muted); line-height: 1.8;">
+        CLI: <code style="color: #a5b4fc;">node src/index.js scrape</code><br>
+        POST: <code style="color: #a5b4fc;">/api/scrape</code><br>
+        Export: <code style="color: #a5b4fc;">/api/export?format=csv</code>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card stat-total">
+        <div class="stat-label">Total Leads</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card stat-hot">
+        <div class="stat-label">🔥 Hot</div>
+        <div class="stat-value" id="statHot">0</div>
+      </div>
+      <div class="stat-card stat-warm">
+        <div class="stat-label">⚡ Warm</div>
+        <div class="stat-value" id="statWarm">0</div>
+      </div>
+      <div class="stat-card stat-cold">
+        <div class="stat-label">❄ Cold</div>
+        <div class="stat-value" id="statCold">0</div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-box" id="progressBox">
+      <div class="progress-header">
+        <span style="font-weight:600; font-size:13px;" id="progressTitle">Scraping...</span>
+        <span style="font-size:12px; color:var(--muted);" id="progressCount">0 / 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-log" id="progressLog"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar">
+      <select class="filter-select" id="filterClass" onchange="filterLeads()">
+        <option value="">All Classifications</option>
+        <option value="Hot">🔥 Hot</option>
+        <option value="Warm">⚡ Warm</option>
+        <option value="Cold">❄ Cold</option>
+      </select>
+      <select class="filter-select" id="filterNiche" onchange="filterLeads()">
+        <option value="">All Niches</option>
+        <option value="Med Spa">Med Spa</option>
+        <option value="Roofing">Roofing</option>
+        <option value="Aesthetic Clinic">Aesthetic Clinic</option>
+        <option value="Dental Clinic">Dental Clinic</option>
+        <option value="Realtor">Realtor</option>
+        <option value="Law Firm">Law Firm</option>
+        <option value="Insurance Agency">Insurance Agency</option>
+        <option value="Gym">Gym</option>
+        <option value="Car Dealership">Car Dealership</option>
+        <option value="HVAC Company">HVAC Company</option>
+        <option value="Travel Agency">Travel Agency</option>
+      </select>
+      <button class="export-btn" onclick="exportLeads('csv')">⬇ CSV</button>
+      <button class="export-btn" onclick="exportLeads('json')">⬇ JSON</button>
+      <span class="count-badge" id="leadCount">0 leads</span>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Business</th>
+            <th>Location</th>
+            <th>Rating</th>
+            <th>Reviews</th>
+            <th>Score</th>
+            <th>Class</th>
+            <th>Website</th>
+            <th>Email</th>
+            <th>AI Gaps</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTable">
+          <tr class="empty-row"><td colspan="9">No leads yet. Start a scrape to begin.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script>
+let allLeads = [];
+let activeNiche = 'med spa';
+let scraping = false;
+let eventSource = null;
+
+// Niche selection
+document.querySelectorAll('.niche-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.niche-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeNiche = btn.dataset.niche;
+  });
+});
+
+function startScrape() {
+  if (scraping) { stopScrape(); return; }
+
+  const location = document.getElementById('location').value.trim();
+  const limit = parseInt(document.getElementById('limit').value) || 20;
+
+  if (!location) { alert('Enter a location first.'); return; }
+
+  scraping = true;
+  setBtnState(true);
+  showProgress(`Scraping ${activeNiche} in ${location}...`);
+  clearLog();
+
+  const url = `/api/scrape/stream?niche=${encodeURIComponent(activeNiche)}&location=${encodeURIComponent(location)}&limit=${limit}`;
+  eventSource = new EventSource(url);
+
+  eventSource.onmessage = (e) => {
+    const event = JSON.parse(e.data);
+    handleEvent(event, limit);
+  };
+
+  eventSource.onerror = () => {
+    addLog('Connection error or scrape complete.', 'error');
+    finishScrape();
+  };
+}
+
+function stopScrape() {
+  if (eventSource) { eventSource.close(); eventSource = null; }
+  finishScrape();
+}
+
+function startScrapeAll() {
+  if (scraping) return;
+
+  const location = document.getElementById('location').value.trim();
+  const limit = parseInt(document.getElementById('limit').value) || 20;
+
+  if (!location) { alert('Enter a location first.'); return; }
+
+  scraping = true;
+  document.getElementById('scrapeBtn').disabled = true;
+  const allBtn = document.getElementById('scrapeAllBtn');
+  allBtn.classList.add('running');
+  allBtn.disabled = false;
+  document.getElementById('allBtnIcon').innerHTML = '<div class="spinner"></div>';
+  document.getElementById('allBtnText').textContent = 'Scraping All...';
+
+  showProgress(`Scraping all 11 niches in ${location}...`);
+  clearLog();
+
+  const url = `/api/scrape/all/stream?location=${encodeURIComponent(location)}&limit=${limit}`;
+  eventSource = new EventSource(url);
+
+  eventSource.onmessage = (e) => {
+    const event = JSON.parse(e.data);
+
+    if (event.type === 'niche_start') {
+      updateProgressBar(event.nicheIndex - 1, event.nicheTotal);
+      addLog(`[${event.nicheIndex}/${event.nicheTotal}] ${event.niche.toUpperCase()}`);
+    } else if (event.type === 'niche_done') {
+      const r = event.result;
+      addLog(`  ✓ ${r.total} leads — Hot:${r.hot} Warm:${r.warm} Cold:${r.cold} New:${r.inserted}`, 'found');
+      updateProgressBar(event.nicheIndex, event.nicheTotal);
+      if (r.leads) addLeadsToTable(r.leads);
+    } else if (event.type === 'niche_error') {
+      addLog(`  ✗ ${event.niche}: ${event.message}`, 'error');
+    } else if (event.type === 'all_done') {
+      const t = event.totals;
+      updateStats(t);
+      updateProgressBar(1, 1);
+      addLog(`All done — ${t.total} total leads | Hot:${t.hot} Warm:${t.warm} Cold:${t.cold}`, 'found');
+      finishScrapeAll();
+    } else if (event.type === 'progress') {
+      addLog(`    ${event.business}${event.rating ? ' ⭐' + event.rating : ''}${event.email ? ' 📧' : ''}`, 'found');
+    } else if (event.type === 'error') {
+      addLog(event.message, 'error');
+      finishScrapeAll();
+    }
+  };
+
+  eventSource.onerror = () => {
+    addLog('Connection closed.', 'error');
+    finishScrapeAll();
+  };
+}
+
+function finishScrapeAll() {
+  scraping = false;
+  if (eventSource) { eventSource.close(); eventSource = null; }
+  document.getElementById('scrapeBtn').disabled = false;
+  const allBtn = document.getElementById('scrapeAllBtn');
+  allBtn.classList.remove('running');
+  document.getElementById('allBtnIcon').textContent = '⚡';
+  document.getElementById('allBtnText').textContent = 'Scrape All Niches';
+}
+
+function handleEvent(event, total) {
+  switch (event.type) {
+    case 'status':
+      addLog(event.message);
+      break;
+    case 'progress':
+      updateProgressBar(event.current, event.total || total);
+      const stars = event.rating ? `⭐${event.rating}` : '';
+      const reviews = event.reviewCount ? `(${event.reviewCount} reviews)` : '';
+      const email = event.email ? '📧' : '';
+      addLog(`${event.business} ${stars} ${reviews} ${email}`, 'found');
+      break;
+    case 'done':
+      updateStats(event);
+      if (event.leads) addLeadsToTable(event.leads);
+      addLog(`Done! ${event.total} leads — Hot: ${event.hot} Warm: ${event.warm} Cold: ${event.cold}`, 'found');
+      updateProgressBar(1, 1);
+      finishScrape();
+      break;
+    case 'error':
+      addLog(event.message, 'error');
+      finishScrape();
+      break;
+  }
+}
+
+function finishScrape() {
+  scraping = false;
+  setBtnState(false);
+  if (eventSource) { eventSource.close(); eventSource = null; }
+}
+
+function setBtnState(running) {
+  const btn = document.getElementById('scrapeBtn');
+  const icon = document.getElementById('btnIcon');
+  const text = document.getElementById('btnText');
+  if (running) {
+    btn.classList.add('running');
+    icon.innerHTML = '<div class="spinner"></div>';
+    text.textContent = 'Stop';
+  } else {
+    btn.classList.remove('running');
+    icon.textContent = '▶';
+    text.textContent = 'Start Scrape';
+  }
+}
+
+function showProgress(title) {
+  const box = document.getElementById('progressBox');
+  box.classList.add('visible');
+  document.getElementById('progressTitle').textContent = title;
+}
+
+function clearLog() {
+  document.getElementById('progressLog').innerHTML = '';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressCount').textContent = '0 / ?';
+}
+
+function addLog(msg, type = '') {
+  const log = document.getElementById('progressLog');
+  const line = document.createElement('div');
+  line.className = `log-line ${type}`;
+  line.innerHTML = `<div class="log-dot"></div><span>${msg}</span>`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+function updateProgressBar(current, total) {
+  const pct = total > 0 ? Math.round((current / total) * 100) : 0;
+  document.getElementById('progressBar').style.width = `${pct}%`;
+  document.getElementById('progressCount').textContent = `${current} / ${total}`;
+}
+
+function updateStats({ total, hot, warm, cold }) {
+  document.getElementById('statTotal').textContent = total ?? 0;
+  document.getElementById('statHot').textContent = hot ?? 0;
+  document.getElementById('statWarm').textContent = warm ?? 0;
+  document.getElementById('statCold').textContent = cold ?? 0;
+}
+
+function addLeadsToTable(newLeads) {
+  // Merge, deduplicate by hash
+  const existingHashes = new Set(allLeads.map(l => l._hash));
+  newLeads.forEach(l => { if (!existingHashes.has(l._hash)) allLeads.push(l); });
+  renderTable(allLeads);
+}
+
+function filterLeads() {
+  const cls = document.getElementById('filterClass').value;
+  const niche = document.getElementById('filterNiche').value;
+  let filtered = allLeads;
+  if (cls) filtered = filtered.filter(l => l.classification === cls);
+  if (niche) filtered = filtered.filter(l => (l.niche || '').includes(niche));
+  renderTable(filtered);
+}
+
+function renderTable(leads) {
+  const tbody = document.getElementById('leadsTable');
+  document.getElementById('leadCount').textContent = `${leads.length} leads`;
+
+  if (leads.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="9">No leads match filter.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = leads.map(l => {
+    const score = l.leadScore || 0;
+    const scoreColor = score >= 75 ? '#f87171' : score >= 45 ? '#d97706' : '#6b7280';
+    const badgeCls = l.classification === 'Hot' ? 'badge-hot' : l.classification === 'Warm' ? 'badge-warm' : 'badge-cold';
+    const gaps = (l.detectedGaps || []).slice(0, 3).map(g =>
+      `<span class="gap-pill">${g}</span>`
+    ).join('');
+    const website = l.website ? `<a class="cell-link" href="${l.website}" target="_blank">${domain(l.website)}</a>` : '<span style="color:var(--muted)">—</span>';
+    const email = l.email ? `<a class="cell-link" href="mailto:${l.email}">${l.email}</a>` : '<span style="color:var(--muted)">—</span>';
+    const rating = l.rating ? `⭐ ${l.rating}` : '<span style="color:var(--muted)">—</span>';
+    const reviews = l.reviewCount ? l.reviewCount.toLocaleString() : '<span style="color:var(--muted)">—</span>';
+
+    return `<tr>
+      <td title="${l.businessName || ''}">${l.businessName || '—'}</td>
+      <td>${l.location || '—'}</td>
+      <td>${rating}</td>
+      <td>${reviews}</td>
+      <td>
+        <div class="score-wrap">
+          <span class="score-num" style="color:${scoreColor}">${score}</span>
+          <div class="score-bar"><div class="score-fill" style="width:${score}%;background:${scoreColor}"></div></div>
+        </div>
+      </td>
+      <td><span class="badge ${badgeCls}">${l.classification || '—'}</span></td>
+      <td>${website}</td>
+      <td>${email}</td>
+      <td><div class="gaps-wrap">${gaps || '<span style="color:#71717A;font-size:11px">—</span>'}</div></td>
+    </tr>`;
+  }).join('');
+}
+
+function domain(url) {
+  try { return new URL(url).hostname.replace('www.', ''); } catch { return url; }
+}
+
+async function exportLeads(format) {
+  const cls = document.getElementById('filterClass').value;
+  const niche = document.getElementById('filterNiche').value;
+  let url = `/api/export?format=${format}`;
+  if (cls) url += `&classification=${encodeURIComponent(cls)}`;
+  if (niche) url += `&niche=${encodeURIComponent(niche)}`;
+
+  // In Electron: use native save dialog
+  if (window.electronAPI?.isElectron) {
+    const res = await fetch(url);
+    const content = await res.text();
+    const ext = format === 'csv' ? 'csv' : 'json';
+    window.electronAPI.saveFile({
+      content,
+      defaultName: `leadforge_export.${ext}`,
+      filters: [{ name: ext.toUpperCase(), extensions: [ext] }],
+    });
+    return;
+  }
+  window.location.href = url;
+}
+
+// Load existing leads on startup
+fetch('/api/leads').then(r => r.json()).then(data => {
+  if (data.leads && data.leads.length > 0) {
+    allLeads = data.leads;
+    renderTable(allLeads);
+    const stats = data.leads.reduce((a, l) => {
+      a.total++;
+      if (l.classification === 'Hot') a.hot++;
+      else if (l.classification === 'Warm') a.warm++;
+      else a.cold++;
+      return a;
+    }, { total: 0, hot: 0, warm: 0, cold: 0 });
+    updateStats(stats);
+  }
+}).catch(() => {});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+C:\Users\user\OneDrive\Documents\DashBoard Project\apps\leadforge\electron\main.js:55
+app.whenReady().then(async () => {
+    ^
+
+TypeError: Cannot read properties of undefined (reading 'whenReady')
+    at Object.<anonymous> (C:\Users\user\OneDrive\Documents\DashBoard Project\apps\leadforge\electron\main.js:55:5)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1311:10)
+    at Module.load (node:internal/modules/cjs/loader:1098:32)
+    at Module._load (node:internal/modules/cjs/loader:945:12)
+    at c._load (node:electron/js2c/node_init:2:13672)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:96:12)
+    at node:internal/main/run_main_module:23:47
+
+Node.js v20.9.0

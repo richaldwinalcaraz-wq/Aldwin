@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 10 15 30;
+  --foreground: 248 250 252;
+  --card: 15 22 41;
+  --card-foreground: 248 250 252;
+  --popover: 15 22 41;
+  --popover-foreground: 248 250 252;
+  --primary: 59 130 246;
+  --primary-foreground: 248 250 252;
+  --secondary: 26 35 64;
+  --secondary-foreground: 148 163 184;
+  --muted: 26 35 64;
+  --muted-foreground: 100 116 139;
+  --accent: 16 185 129;
+  --accent-foreground: 248 250 252;
+  --destructive: 239 68 68;
+  --destructive-foreground: 248 250 252;
+  --border: 36 48 85;
+  --input: 36 48 85;
+  --ring: 59 130 246;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+body {
+  background-color: #0a0f1e;
+  color: rgb(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Custom scrollbar for finance dashboard feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1629;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2e3d6a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

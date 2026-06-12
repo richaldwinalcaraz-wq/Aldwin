@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiraya Systems AI Agency — Premium Brochure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #ffffff;
+            color: #0a0a0f;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/></filter><rect width="1200" height="800" fill="black" filter="url(%23noise)" opacity="0.012"/></svg>');
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Page structure */
+        @page { size: A4; margin: 0; }
+        .page {
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            page-break-after: always;
+        }
+
+        /* Top accent border — page specific */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, rgba(242, 210, 122, 0.8), rgba(242, 210, 122, 0.4), transparent);
+            z-index: 25;
+            box-shadow: 0 4px 24px rgba(242, 210, 122, 0.3);
+        }
+
+        /* Prominent accent glow — top corner */
+        .page::after {
+            content: "";
+            position: absolute;
+            top: -300px;
+            left: -300px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(242, 210, 122, 0.25), transparent);
+            border-radius: 50%;
+            filter: blur(180px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .page-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 70px 55px;
+        }
+
+        /* Top/bottom fade */
+        .page-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), transparent);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .page-content::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1 { font-family: 'Unbounded', sans-serif; font-size: 3.2rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; }
+        h2 { font-family: 'Unbounded', sans-serif; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1.2rem; }
+        h3 { font-family: 'Unbounded', sans-serif; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.8rem; }
+        p { font-size: 0.95rem; color: rgba(20, 20, 30, 0.75); line-height: 1.8; margin-bottom: 1rem; }
+        .muted { color: rgba(20, 20, 30, 0.5); }
+        .stat { font-family: 'Instrument Serif', serif; font-size: 2.8rem; font-weight: 700; color: #0a0a0f; }
+
+        /* ============ PAGE 1: COVER ============ */
+        #page1 {
+            background: linear-gradient(135deg, #ffffff 0%, #fef9f0 100%);
+            position: relative;
+        }
+        #page1::before {
+            background: linear-gradient(to right, rgba(242, 210, 122, 1), rgba(242, 210, 122, 0.5), transparent);
+            box-shadow: 0 6px 30px rgba(242, 210, 122, 0.4);
+        }
+        #page1::after {
+            background: radial-gradient(circle at 35% 30%, rgba(242, 210, 122, 0.35), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.35;
+        }
+        #page1 .page-content::before {
+            box-shadow: inset 0 0 100px rgba(242, 210, 122, 0.08);
+        }
+        #page1 .page-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #page1 .logo {
+            font-size: 0.9rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(20, 20, 30, 0.45);
+            margin-bottom: 4rem;
+            font-weight: 600;
+        }
+        #page1 h1 {
+            font-size: 3.9rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+        }
+        #page1 .tagline {
+            font-size: 1.35rem;
+            color: rgba(20, 20, 30, 0.65);
+            margin-bottom: 3.5rem;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+        #page1 .cta-btn {
+            display: inline-block;
+            background: #0a0a0f;
+            color: #ffffff;
+            padding: 1.1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            border: 2px solid #0a0a0f;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(10, 10, 15, 0.15);
+        }
+
+        /* ============ PAGE 2: ABOUT ============ */
+        #page2 {
+            background: linear-gradient(135deg, #ffffff 0%, #f9f5f0 100%);
+            position: relative;
+        }
+        #page2::before {
+            background: linear-gradient(to right, rgba(220, 180, 140, 0.95), rgba(220, 180, 140, 0.5), transparent);
+            box-shadow: 0 6px 30px rgba(220, 180, 140, 0.35);
+        }
+        #page2::after {
+            background: radial-gradient(circle at 25% 45%, rgba(220, 180, 140, 0.3), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.3;
+        }
+        #page2 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(220, 180, 140, 0.06);
+        }
+        #page2 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page2 h1 {
+            margin-bottom: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page2 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(242, 210, 122, 0.5);
+        }
+        #page2 h3 {
+            color: rgba(20, 20, 30, 0.85);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        #page2 p {
+            margin-bottom: 1.3rem;
+        }
+        #page2 .stat-line {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-size: 0.9rem;
+            color: rgba(20, 20, 30, 0.6);
+        }
+        #page2 .stat-line strong {
+            color: #0a0a0f;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* ============ PAGE 3: PROBLEM ============ */
+        #page3 {
+            background: linear-gradient(135deg, #ffffff 0%, #fce8e0 100%);
+            position: relative;
+        }
+        #page3::before {
+            background: linear-gradient(to right, rgba(230, 140, 100, 0.9), rgba(230, 140, 100, 0.45), transparent);
+            box-shadow: 0 6px 30px rgba(230, 140, 100, 0.32);
+        }
+        #page3::after {
+            background: radial-gradient(circle at 45% 55%, rgba(230, 140, 100, 0.32), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.32;
+        }
+        #page3 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(230, 140, 100, 0.07);
+        }
+        #page3 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page3 h1 {
+            margin-bottom: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page3 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(232, 180, 160, 0.5);
+        }
+        #page3 > .page-content > p {
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .pain-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(250, 248, 245, 0.95) 100%);
+            border-left: 4px solid rgba(232, 180, 160, 0.45);
+            padding: 1.8rem;
+            margin-bottom: 1.3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .pain-item:hover {
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        .pain-item h3 {
+            margin-top: 0;
+            color: #0a0a0f;
+            font-size: 1.2rem;
+        }
+        .pain-item p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: rgba(20, 20, 30, 0.7);
+        }
+
+        /* ============ PAGE 4: SOLUTION ============ */
+        #page4 {
+            background: linear-gradient(135deg, #ffffff 0%, #e8f4ff 100%);
+            position: relative;
+        }
+        #page4::before {
+            background: linear-gradient(to right, rgba(100, 160, 255, 0.92), rgba(100, 160, 255, 0.48), transparent);
+            box-shadow: 0 6px 30px rgba(100, 160, 255, 0.35);
+        }
+        #page4::after {
+            background: radial-gradient(circle at 35% 65%, rgba(100, 160, 255, 0.35), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.35;
+        }
+        #page4 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(100, 160, 255, 0.07);
+        }
+        #page4 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page4 h1 {
+            margin-bottom: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page4 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(191, 215, 255, 0.6);
+        }
+        #page4 > .page-content > p {
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        .process-step {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(191, 215, 255, 0.25);
+            position: relative;
+        }
+        .process-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .step-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.2rem;
+            color: rgba(20, 20, 30, 0.65);
+            margin-bottom: 0.7rem;
+            font-weight: 700;
+        }
+        .step-num strong {
+            color: #0a0a0f;
+            font-weight: 800;
+        }
+        .process-step p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: rgba(20, 20, 30, 0.75);
+        }
+
+        /* ============ PAGE 5: SERVICES ============ */
+        #page5 {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fde8 100%);
+            position: relative;
+        }
+        #page5::before {
+            background: linear-gradient(to right, rgba(150, 195, 100, 0.88), rgba(150, 195, 100, 0.44), transparent);
+            box-shadow: 0 6px 30px rgba(150, 195, 100, 0.3);
+        }
+        #page5::after {
+            background: radial-gradient(circle at 50% 35%, rgba(150, 195, 100, 0.3), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.3;
+        }
+        #page5 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(150, 195, 100, 0.06);
+        }
+        #page5 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page5 h1 {
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page5 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(237, 231, 221, 0.5);
+        }
+        #page5 > .page-content > p {
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: rgba(20, 20, 30, 0.7);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.6rem;
+        }
+        .service-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 248, 245, 0.98) 100%);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-top: 2px solid rgba(237, 231, 221, 0.4);
+            border-radius: 18px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+        .service-card h3 {
+            font-size: 1.15rem;
+            margin-top: 0;
+            margin-bottom: 0.7rem;
+            color: #0a0a0f;
+        }
+        .service-card p {
+            font-size: 0.9rem;
+            margin: 0;
+            color: rgba(20, 20, 30, 0.7);
+        }
+
+        /* ============ PAGE 6: DETAILED SERVICES ============ */
+        #page6 {
+            background: linear-gradient(135deg, #ffffff 0%, #e8f0ff 100%);
+            position: relative;
+        }
+        #page6::before {
+            background: linear-gradient(to right, rgba(120, 140, 220, 0.9), rgba(120, 140, 220, 0.46), transparent);
+            box-shadow: 0 6px 30px rgba(120, 140, 220, 0.32);
+        }
+        #page6::after {
+            background: radial-gradient(circle at 40% 48%, rgba(120, 140, 220, 0.32), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.32;
+        }
+        #page6 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(120, 140, 220, 0.06);
+        }
+        #page6 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page6 h1 {
+            margin-bottom: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page6 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(221, 227, 234, 0.5);
+        }
+        .detail-service {
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.8rem;
+            border-bottom: 1px solid rgba(221, 227, 234, 0.3);
+        }
+        .detail-service:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .detail-service h3 {
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: #0a0a0f;
+        }
+        .detail-service p {
+            margin: 0;
+            color: rgba(20, 20, 30, 0.75);
+            font-size: 0.95rem;
+        }
+
+        /* ============ PAGE 7: PRICING ============ */
+        #page7 {
+            background: linear-gradient(135deg, #f5f5f5 0%, #fff8f0 100%);
+            position: relative;
+        }
+        #page7::before {
+            background: linear-gradient(to right, rgba(230, 180, 60, 1), rgba(230, 180, 60, 0.5), transparent);
+            box-shadow: 0 6px 30px rgba(230, 180, 60, 0.35);
+        }
+        #page7::after {
+            background: radial-gradient(circle at 50% 50%, rgba(230, 180, 60, 0.3), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.3;
+        }
+        #page7 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(230, 180, 60, 0.06);
+        }
+        #page7 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page7 h1 {
+            margin-bottom: 2.2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page7 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(242, 210, 122, 0.5);
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .pricing-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 248, 245, 0.98) 100%);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-top: 2px solid rgba(242, 210, 122, 0.4);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+        .pricing-card:hover {
+            box-shadow: 0 8px 32px rgba(242, 210, 122, 0.1);
+            border-top-color: rgba(242, 210, 122, 0.7);
+        }
+        .pricing-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #0a0a0f;
+        }
+        .price {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: #0a0a0f;
+        }
+        .pricing-tier {
+            font-size: 0.8rem;
+            color: rgba(20, 20, 30, 0.65);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        .pricing-card ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+        .pricing-card li {
+            margin-bottom: 0.6rem;
+            color: rgba(20, 20, 30, 0.7);
+        }
+
+        /* ============ PAGE 8: CASE STUDIES ============ */
+        #page8 {
+            background: linear-gradient(135deg, #ffffff 0%, #dff9ff 100%);
+            position: relative;
+        }
+        #page8::before {
+            background: linear-gradient(to right, rgba(50, 200, 220, 0.93), rgba(50, 200, 220, 0.47), transparent);
+            box-shadow: 0 6px 30px rgba(50, 200, 220, 0.36);
+        }
+        #page8::after {
+            background: radial-gradient(circle at 42% 52%, rgba(50, 200, 220, 0.34), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.34;
+        }
+        #page8 .page-content::before {
+            box-shadow: inset 0 0 80px rgba(50, 200, 220, 0.07);
+        }
+        #page8 .page-content {
+            justify-content: flex-start;
+            padding-top: 90px;
+        }
+        #page8 h1 {
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        #page8 h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: rgba(191, 215, 255, 0.6);
+        }
+        .case-study {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 245, 255, 0.98) 100%);
+            border: 1px solid rgba(191, 215, 255, 0.2);
+            border-left: 4px solid rgba(191, 215, 255, 0.5);
+            border-radius: 14px;
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+        }
+        .case-study:last-child {
+            margin-bottom: 0;
+        }
+        .case-header h3 {
+            font-size: 1.15rem;
+            margin-top: 0;
+            margin-bottom: 0.3rem;
+            color: #0a0a0f;
+        }
+        .case-type {
+            font-size: 0.8rem;
+            color: rgba(50, 150, 200, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .case-problem {
+            font-size: 0.9rem;
+            color: rgba(20, 20, 30, 0.7);
+            margin-bottom: 1rem;
+        }
+        .case-solution {
+            font-size: 0.85rem;
+            color: rgba(20, 20, 30, 0.65);
+            margin-bottom: 1.2rem;
+            padding: 0.8rem;
+            background: rgba(191, 215, 255, 0.08);
+            border-radius: 8px;
+            border-left: 2px solid rgba(191, 215, 255, 0.3);
+        }
+        .case-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .case-result {
+            background: rgba(245, 250, 255, 0.8);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border-top: 2px solid rgba(191, 215, 255, 0.3);
+        }
+        .case-result-value {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0a0a0f;
+            margin-bottom: 0.2rem;
+        }
+        .case-result-label {
+            font-size: 0.75rem;
+            color: rgba(20, 20, 30, 0.75);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            font-weight: 600;
+        }
+
+        /* ============ PAGE 9: FINAL CTA ============ */
+        #page9 {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1820 100%);
+            position: relative;
+        }
+        #page9::before {
+            background: linear-gradient(to right, rgba(242, 210, 122, 0.95), rgba(242, 210, 122, 0.45), transparent);
+            box-shadow: 0 6px 40px rgba(242, 210, 122, 0.45);
+        }
+        #page9::after {
+            background: radial-gradient(circle at 35% 35%, rgba(242, 210, 122, 0.4), transparent);
+            top: -350px;
+            left: -350px;
+            width: 800px;
+            height: 800px;
+            filter: blur(200px);
+            opacity: 0.4;
+        }
+        #page9 .page-content::before {
+            box-shadow: inset 0 0 120px rgba(242, 210, 122, 0.08);
+        }
+        #page9 .page-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        #page9 h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        #page9 p {
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 500px;
+        }
+        #page9 .cta-btn {
+            display: inline-block;
+            background: #f2d27a;
+            color: #0a0a0f;
+            padding: 1.2rem 3.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            border: 2px solid #f2d27a;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(242, 210, 122, 0.2);
+            margin-bottom: 2rem;
+        }
+        #page9 .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(242, 210, 122, 0.3);
+        }
+        #page9 .contact-info {
+            margin-top: 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        #page9 .contact-info p {
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+        #page9 .contact-info strong {
+            color: #f2d27a;
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<section class="page" id="page1">
+    <div class="page-content">
+        <div class="logo">Hiraya Systems</div>
+        <h1>AI AUTOMATION AGENCY</h1>
+        <p class="tagline">Build Systems That Scale.</p>
+        <button class="cta-btn">Book a Discovery Call</button>
+    </div>
+</section>
+
+<!-- PAGE 2: ABOUT US -->
+<section class="page" id="page2">
+    <div class="page-content">
+        <h1>About Hiraya Systems</h1>
+        <h3>A technical AI agency. Built different.</h3>
+        <p>Hiraya Systems builds autonomous systems that run your business. We don't sell tools. We engineer solutions — integrating AI, automation, and custom logic into production systems that generate measurable ROI.</p>
+        <p>Since 2024, we've partnered with construction suppliers, e-commerce brands, and service firms to replace manual operations with intelligent automation. Every engagement starts with operational diagnosis, not a sales pitch. We map bottlenecks, identify leverage points, and deliver systems that compound in efficiency over time.</p>
+        <p><strong>Hiraya</strong> (古希臘語) means "the fruit of one's hopes and aspirations" — the real outcome of systematic improvement.</p>
+        <div class="stat-line">
+            <strong>6</strong> Core System Types | <strong>50+</strong> Integrations | <strong>$3M+</strong> Annual Client Revenue Generated
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 3: THE PROBLEM -->
+<section class="page" id="page3">
+    <div class="page-content">
+        <h1>The Operational Gap</h1>
+        <p>Most businesses understand AI exists. Few know how to deploy it operationally.</p>
+        <div class="pain-item">
+            <h3>Manual Reporting Overhead</h3>
+            <p>Hours weekly on data entry, spreadsheet maintenance, and status reports. High error rate. Zero scalability.</p>
+        </div>
+        <div class="pain-item">
+            <h3>Fragmented Data Flow</h3>
+            <p>Customer data scattered across CRM, email, messaging, billing systems. No unified view. Missed insights and opportunities.</p>
+        </div>
+        <div class="pain-item">
+            <h3>Reactive Customer Service</h3>
+            <p>Response delays. Limited availability. Customers wait for human attention. Leads go cold.</p>
+        </div>
+        <div class="pain-item">
+            <h3>Unscalable Operations</h3>
+            <p>Growth stalled by team capacity. Can't hire faster than workload increases. Margins compress under operational bloat.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 4: THE SOLUTION -->
+<section class="page" id="page4">
+    <div class="page-content">
+        <h1>How We Solve It</h1>
+        <p>We build integrated systems that operate 24/7. Every component is designed to reduce friction and amplify output.</p>
+        <div class="process-step">
+            <div class="step-num"><strong>01</strong> Operational Audit</div>
+            <p>We dissect your workflows. Map data flows, identify bottlenecks, quantify time loss. You see the operational gaps we're solving for.</p>
+        </div>
+        <div class="process-step">
+            <div class="step-num"><strong>02</strong> System Architecture</div>
+            <p>We design your integrated stack: which AI agents do what, which workflows automate, which tools integrate, and how data flows. Full transparency before we build.</p>
+        </div>
+        <div class="process-step">
+            <div class="step-num"><strong>03</strong> Precision Engineering</div>
+            <p>We build each component tested and verified. Integration points validated. No shortcuts. No deployed code without baseline metrics.</p>
+        </div>
+        <div class="process-step">
+            <div class="step-num"><strong>04</strong> Deploy & Optimize</div>
+            <p>Live deployment with real-time monitoring. We track KPIs weekly and continuously optimize for speed, accuracy, and cost. Systems compound — they get better over time.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 5: SERVICES OVERVIEW -->
+<section class="page" id="page5">
+    <div class="page-content">
+        <h1>Our Service Stack</h1>
+        <p>Six integrated systems working in concert. Automation without silos.</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>🤖 Agentic AI Assistants</h3>
+                <p>Claude AI deployed as autonomous agents. Query live data, process requests, book appointments, triage inquiries — 24/7 without human input.</p>
+            </div>
+            <div class="service-card">
+                <h3>⚙️ Workflow Automation</h3>
+                <p>Replace manual processes with deterministic flows. CRM updates, lead scoring, invoice processing, customer onboarding — all automated.</p>
+            </div>
+            <div class="service-card">
+                <h3>📊 Operational Dashboards</h3>
+                <p>Live dashboards pulling from CRM, ad platforms, spreadsheets, APIs. Single source of truth. Real-time metrics visible to leadership.</p>
+            </div>
+            <div class="service-card">
+                <h3>🌐 Conversion Funnels</h3>
+                <p>Landing pages + email sequences engineered for conversion. Copywriting, design, CRM integration. Built to close deals, not just capture emails.</p>
+            </div>
+            <div class="service-card">
+                <h3>🔗 Data Integration</h3>
+                <p>Connect disparate systems: CRM, email, billing, spreadsheets, APIs. Bidirectional sync. Eliminate manual data entry. Ensure consistency.</p>
+            </div>
+            <div class="service-card">
+                <h3>🎨 Custom Web Systems</h3>
+                <p>High-performance websites and web apps. Built from scratch, not templates. Optimized for speed, SEO, and conversion rate maximization.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 6: DETAILED SERVICES -->
+<section class="page" id="page6">
+    <div class="page-content">
+        <h1>Service Details</h1>
+        <div class="detail-service">
+            <h3>Agentic AI Assistants</h3>
+            <p>Claude-powered agents that operate your business. Query inventory in real time, answer customer questions with business context, book appointments, triage support tickets, and escalate appropriately. Works via web interface, SMS, WhatsApp, or chat. Learns patterns and suggests improvements.</p>
+        </div>
+        <div class="detail-service">
+            <h3>Workflow Automation</h3>
+            <p>We audit manual work and replace it with automated flows. CRM updates triggered by inbound messages. Invoice auto-processing. Customer onboarding sequences. Lead scoring and routing. All deterministic, logged, and auditable.</p>
+        </div>
+        <div class="detail-service">
+            <h3>Operational Dashboards</h3>
+            <p>Real-time dashboards that surface what matters: sales pipeline, inventory levels, support queue depth, revenue by source, customer lifetime value, etc. Built on Retool, Looker Studio, or custom React depending on complexity.</p>
+        </div>
+        <div class="detail-service">
+            <h3>Conversion Funnels</h3>
+            <p>Landing pages designed and copywritten to convert. Email sequences that nurture leads. Integrated with CRM so every interaction is tracked and acted upon. A/B tested and optimized for cost per acquisition.</p>
+        </div>
+        <div class="detail-service">
+            <h3>Data Integration</h3>
+            <p>Bidirectional sync between CRM, email, spreadsheets, billing systems, and APIs. Data flows in real time. No manual updates. Eliminates duplicate entry and keeps your database clean and current.</p>
+        </div>
+        <div class="detail-service">
+            <h3>Custom Web Systems</h3>
+            <p>Built from the ground up for your business: no templates, no bloat, no compromises. Custom domain, custom branding, optimized for search and conversion. Fast, scalable, and designed to grow with your business.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 7: PRICING & PACKAGES -->
+<section class="page" id="page7">
+    <div class="page-content">
+        <h1>Investment Levels</h1>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <p class="price">$3,500/mo</p>
+                <p class="pricing-tier">Build Phase: 3 Months</p>
+                <ul>
+                    <li>✓ 1 AI Assistant Agent</li>
+                    <li>✓ Basic CRM Integration</li>
+                    <li>✓ Email Automation (50 sequences)</li>
+                    <li>✓ Live Support Portal</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3>Growth</h3>
+                <p class="price">$6,500/mo</p>
+                <p class="pricing-tier">Build Phase: 4–6 Months</p>
+                <ul>
+                    <li>✓ Everything in Starter</li>
+                    <li>✓ 2 Additional AI Agents</li>
+                    <li>✓ Operational Dashboard</li>
+                    <li>✓ Landing Page + Funnel</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3>Scale</h3>
+                <p class="price">$10,000/mo</p>
+                <p class="pricing-tier">Build Phase: 6–8 Months</p>
+                <ul>
+                    <li>✓ Everything in Growth</li>
+                    <li>✓ Full Data Integration</li>
+                    <li>✓ Advanced Analytics</li>
+                    <li>✓ Custom Web Application</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <p class="price">Custom</p>
+                <p class="pricing-tier">Bespoke Implementation</p>
+                <ul>
+                    <li>✓ Full Custom Stack</li>
+                    <li>✓ Dedicated Support Team</li>
+                    <li>✓ Quarterly Optimization Reviews</li>
+                    <li>✓ SLA Guarantees</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 8: CASE STUDIES -->
+<section class="page" id="page8">
+    <div class="page-content">
+        <h1>Client Results</h1>
+
+        <div class="case-study">
+            <div class="case-header">
+                <p class="case-type">Construction Supply Distribution</p>
+                <h3>Regional Distributor — Operational Transformation</h3>
+            </div>
+            <p class="case-problem"><strong>Problem:</strong> Manual order entry (4+ hours/day). Lead follow-up delays (missed sales). Scattered customer data across email, spreadsheets, legacy system.</p>
+            <p class="case-solution"><strong>Solution:</strong> AI order-intake agent. Automated lead scoring and CRM routing. Daily operational dashboard. Bidirectional data sync.</p>
+            <div class="case-results">
+                <div class="case-result">
+                    <div class="case-result-value">+$48K</div>
+                    <div class="case-result-label">Monthly Revenue</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">18 hrs/wk</div>
+                    <div class="case-result-label">Manual Work Eliminated</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">3.2x</div>
+                    <div class="case-result-label">Faster Lead Response</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">92%</div>
+                    <div class="case-result-label">Follow-up Completion Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="case-study">
+            <div class="case-header">
+                <p class="case-type">E-Commerce Fashion Brand</p>
+                <h3>Direct-to-Consumer — Customer Experience & Conversion Boost</h3>
+            </div>
+            <p class="case-problem"><strong>Problem:</strong> Customer support backlog (5–7 day response time). Cart abandonment at 65%. Manual email sequences. Inventory visibility issues.</p>
+            <p class="case-solution"><strong>Solution:</strong> AI chat agent on website (order tracking, product questions, returns). Automated cart abandonment funnel. Real-time inventory dashboard. SMS recovery sequences.</p>
+            <div class="case-results">
+                <div class="case-result">
+                    <div class="case-result-value">+35%</div>
+                    <div class="case-result-label">Conversion Rate</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">+$126K</div>
+                    <div class="case-result-label">Recovered Revenue (3 mo)</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">2x</div>
+                    <div class="case-result-label">Response Time (avg)</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">60%</div>
+                    <div class="case-result-label">Abandonment Recovery Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="case-study">
+            <div class="case-header">
+                <p class="case-type">B2B SaaS Service Provider</p>
+                <h3>Enterprise Software Company — Sales & Operations Automation</h3>
+            </div>
+            <p class="case-problem"><strong>Problem:</strong> Sales demos booked but unqualified. Onboarding took 3 weeks (manual process). Support team drowning in repetitive questions. No visibility into pipeline health.</p>
+            <p class="case-solution"><strong>Solution:</strong> AI lead qualification agent (pre-call). Automated onboarding workflows. Self-service support bot (docs + knowledge base). Real-time sales pipeline dashboard.</p>
+            <div class="case-results">
+                <div class="case-result">
+                    <div class="case-result-value">42%</div>
+                    <div class="case-result-label">Sales Velocity Increase</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">7 days</div>
+                    <div class="case-result-label">Onboarding (from 21)</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">65%</div>
+                    <div class="case-result-label">Support Questions Auto-Resolved</div>
+                </div>
+                <div class="case-result">
+                    <div class="case-result-value">+$320K</div>
+                    <div class="case-result-label">ARR (first year)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PAGE 9: FINAL CTA -->
+<section class="page" id="page9">
+    <div class="page-content">
+        <h1>Ready to Build?</h1>
+        <p>Schedule a discovery call. We'll audit your operation, identify automation opportunities, and map exactly what we'd build — before any commitment.</p>
+        <button class="cta-btn">Schedule Discovery Call</button>
+        <div class="contact-info">
+            <p><strong>Hiraya Systems</strong></p>
+            <p>AI Automation & Systems Engineering</p>
+            <p>johnbernardtabanao@gmail.com</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

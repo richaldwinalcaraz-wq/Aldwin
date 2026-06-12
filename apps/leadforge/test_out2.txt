@@ -1,0 +1,5 @@
+electron type: string
+process.type: undefined
+process.versions.electron: 29.1.4
+ERROR: require(electron) returned path string, not module
+This means the npm electron package is shadowing the built-in

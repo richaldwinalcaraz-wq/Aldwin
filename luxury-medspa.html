@@ -1440,6 +1440,787 @@
         right: 1rem;
       }
     }
+
+    /* ============================================================
+       AI ASSESSMENT — Hero CTA Block
+    ============================================================ */
+    .hero-ai-cta {
+      margin-top: 2.5rem;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .hero-ai-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      display: block;
+      text-transform: uppercase;
+    }
+    .hero-ai-headline {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .hero-ai-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .hero-ai-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-ai-learn {
+      color: rgba(255,255,255,0.95) !important;
+      border-color: rgba(255,255,255,0.5) !important;
+    }
+    .hero-ai-learn:hover {
+      background: rgba(201,169,110,0.3) !important;
+      border-color: rgba(255,255,255,0.8) !important;
+    }
+    @media (max-width: 768px) {
+      .hero-ai-cta { padding: 1.5rem; }
+      .hero-ai-buttons { flex-direction: column; align-items: center; }
+      .hero-ai-buttons .btn { width: 100%; max-width: 320px; }
+    }
+
+    /* ============================================================
+       AI ASSESSMENT — Section & Cards
+    ============================================================ */
+    .ai-assess-section {
+      background: linear-gradient(160deg, var(--charcoal) 0%, #2a2a2e 50%, var(--ivory) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-assess-section .section-header h2 { color: #fff; }
+    .ai-assess-section .section-header p { color: rgba(255,255,255,0.65); }
+    .ai-section-badge {
+      display: inline-block;
+      background: rgba(201,169,110,0.15);
+      border: 1px solid rgba(201,169,110,0.4);
+      color: var(--gold);
+      padding: 0.4rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+    }
+    .ai-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+    @media (max-width: 768px) {
+      .ai-cards-grid { grid-template-columns: 1fr; }
+    }
+    .ai-tool-card {
+      position: relative;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(201,169,110,0.22);
+      border-radius: 20px;
+      padding: 2.5rem;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .ai-tool-card:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(201,169,110,0.5);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(0,0,0,0.3), 0 0 40px rgba(201,169,110,0.1);
+    }
+    .ai-tool-card > *:not(.ai-card-glow) { position: relative; z-index: 1; }
+    .ai-card-glow {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+      top: -90px;
+      right: -70px;
+    }
+    .ai-card-glow--skin {
+      background: radial-gradient(circle, rgba(201,169,110,0.3), transparent 70%);
+    }
+    .ai-card-glow--facial {
+      background: radial-gradient(circle, rgba(212,160,160,0.3), transparent 70%);
+    }
+    .ai-card-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      flex-shrink: 0;
+    }
+    .ai-card-icon svg { width: 26px; height: 26px; stroke: #1C1C1E; fill: none; stroke-width: 1.5; }
+    .ai-card-icon--facial {
+      background: linear-gradient(135deg, var(--rose), #e8c0c0);
+    }
+    .ai-card-badge {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      display: block;
+      text-transform: uppercase;
+    }
+    .ai-card-badge--facial { color: var(--rose); }
+    .ai-tool-card h3 {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+      color: #fff;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    .ai-tool-card > p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .ai-card-features {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .ai-card-features li {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .ai-card-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .ai-card-btn { width: 100%; margin-bottom: 1rem; }
+    .ai-card-disclaimer {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin: 0;
+      font-weight: 300;
+    }
+    @media (max-width: 768px) {
+      .ai-tool-card { padding: 2rem 1.5rem; }
+    }
+
+    /* ============================================================
+       AI MODAL — Overlay & Panel
+    ============================================================ */
+    .ai-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      overflow-y: auto;
+    }
+    .ai-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .ai-modal-panel {
+      background: var(--cream);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 580px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: var(--shadow-lg), 0 0 80px rgba(0,0,0,0.4);
+      transform: translateY(28px);
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold) transparent;
+    }
+    .ai-modal-overlay.open .ai-modal-panel {
+      transform: translateY(0);
+    }
+    body.modal-open { overflow: hidden; }
+    .ai-modal-panel::-webkit-scrollbar { width: 4px; }
+    .ai-modal-panel::-webkit-scrollbar-track { background: transparent; }
+    .ai-modal-panel::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+    .ai-modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--ivory);
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--ash);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .ai-modal-close:hover {
+      background: var(--charcoal);
+      color: #fff;
+      border-color: var(--charcoal);
+    }
+
+    /* Step indicator */
+    .ai-modal-steps-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .ai-step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .ai-step-dot.active {
+      background: var(--gold);
+      width: 28px;
+      border-radius: 100px;
+    }
+    .ai-step-dot.done { background: var(--gold); }
+    .ai-step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      max-width: 70px;
+      transition: background 0.3s;
+    }
+    .ai-step-line.done { background: var(--gold); }
+
+    /* Step panels */
+    .modal-step { display: block; }
+    .modal-step.hidden { display: none; }
+    .modal-step-header { margin-bottom: 2rem; }
+    .modal-step-header h3 {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      color: var(--charcoal);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .modal-step-header p { color: var(--ash); font-size: 0.9rem; font-weight: 300; }
+
+    /* Drop zone */
+    .ai-drop-zone {
+      border: 2px dashed rgba(201,169,110,0.45);
+      border-radius: 16px;
+      padding: 3rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      margin-bottom: 1.5rem;
+      background: var(--ivory);
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ai-drop-zone:hover,
+    .ai-drop-zone.drag-over {
+      border-color: var(--gold);
+      background: rgba(201,169,110,0.06);
+    }
+    .ai-drop-zone.has-file {
+      border-color: var(--gold);
+      border-style: solid;
+      padding: 0;
+      overflow: hidden;
+    }
+    .ai-drop-zone-inner { pointer-events: none; }
+    .ai-drop-icon {
+      width: 48px;
+      height: 48px;
+      color: var(--gold);
+      margin: 0 auto 1rem;
+      display: block;
+      opacity: 0.65;
+    }
+    .ai-drop-title { font-size: 1rem; color: var(--charcoal); margin-bottom: 0.4rem; font-weight: 500; }
+    .ai-drop-sub { font-size: 0.8rem; color: var(--ash); font-weight: 300; }
+    .ai-drop-mobile { display: none; font-size: 0.8rem; color: var(--ash); margin-top: 0.3rem; font-weight: 300; }
+    @media (max-width: 768px) {
+      .ai-drop-mobile { display: block; }
+      .ai-drop-sub { display: none; }
+    }
+    .ai-photo-preview {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+    }
+    .ai-photo-preview.ai-hidden { display: none; }
+    .ai-preview-badge {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 0.4rem 1.1rem;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .ai-preview-badge.ai-hidden { display: none; }
+    .ai-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) { .ai-form-row { grid-template-columns: 1fr; } }
+    .ai-modal-next-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .ai-modal-next-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    .ai-privacy-note {
+      font-size: 0.78rem;
+      color: var(--ash);
+      text-align: center;
+      margin: 0;
+      font-weight: 300;
+    }
+
+    /* Step 3 — Progress */
+    .ai-analysis-visual {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .ai-spinner-ring {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    .ai-spinner-ring svg { width: 120px; height: 120px; }
+    @keyframes aiSpinArc {
+      to { transform: rotate(360deg); }
+    }
+    .ai-spinner-arc-anim {
+      transform-origin: 60px 60px;
+      animation: aiSpinArc 1.2s linear infinite;
+      stroke-dasharray: 200 127;
+    }
+    .ai-spinner-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ai-progress-bar-wrap { margin-bottom: 1.5rem; }
+    .ai-progress-bar-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 0.6rem;
+    }
+    .ai-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      border-radius: 100px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    .ai-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--ash);
+    }
+    .ai-step-labels { display: flex; flex-direction: column; gap: 0.6rem; }
+    .ai-step-label-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--ash);
+      opacity: 0.4;
+      transition: opacity 0.3s;
+      font-weight: 300;
+    }
+    .ai-step-label-item.active { opacity: 1; color: var(--charcoal); font-weight: 500; }
+    .ai-step-label-item.done { opacity: 0.7; color: var(--gold); }
+    .ai-step-label-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .ai-step-label-item.active .ai-step-label-dot,
+    .ai-step-label-item.done .ai-step-label-dot { background: var(--gold); }
+
+    /* Step 4 — Results */
+    .modal-results-header { margin-bottom: 1.5rem; text-align: center; }
+    .results-mode-badge {
+      display: inline-block;
+      background: rgba(201,169,110,0.1);
+      border: 1px solid rgba(201,169,110,0.35);
+      color: var(--gold);
+      padding: 0.35rem 1.1rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+    .modal-results-header h3 {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .modal-results-header p { color: var(--ash); font-size: 0.9rem; }
+    .ai-score-circle-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin: 1.5rem auto;
+      width: 160px;
+      height: 160px;
+    }
+    .ai-score-svg { position: absolute; inset: 0; width: 160px; height: 160px; }
+    .ai-score-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .ai-score-number {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+    .ai-score-unit {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.2rem;
+      color: var(--ash);
+    }
+    .ai-score-label {
+      font-size: 0.7rem;
+      color: var(--ash);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+      font-weight: 400;
+    }
+    .results-section-title {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1.2rem;
+      color: var(--charcoal);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+    .results-scores-section { margin-bottom: 1.75rem; }
+    .results-score-item { margin-bottom: 0.9rem; }
+    .results-score-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+    }
+    .results-score-name { color: var(--charcoal); font-weight: 500; }
+    .results-score-val { color: var(--gold); font-weight: 600; }
+    .results-score-track {
+      height: 8px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .results-score-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+      border-radius: 100px;
+      width: 0%;
+      transition: width 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .results-tags-section { margin-bottom: 1.75rem; }
+    .results-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .results-tag {
+      background: rgba(212,160,160,0.12);
+      border: 1px solid rgba(212,160,160,0.4);
+      color: #b87070;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 400;
+    }
+    .results-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    @media (max-width: 480px) { .results-two-col { grid-template-columns: 1fr; } }
+    .results-col-card {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .results-col-card h4 {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+    .results-col-card ul { list-style: none; }
+    .results-col-card li {
+      font-size: 0.83rem;
+      color: var(--ash);
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      font-weight: 300;
+    }
+    .results-col-card li:last-child { border-bottom: none; }
+    .results-col-card--strength li::before { content: '↑'; position: absolute; left: 0; color: #4CAF50; font-weight: 700; }
+    .results-col-card--improve li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+    .results-recs-section { margin-bottom: 2rem; }
+    .results-recs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .results-rec-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      transition: var(--transition);
+    }
+    .results-rec-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-3px);
+    }
+    .results-rec-header {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    .results-rec-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1.2; }
+    .results-rec-name {
+      font-family: 'Cormorant Garant', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .results-rec-why { font-size: 0.77rem; color: var(--ash); margin-top: 0.2rem; font-weight: 300; }
+    .results-rec-benefits { list-style: none; margin-top: 0.5rem; }
+    .results-rec-benefits li {
+      font-size: 0.79rem;
+      color: var(--ash);
+      padding: 0.25rem 0;
+      padding-left: 1.1rem;
+      position: relative;
+      font-weight: 300;
+    }
+    .results-rec-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .results-cta-block {
+      background: linear-gradient(135deg, var(--charcoal), #2a2a2e);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .results-cta-block h4 {
+      font-family: 'Cormorant Garant', serif;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .results-cta-block p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .results-cta-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .results-cta-block .btn-secondary {
+      color: rgba(255,255,255,0.9) !important;
+      border-color: rgba(255,255,255,0.35) !important;
+    }
+    .results-cta-block .btn-secondary:hover {
+      background: rgba(255,255,255,0.15) !important;
+      border-color: rgba(255,255,255,0.7) !important;
+    }
+    .ai-disclaimer {
+      font-size: 0.74rem;
+      color: var(--ash);
+      text-align: center;
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin: 0;
+      font-weight: 300;
+    }
+    @media (max-width: 640px) {
+      .ai-modal-panel { padding: 1.5rem 1.25rem; border-radius: 16px; max-height: 95vh; }
+      .ai-score-circle-wrap { width: 130px; height: 130px; }
+      .ai-score-svg { width: 130px; height: 130px; }
+      .results-recs-grid { grid-template-columns: 1fr; }
+      .ai-score-number { font-size: 2.2rem; }
+    }
+
+    /* === AI Modal — Supplemental Classes === */
+    .ai-step-indicator { display:flex; align-items:center; justify-content:center; margin-bottom:2.5rem; }
+    .ai-modal-header { margin-bottom:2rem; }
+    .ai-modal-header h3 { font-family:'Cormorant Garant',serif; font-size:clamp(1.4rem,3vw,1.9rem); color:var(--charcoal); margin-bottom:.5rem; font-weight:600; }
+    .ai-modal-header p { color:var(--ash); font-size:.9rem; font-weight:300; }
+    .ai-modal-mode-badge { display:inline-block; background:rgba(201,169,110,.1); border:1px solid rgba(201,169,110,.35); color:var(--gold); padding:.35rem 1.1rem; border-radius:100px; font-size:.75rem; letter-spacing:.1em; font-weight:500; margin-bottom:.75rem; text-transform:uppercase; }
+    .ai-step-btn { width:100%; margin-top:.5rem; margin-bottom:1rem; }
+    .ai-step-btn:disabled { opacity:.42; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
+    .ai-form-group { display:flex; flex-direction:column; gap:.4rem; margin-bottom:1rem; }
+    .ai-form-group label { font-size:.85rem; font-weight:500; color:var(--charcoal); }
+    .ai-form-group input { padding:.75rem 1rem; border:1px solid var(--border); border-radius:10px; font-size:.9rem; font-family:inherit; color:var(--charcoal); background:var(--ivory); outline:none; transition:var(--transition); width:100%; box-sizing:border-box; }
+    .ai-form-group input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,169,110,.15); }
+    .ai-form-optional { color:var(--ash); font-weight:300; font-size:.8rem; }
+    .ai-form-privacy { font-size:.78rem; color:var(--ash); text-align:center; margin:.75rem 0 1rem; font-weight:300; line-height:1.5; }
+    .ai-photo-preview-wrap { position:relative; border-radius:14px; overflow:hidden; max-height:200px; margin-bottom:1rem; }
+    .ai-photo-preview-img { width:100%; max-height:200px; object-fit:cover; display:block; border-radius:14px; }
+    @keyframes aiScanMove { 0%{top:0;opacity:.8} 50%{top:calc(100% - 3px);opacity:.4} 100%{top:0;opacity:.8} }
+    .ai-scan-line { position:absolute; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); animation:aiScanMove 2s ease-in-out infinite; pointer-events:none; }
+    .ai-progress-wrap { margin-bottom:1.5rem; }
+    .ai-progress-bar { height:6px; background:var(--border); border-radius:100px; overflow:hidden; margin-bottom:.5rem; }
+    .ai-progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-lt)); border-radius:100px; width:0%; transition:width .4s ease; }
+    .ai-progress-pct { font-size:.8rem; color:var(--ash); font-weight:400; }
+    .ai-analysis-steps { list-style:none; display:flex; flex-direction:column; gap:.6rem; margin-top:1rem; padding:0; }
+    .ai-analysis-step { display:flex; align-items:center; gap:.75rem; font-size:.85rem; color:var(--ash); opacity:.4; transition:opacity .3s; font-weight:300; }
+    .ai-analysis-step.active { opacity:1; color:var(--charcoal); font-weight:500; }
+    .ai-analysis-step.done { opacity:.7; color:var(--gold); }
+    .ai-step-status { width:8px; height:8px; border-radius:50%; background:var(--border); flex-shrink:0; transition:background .3s; }
+    .ai-analysis-step.active .ai-step-status, .ai-analysis-step.done .ai-step-status { background:var(--gold); }
+    .ai-results-header { margin-bottom:1.5rem; text-align:center; }
+    .ai-results-header h3 { font-family:'Cormorant Garant',serif; font-size:clamp(1.4rem,3vw,1.9rem); margin-bottom:.4rem; font-weight:600; color:var(--charcoal); }
+    .ai-results-header p { color:var(--ash); font-size:.9rem; }
+    .ai-category-scores { margin-bottom:1.75rem; }
+    .ai-score-bar-row { margin-bottom:.9rem; }
+    .ai-score-bar-label { display:flex; justify-content:space-between; font-size:.88rem; margin-bottom:.4rem; }
+    .ai-score-bar-label span:first-child { color:var(--charcoal); font-weight:500; }
+    .ai-score-bar-val { color:var(--gold); font-weight:600; }
+    .ai-score-bar-track { height:8px; background:var(--border); border-radius:100px; overflow:hidden; }
+    .ai-score-bar-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-lt)); border-radius:100px; width:0%; transition:width .9s cubic-bezier(.25,.46,.45,.94); }
+    .ai-concerns-block { margin-bottom:1.75rem; }
+    .ai-concerns-block h4 { font-family:'Cormorant Garant',serif; font-size:1.1rem; color:var(--charcoal); margin-bottom:.75rem; font-weight:600; border-bottom:1px solid var(--border); padding-bottom:.5rem; }
+    .ai-concern-tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .ai-concern-tag { background:rgba(212,160,160,.12); border:1px solid rgba(212,160,160,.4); color:#b87070; padding:.35rem .9rem; border-radius:100px; font-size:.8rem; font-weight:400; }
+    .ai-two-col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.75rem; }
+    @media(max-width:480px){ .ai-two-col { grid-template-columns:1fr; } }
+    .ai-result-col { background:var(--ivory); border:1px solid var(--border); border-radius:12px; padding:1.25rem; }
+    .ai-result-col h4 { font-family:'Cormorant Garant',serif; font-size:1rem; margin-bottom:.75rem; color:var(--charcoal); font-weight:600; }
+    .ai-result-col ul { list-style:none; padding:0; }
+    .ai-result-col li { font-size:.83rem; color:var(--ash); padding:.3rem 0 .3rem 1.2rem; position:relative; border-bottom:1px solid var(--border); font-weight:300; }
+    .ai-result-col li:last-child { border-bottom:none; }
+    .ai-result-col--strengths li::before { content:'↑'; position:absolute; left:0; color:#4CAF50; font-weight:700; }
+    .ai-result-col--improvements li::before { content:'→'; position:absolute; left:0; color:var(--gold); font-weight:700; }
+    .ai-recs-block { margin-bottom:2rem; }
+    .ai-recs-block h4 { font-family:'Cormorant Garant',serif; font-size:1.1rem; color:var(--charcoal); margin-bottom:.75rem; font-weight:600; border-bottom:1px solid var(--border); padding-bottom:.5rem; }
+    .ai-recs-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+    .ai-rec-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:1.25rem; transition:var(--transition); }
+    .ai-rec-card:hover { border-color:var(--gold); box-shadow:var(--shadow-sm); transform:translateY(-3px); }
+    .ai-rec-icon { font-size:1.4rem; margin-bottom:.5rem; }
+    .ai-rec-card h5 { font-family:'Cormorant Garant',serif; font-size:1rem; font-weight:600; color:var(--charcoal); margin-bottom:.3rem; }
+    .ai-rec-card > p { font-size:.77rem; color:var(--ash); margin-bottom:.5rem; font-weight:300; }
+    .ai-rec-card ul { list-style:none; padding:0; }
+    .ai-rec-card li { font-size:.79rem; color:var(--ash); padding:.25rem 0 .25rem 1.1rem; position:relative; font-weight:300; }
+    .ai-rec-card li::before { content:'✓'; position:absolute; left:0; color:var(--gold); font-size:.72rem; font-weight:700; }
+    .ai-results-cta { background:linear-gradient(135deg,var(--charcoal),#2a2a2e); border-radius:16px; padding:2rem; text-align:center; margin-bottom:1.5rem; }
+    .ai-results-cta h4 { font-family:'Cormorant Garant',serif; font-size:clamp(1.4rem,3vw,1.8rem); color:#fff; margin-bottom:.5rem; font-weight:600; }
+    .ai-results-cta p { color:rgba(255,255,255,.65); font-size:.9rem; margin-bottom:1.5rem; font-weight:300; }
+    .ai-cta-buttons { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
+    .ai-results-cta .btn-secondary { color:rgba(255,255,255,.9) !important; border-color:rgba(255,255,255,.35) !important; }
+    .ai-results-cta .btn-secondary:hover { background:rgba(255,255,255,.15) !important; border-color:rgba(255,255,255,.7) !important; }
+    .ai-drop-preview { width:100%; height:260px; object-fit:cover; border-radius:14px; display:block; pointer-events:none; }
+    .ai-drop-preview-label { font-size:.85rem; font-weight:500; color:var(--gold); text-align:center; margin-top:.75rem; pointer-events:none; }
   </style>
 </head>
 <body>
@@ -1449,6 +2230,7 @@
       <a href="#" class="logo">LUXE</a>
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
+        <li><a href="#ai-assessment">AI Analysis</a></li>
         <li><a href="#treatments">Treatments</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -1466,6 +2248,7 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
     <a href="#hero">Home</a>
+    <a href="#ai-assessment">AI Analysis</a>
     <a href="#treatments">Treatments</a>
     <a href="#about">About</a>
     <a href="#faq">FAQ</a>
@@ -1497,10 +2280,64 @@
         <div class="provider-chip">
           🏆 Allergan Diamond Partner | 12+ Years Experience
         </div>
+
+        <div class="hero-ai-cta">
+          <span class="hero-ai-eyebrow">New — AI-Powered</span>
+          <h3 class="hero-ai-headline">Discover What Your Skin Is Telling You</h3>
+          <p class="hero-ai-sub">Upload a selfie and receive an instant AI-powered skin analysis and facial assessment with personalized aesthetic insights.</p>
+          <div class="hero-ai-buttons">
+            <button class="btn btn-primary" onclick="document.getElementById('ai-assessment').scrollIntoView({behavior:'smooth'})">Start Free Analysis</button>
+            <a href="#ai-assessment" class="btn btn-secondary hero-ai-learn">Learn More</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+
+  <!-- AI Assessment Section -->
+  <section id="ai-assessment" class="section ai-assess-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="ai-section-badge">Powered by AI</div>
+        <h2>Your Personalized Skin Intelligence</h2>
+        <p>Two advanced AI tools to understand your skin and facial aesthetics — in seconds, completely free.</p>
+      </div>
+      <div class="ai-cards-grid">
+
+        <!-- Card 1: AI Skin Analysis -->
+        <div class="ai-tool-card reveal-up">
+          <div class="ai-card-glow ai-card-glow--skin"></div>
+          <h3>Skin Analysis</h3>
+          <p>Analyze skin texture, clarity, pores, pigmentation, redness, acne indicators, and overall skin appearance with detailed scoring.</p>
+          <ul class="ai-card-features">
+            <li>5 scored skin metrics</li>
+            <li>Concern & indicator detection</li>
+            <li>Personalized treatment mapping</li>
+            <li>Instant results — no wait</li>
+          </ul>
+          <button class="btn btn-primary ai-card-btn" onclick="openAIModal('skin')">Start Analysis</button>
+          <p class="ai-card-disclaimer">Free · Private · No commitment required</p>
+        </div>
+
+        <!-- Card 2: AI Facial Assessment -->
+        <div class="ai-tool-card reveal-up">
+          <div class="ai-card-glow ai-card-glow--facial"></div>
+          <h3>Facial Assessment</h3>
+          <p>Evaluate facial symmetry, balance, jawline definition, under-eye appearance, and aesthetic proportions for a full profile.</p>
+          <ul class="ai-card-features">
+            <li>6 scored facial metrics</li>
+            <li>Symmetry & balance analysis</li>
+            <li>Filler & contouring recommendations</li>
+            <li>Instant results — no wait</li>
+          </ul>
+          <button class="btn btn-primary ai-card-btn" onclick="openAIModal('facial')">Start Assessment</button>
+          <p class="ai-card-disclaimer">Free · Private · No commitment required</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- Featured Treatments -->
   <section id="treatments" class="section">
@@ -2163,6 +3000,476 @@
     chatInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') sendBtn.click();
     });
+  </script>
+
+  <!-- AI Assessment Modal -->
+  <div id="ai-modal" class="ai-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
+    <div class="ai-modal-panel">
+
+      <button class="ai-modal-close" onclick="closeAIModal()" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="ai-step-indicator">
+        <div class="ai-step-dot active" id="dot-1"></div>
+        <div class="ai-step-line" id="line-1-2"></div>
+        <div class="ai-step-dot" id="dot-2"></div>
+        <div class="ai-step-line" id="line-2-3"></div>
+        <div class="ai-step-dot" id="dot-3"></div>
+        <div class="ai-step-line" id="line-3-4"></div>
+        <div class="ai-step-dot" id="dot-4"></div>
+      </div>
+
+      <!-- Step 1: Upload -->
+      <div class="modal-step" id="modal-step-1">
+        <div class="ai-modal-header">
+          <span class="ai-modal-mode-badge" id="modal-mode-badge-1">Skin Analysis</span>
+          <h3 id="ai-modal-title">Upload Your Photo</h3>
+          <p>Take a clear, well-lit selfie for best results. Your photo is processed locally and never stored on our servers.</p>
+        </div>
+        <div class="ai-drop-zone" id="ai-drop-zone"
+             ondragover="handleDragOver(event)"
+             ondragleave="handleDragLeave(event)"
+             ondrop="handleDrop(event)"
+             onclick="document.getElementById('ai-file-input').click()">
+          <div class="ai-drop-inner" id="ai-drop-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="ai-drop-icon">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+            <p class="ai-drop-title">Drag &amp; drop or click to upload</p>
+            <p class="ai-drop-sub">JPG, PNG, HEIC &middot; Max 10MB &middot; Front-facing selfie recommended</p>
+          </div>
+        </div>
+        <input type="file" id="ai-file-input" accept="image/*" capture="user" style="display:none" onchange="handleFileSelect(event)">
+        <button class="btn btn-primary ai-step-btn" id="step1-continue" disabled onclick="goToStep(2)">Continue</button>
+      </div>
+
+      <!-- Step 2: Lead Capture -->
+      <div class="modal-step hidden" id="modal-step-2">
+        <div class="ai-modal-header">
+          <span class="ai-modal-mode-badge" id="modal-mode-badge-2">Almost There</span>
+          <h3>Your Free Results Await</h3>
+          <p>Enter your details to unlock your personalized treatment recommendations and full analysis report.</p>
+        </div>
+        <form class="ai-lead-form" id="ai-lead-form" onsubmit="submitLeadForm(event)">
+          <div class="ai-form-row">
+            <div class="ai-form-group">
+              <label for="lead-first">First Name</label>
+              <input type="text" id="lead-first" placeholder="Jane" required>
+            </div>
+            <div class="ai-form-group">
+              <label for="lead-last">Last Name</label>
+              <input type="text" id="lead-last" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="ai-form-group">
+            <label for="lead-email">Email Address</label>
+            <input type="email" id="lead-email" placeholder="jane@example.com" required>
+          </div>
+          <div class="ai-form-group">
+            <label for="lead-phone">Phone Number <span class="ai-form-optional">(optional)</span></label>
+            <input type="tel" id="lead-phone" placeholder="+1 (555) 000-0000">
+          </div>
+          <p class="ai-form-privacy">🔒 Your information is private and will never be shared. By continuing, you agree to receive your analysis results and occasional wellness tips from Lumière Aesthetics.</p>
+          <button type="submit" class="btn btn-primary ai-step-btn" id="step2-submit">Run My Analysis</button>
+        </form>
+      </div>
+
+      <!-- Step 3: Analysis Progress -->
+      <div class="modal-step hidden" id="modal-step-3">
+        <div class="ai-modal-header">
+          <span class="ai-modal-mode-badge" id="modal-mode-badge-3">Analyzing</span>
+          <h3 id="analysis-headline">Analyzing Your Skin...</h3>
+          <p id="analysis-subtext">Our AI is reviewing your photo. This takes just a moment.</p>
+        </div>
+        <div class="ai-analysis-visual">
+          <div class="ai-photo-preview-wrap">
+            <img id="analysis-photo-preview" class="ai-photo-preview-img" src="" alt="Your photo">
+            <div class="ai-scan-line"></div>
+          </div>
+        </div>
+        <div class="ai-progress-wrap">
+          <div class="ai-progress-bar">
+            <div class="ai-progress-fill" id="ai-progress-fill"></div>
+          </div>
+          <span class="ai-progress-pct" id="ai-progress-pct">0%</span>
+        </div>
+        <ul class="ai-analysis-steps" id="ai-analysis-steps"></ul>
+      </div>
+
+      <!-- Step 4: Results -->
+      <div class="modal-step hidden" id="modal-step-4">
+        <div class="ai-results-header">
+          <span class="ai-modal-mode-badge" id="modal-mode-badge-4">Your Results</span>
+          <h3 id="results-headline">Your Skin Analysis</h3>
+          <p id="results-intro">Here&rsquo;s what our AI found about your skin.</p>
+        </div>
+
+        <div class="ai-score-circle-wrap">
+          <svg width="160" height="160" viewBox="0 0 160 160" class="ai-score-svg">
+            <circle cx="80" cy="80" r="66" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10"/>
+            <circle id="score-arc" cx="80" cy="80" r="66" fill="none" stroke="var(--gold)" stroke-width="10"
+                    stroke-linecap="round" stroke-dasharray="414.69" stroke-dashoffset="414.69"
+                    transform="rotate(-90 80 80)" style="transition: stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1)"/>
+          </svg>
+          <div class="ai-score-inner">
+            <span class="ai-score-number" id="score-num">0</span>
+            <span class="ai-score-label">Overall Score</span>
+          </div>
+        </div>
+
+        <div class="ai-category-scores" id="ai-category-scores"></div>
+
+        <div class="ai-concerns-block" id="ai-concerns-block">
+          <h4>Detected Concerns</h4>
+          <div class="ai-concern-tags" id="ai-concern-tags"></div>
+        </div>
+
+        <div class="ai-two-col">
+          <div class="ai-result-col ai-result-col--strengths">
+            <h4>Strengths</h4>
+            <ul id="results-strengths"></ul>
+          </div>
+          <div class="ai-result-col ai-result-col--improvements">
+            <h4>Areas to Enhance</h4>
+            <ul id="results-improvements"></ul>
+          </div>
+        </div>
+
+        <div class="ai-recs-block">
+          <h4>Recommended Treatments</h4>
+          <div class="ai-recs-grid" id="ai-recs-grid"></div>
+        </div>
+
+        <div class="ai-results-cta">
+          <h4>Ready to start your transformation?</h4>
+          <p>Book a free consultation with our medical team to discuss your personalized treatment plan.</p>
+          <div class="ai-cta-buttons">
+            <button class="btn btn-primary" onclick="closeAIModal(); document.getElementById('consultation-form').scrollIntoView({behavior:'smooth'})">Book Free Consultation</button>
+            <button class="btn btn-secondary" onclick="restartAIModal()">New Analysis</button>
+          </div>
+        </div>
+
+        <p class="ai-disclaimer">This AI-powered analysis is for informational and educational purposes only. Results are generated using pattern recognition and do not constitute a medical diagnosis or treatment recommendation. Always consult a licensed medical professional for personalized medical advice.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = '';
+
+    const aiState = {
+      mode: 'skin',
+      currentStep: 1,
+      photoFile: null,
+      photoDataURL: null,
+      lead: { firstName: '', lastName: '', email: '', phone: '' },
+      scores: {},
+      overallScore: 0,
+      concerns: [],
+      strengths: [],
+      improvements: [],
+      recommendations: []
+    };
+
+    const TREATMENT_DB = {
+      'Microneedling':        { icon: '✦', why: 'Stimulates collagen to improve texture and minimize pores',          benefits: ['Reduces fine lines', 'Tightens pores', 'Evens skin tone'] },
+      'RF Microneedling':     { icon: '⚡', why: 'Combines radiofrequency with microneedling for superior tightening', benefits: ['Firms skin', 'Reduces wrinkles', 'Lifts and tightens'] },
+      'HydraFacial':          { icon: '💧', why: 'Deep cleanses and replenishes hydration for instant glow',           benefits: ['Clears pores', 'Hydrates deeply', 'Brightens complexion'] },
+      'Chemical Peel':        { icon: '✨', why: 'Resurfaces skin to reveal clearer, more even-toned skin below',      benefits: ['Fades dark spots', 'Smooths texture', 'Reduces acne'] },
+      'Botox':                { icon: '◈', why: 'Relaxes dynamic muscles to smooth expression lines',                  benefits: ['Smooths forehead lines', 'Lifts brow', 'Prevents new wrinkles'] },
+      'Laser Resurfacing':    { icon: '◎', why: 'Precise laser energy resurfaces damaged skin layers',                 benefits: ['Reduces pigmentation', 'Tightens skin', 'Erases sun damage'] },
+      'IPL Photofacial':      { icon: '☀', why: 'Targets redness and pigmentation with broad-spectrum light',          benefits: ['Reduces redness', 'Fades sun spots', 'Evens tone'] },
+      'Medical Grade Skincare':{ icon: '◆', why: 'Clinical-strength formulas that penetrate deeper than retail',      benefits: ['Maintains results', 'Boosts collagen', 'Protects barrier'] },
+      'Dermal Fillers':       { icon: '◉', why: 'Restores volume and structure to facial areas affected by aging',    benefits: ['Restores volume', 'Lifts features', 'Natural results'] },
+      'Cheek Fillers':        { icon: '◍', why: 'Adds definition and lift to the mid-face for youthful contour',      benefits: ['Lifts midface', 'Defines cheekbones', 'Adds volume'] },
+      'Under-Eye Fillers':    { icon: '◌', why: 'Corrects hollow tear troughs and reduces dark circle appearance',    benefits: ['Erases hollows', 'Reduces shadows', 'Refreshes look'] },
+      'Jawline Filler':       { icon: '▲', why: 'Sculpts and defines the jawline for improved facial structure',      benefits: ['Defines jaw', 'Reduces jowls', 'Creates structure'] },
+      'Kybella':              { icon: '▼', why: 'Destroys fat cells under the chin for a sculpted profile',           benefits: ['Eliminates double chin', 'Contours neck', 'Permanent results'] }
+    };
+
+    const SKIN_STEPS = [
+      'Reading skin surface texture...',
+      'Analyzing pore visibility & clarity...',
+      'Mapping pigmentation & evenness...',
+      'Detecting redness & skin concerns...',
+      'Generating personalized recommendations...'
+    ];
+
+    const FACIAL_STEPS = [
+      'Mapping facial geometry...',
+      'Evaluating symmetry & proportions...',
+      'Assessing jawline & contour definition...',
+      'Analyzing under-eye & volume areas...'
+    ];
+
+    function openAIModal(mode) {
+      aiState.mode = mode;
+      aiState.currentStep = 1;
+      aiState.photoFile = null;
+      aiState.photoDataURL = null;
+      aiState.scores = {};
+      aiState.overallScore = 0;
+      aiState.concerns = [];
+      aiState.strengths = [];
+      aiState.improvements = [];
+      aiState.recommendations = [];
+
+      resetDropZone();
+      document.getElementById('step1-continue').disabled = true;
+      document.getElementById('ai-lead-form').reset();
+
+      const badge = mode === 'skin' ? 'Skin Analysis' : 'Facial Assessment';
+      document.querySelectorAll('.ai-modal-mode-badge').forEach(el => el.textContent = badge);
+      document.getElementById('ai-modal-title').textContent = 'Upload Your Photo';
+      document.getElementById('analysis-headline').textContent = mode === 'skin' ? 'Analyzing Your Skin...' : 'Analyzing Your Face...';
+      document.getElementById('results-headline').textContent = mode === 'skin' ? 'Your Skin Analysis' : 'Your Facial Assessment';
+
+      showModalStep(1);
+      document.getElementById('ai-modal').classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeAIModal() {
+      document.getElementById('ai-modal').classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+
+    function restartAIModal() { openAIModal(aiState.mode); }
+
+    function showModalStep(n) {
+      document.querySelectorAll('.modal-step').forEach(el => el.classList.add('hidden'));
+      const step = document.getElementById('modal-step-' + n);
+      if (step) step.classList.remove('hidden');
+      aiState.currentStep = n;
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        if (dot) { dot.classList.toggle('active', i === n); dot.classList.toggle('done', i < n); }
+      }
+      for (let i = 1; i <= 3; i++) {
+        const line = document.getElementById('line-' + i + '-' + (i + 1));
+        if (line) line.classList.toggle('done', i < n);
+      }
+    }
+
+    function goToStep(n) { showModalStep(n); }
+
+    function handleDragOver(e) { e.preventDefault(); document.getElementById('ai-drop-zone').classList.add('drag-over'); }
+    function handleDragLeave(e) { document.getElementById('ai-drop-zone').classList.remove('drag-over'); }
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('ai-drop-zone').classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) processPhotoFile(file);
+    }
+    function handleFileSelect(e) { const file = e.target.files[0]; if (file) processPhotoFile(file); }
+
+    function processPhotoFile(file) {
+      if (file.size > 10 * 1024 * 1024) { alert('Image must be under 10MB.'); return; }
+      aiState.photoFile = file;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        aiState.photoDataURL = e.target.result;
+        document.getElementById('ai-drop-inner').innerHTML =
+          '<img src="' + e.target.result + '" class="ai-drop-preview" alt="Your photo">' +
+          '<p class="ai-drop-preview-label">Photo ready ✓</p>';
+        document.getElementById('step1-continue').disabled = false;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function resetDropZone() {
+      const zone = document.getElementById('ai-drop-inner');
+      if (!zone) return;
+      zone.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="ai-drop-icon">' +
+        '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>' +
+        '<p class="ai-drop-title">Drag &amp; drop or click to upload</p>' +
+        '<p class="ai-drop-sub">JPG, PNG, HEIC &middot; Max 10MB &middot; Front-facing selfie recommended</p>';
+      const fi = document.getElementById('ai-file-input');
+      if (fi) fi.value = '';
+    }
+
+    function submitLeadForm(e) {
+      e.preventDefault();
+      aiState.lead.firstName = document.getElementById('lead-first').value.trim();
+      aiState.lead.lastName  = document.getElementById('lead-last').value.trim();
+      aiState.lead.email     = document.getElementById('lead-email').value.trim();
+      aiState.lead.phone     = document.getElementById('lead-phone').value.trim();
+
+      const btn = document.getElementById('step2-submit');
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+
+      saveLeadToLocalStorage(aiState.lead);
+
+      setTimeout(() => { btn.textContent = 'Run My Analysis'; btn.disabled = false; goToStep(3); startAnalysis(); }, 800);
+    }
+
+    function saveLeadToLocalStorage(data) {
+      const leads = JSON.parse(localStorage.getItem('medspa_ai_leads') || '[]');
+      leads.push({ ...data, mode: aiState.mode, timestamp: new Date().toISOString() });
+      localStorage.setItem('medspa_ai_leads', JSON.stringify(leads));
+      console.log('[AI Tool Lead - Demo]', data);
+      if (APPS_SCRIPT_URL) {
+        fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, mode: aiState.mode }) }).catch(() => {});
+      }
+    }
+
+    function startAnalysis() {
+      const steps = aiState.mode === 'skin' ? SKIN_STEPS : FACIAL_STEPS;
+      const ms    = aiState.mode === 'skin' ? 500 : 700;
+      const previewImg = document.getElementById('analysis-photo-preview');
+      if (previewImg && aiState.photoDataURL) previewImg.src = aiState.photoDataURL;
+
+      const stepsEl = document.getElementById('ai-analysis-steps');
+      stepsEl.innerHTML = '';
+      steps.forEach((label, i) => {
+        const li = document.createElement('li');
+        li.className = 'ai-analysis-step';
+        li.id = 'analysis-step-' + i;
+        li.innerHTML = '<span class="ai-step-status"></span><span>' + label + '</span>';
+        stepsEl.appendChild(li);
+      });
+
+      document.getElementById('ai-progress-fill').style.width = '0%';
+      document.getElementById('ai-progress-pct').textContent = '0%';
+
+      let idx = 0;
+      const total = steps.length;
+      const firstEl = document.getElementById('analysis-step-0');
+      if (firstEl) firstEl.classList.add('active');
+
+      const interval = setInterval(() => {
+        const el = document.getElementById('analysis-step-' + idx);
+        if (el) { el.classList.remove('active'); el.classList.add('done'); }
+        idx++;
+        const pct = Math.round((idx / total) * 100);
+        document.getElementById('ai-progress-fill').style.width = pct + '%';
+        document.getElementById('ai-progress-pct').textContent = pct + '%';
+        if (idx < total) { const next = document.getElementById('analysis-step-' + idx); if (next) next.classList.add('active'); }
+        if (idx >= total) { clearInterval(interval); setTimeout(() => { generateMockResults(); renderResults(); goToStep(4); }, 500); }
+      }, ms);
+    }
+
+    function generateMockResults() {
+      function rnd(min, max) { return Math.floor(min + Math.random() * (max - min + 1)); }
+      if (aiState.mode === 'skin') {
+        aiState.scores = { texture: rnd(68,95), clarity: rnd(65,93), evenness: rnd(60,92), brightness: rnd(70,96), appearance: rnd(68,94) };
+        aiState.overallScore = Math.round(Object.values(aiState.scores).reduce((a,b)=>a+b,0) / 5);
+        const pool = ['Mild dehydration','Visible pores','Uneven tone','Minor pigmentation','Surface redness','Fine lines forming','Dull complexion'];
+        aiState.concerns = pool.filter(()=>Math.random()>0.55).slice(0,4);
+        aiState.strengths = ['Good overall skin elasticity','Healthy moisture balance','Minimal deep wrinkles','Consistent skin barrier'];
+        aiState.improvements = ['Pore minimization','Tone evening','Hydration boost','Brightening treatment'];
+        aiState.recommendations = buildSkinRecs(aiState.scores, aiState.concerns);
+      } else {
+        aiState.scores = { symmetry: rnd(70,97), jawlineDefinition: rnd(65,95), facialBalance: rnd(68,96), skinUniformity: rnd(62,94), underEye: rnd(60,95), proportions: rnd(70,97) };
+        aiState.overallScore = Math.round(Object.values(aiState.scores).reduce((a,b)=>a+b,0) / 6);
+        const pool = ['Subtle asymmetry','Mild volume loss','Under-eye hollowing','Soft jawline','Mid-face descent','Forehead lines'];
+        aiState.concerns = pool.filter(()=>Math.random()>0.55).slice(0,4);
+        aiState.strengths = ['Well-defined facial structure','Good cheekbone position','Strong brow architecture','Balanced lip proportions'];
+        aiState.improvements = ['Jawline definition','Under-eye rejuvenation','Mid-face volume','Brow lift potential'];
+        aiState.recommendations = buildFacialRecs(aiState.scores, aiState.concerns);
+      }
+    }
+
+    function buildSkinRecs(s, c) {
+      const r = [];
+      if (s.texture < 80)    r.push('Microneedling');
+      if (s.clarity < 80)    r.push('HydraFacial');
+      if (s.evenness < 78)   r.push('Chemical Peel');
+      if (s.brightness < 80) r.push('IPL Photofacial');
+      if (c.some(x=>x.toLowerCase().includes('pigment')||x.toLowerCase().includes('tone'))) r.push('Laser Resurfacing');
+      r.push('Medical Grade Skincare');
+      return [...new Set(r)].slice(0,4);
+    }
+
+    function buildFacialRecs(s, c) {
+      const r = [];
+      if (s.jawlineDefinition < 80) r.push('Jawline Filler');
+      if (s.underEye < 78)          r.push('Under-Eye Fillers');
+      if (s.facialBalance < 80)     r.push('Cheek Fillers');
+      if (s.symmetry < 82)          r.push('Dermal Fillers');
+      if (c.some(x=>x.toLowerCase().includes('forehead'))) r.push('Botox');
+      if (c.some(x=>x.toLowerCase().includes('chin')||x.toLowerCase().includes('jaw'))) r.push('Kybella');
+      r.push('RF Microneedling');
+      return [...new Set(r)].slice(0,4);
+    }
+
+    function renderResults() {
+      const name = aiState.lead.firstName ? ', ' + aiState.lead.firstName : '';
+      document.getElementById('results-intro').textContent =
+        aiState.mode === 'skin'
+          ? "Here's what our AI found about your skin" + name + ". These insights are based on visual pattern analysis."
+          : "Here's your facial aesthetic assessment" + name + ". Results are based on geometric and proportion analysis.";
+
+      const catEl = document.getElementById('ai-category-scores');
+      catEl.innerHTML = '';
+      Object.entries(aiState.scores).forEach(([key, val]) => {
+        const div = document.createElement('div');
+        div.className = 'ai-score-bar-row';
+        div.innerHTML =
+          '<div class="ai-score-bar-label"><span>' + formatScoreName(key) + '</span><span class="ai-score-bar-val">' + val + '</span></div>' +
+          '<div class="ai-score-bar-track"><div class="ai-score-bar-fill" style="width:0%" data-target="' + val + '"></div></div>';
+        catEl.appendChild(div);
+      });
+
+      const tagsEl = document.getElementById('ai-concern-tags');
+      const concernsBlock = document.getElementById('ai-concerns-block');
+      if (aiState.concerns.length === 0) {
+        concernsBlock.style.display = 'none';
+      } else {
+        concernsBlock.style.display = '';
+        tagsEl.innerHTML = aiState.concerns.map(c => '<span class="ai-concern-tag">' + c + '</span>').join('');
+      }
+
+      document.getElementById('results-strengths').innerHTML   = aiState.strengths.map(s=>'<li>'+s+'</li>').join('');
+      document.getElementById('results-improvements').innerHTML = aiState.improvements.map(s=>'<li>'+s+'</li>').join('');
+
+      document.getElementById('ai-recs-grid').innerHTML = aiState.recommendations.map(name => {
+        const t = TREATMENT_DB[name] || { icon: '◆', why: 'Recommended based on your results', benefits: [] };
+        return '<div class="ai-rec-card"><div class="ai-rec-icon">' + t.icon + '</div><h5>' + name + '</h5><p>' + t.why + '</p><ul>' + t.benefits.map(b=>'<li>'+b+'</li>').join('') + '</ul></div>';
+      }).join('');
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        animateScoreCircle(aiState.overallScore);
+        document.querySelectorAll('.ai-score-bar-fill').forEach(bar => {
+          const target = bar.getAttribute('data-target');
+          requestAnimationFrame(() => { bar.style.width = target + '%'; });
+        });
+      }));
+    }
+
+    function animateScoreCircle(score) {
+      const arc   = document.getElementById('score-arc');
+      const numEl = document.getElementById('score-num');
+      if (arc) arc.style.strokeDashoffset = 414.69 - (score / 100) * 414.69;
+      let start = null;
+      function tick(ts) {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / 1400, 1);
+        numEl.textContent = Math.round((1 - Math.pow(1 - p, 3)) * score);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function formatScoreName(key) {
+      return key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim();
+    }
+
+    document.getElementById('ai-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeAIModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.getElementById('ai-modal').classList.contains('open')) closeAIModal();
+    });
+
+    document.querySelectorAll('#ai-assessment .reveal-up').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>

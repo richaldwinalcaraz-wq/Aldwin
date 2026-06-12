@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimbursement Automation Workflow</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 14px;
+        }
+
+        .diagram-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #fafafa;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2196F3;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .condition-card {
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid;
+            background: white;
+        }
+
+        .condition-card.template-a {
+            border-color: #d32f2f;
+            background: #ffebee;
+        }
+
+        .condition-card.template-b {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
+
+        .condition-card.template-c {
+            border-color: #1976d2;
+            background: #e3f2fd;
+        }
+
+        .condition-card.template-d {
+            border-color: #388e3c;
+            background: #e8f5e9;
+        }
+
+        .condition-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+
+        .condition-card.template-a .condition-title {
+            color: #d32f2f;
+            border-color: #d32f2f;
+        }
+
+        .condition-card.template-b .condition-title {
+            color: #ff9800;
+            border-color: #ff9800;
+        }
+
+        .condition-card.template-c .condition-title {
+            color: #1976d2;
+            border-color: #1976d2;
+        }
+
+        .condition-card.template-d .condition-title {
+            color: #388e3c;
+            border-color: #388e3c;
+        }
+
+        .steps {
+            margin-top: 30px;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: #2196F3;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .step-desc {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .conditions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reimbursement Automation Workflow</h1>
+        <p class="subtitle">Automated Email Report Sender with HubSpot & SharePoint Integration</p>
+
+        <!-- Main Workflow -->
+        <div class="diagram-section">
+            <div class="section-title">Main Workflow Process</div>
+            <div class="mermaid">
+graph TD
+    A["📋 VA Approves Report<br/>Clicks YES Toggle"] --> B["🔍 Retrieve Billing Data<br/>from SharePoint"]
+
+    B --> C["⚖️ Evaluate Conditions<br/>Check Recoveries & Past Due"]
+
+    C --> D{Evaluate<br/>Conditions}
+
+    D -->|Recoveries + Past Due| G["📧 Template A"]
+    D -->|Recoveries Only| H["📧 Template B"]
+    D -->|Past Due Only| I["📧 Template C"]
+    D -->|Clean Account| J["📧 Template D"]
+
+    G --> K["📎 Build Email<br/>Attach PDF<br/>Set Recipients"]
+    H --> K
+    I --> K
+    J --> K
+
+    K --> L["🚀 Send via HubSpot"]
+
+    L --> M["✅ Get Ticket ID"]
+
+    M --> N["💾 Update SharePoint<br/>Write Ticket ID<br/>Log Activity"]
+
+    N --> O["📊 Complete<br/>Audit Trail Created"]
+
+    style A fill:#c8e6c9
+    style O fill:#c8e6c9
+    style M fill:#c8e6c9
+    style L fill:#ffe0b2
+    style D fill:#f3e5f5
+    style G fill:#ffcdd2
+    style H fill:#ffe0b2
+    style I fill:#bbdefb
+    style J fill:#c8e6c9
+            </div>
+        </div>
+
+        <!-- Condition Diagrams -->
+        <div class="diagram-section">
+            <div class="section-title">Condition-Specific Templates</div>
+            <div class="conditions-grid">
+
+                <!-- CONDITION A -->
+                <div class="condition-card template-a">
+                    <div class="condition-title">Template A: Recoveries + Past Due</div>
+                    <div class="mermaid">
+graph TD
+    A["Check Recoveries"] -->|YES| B["Check Past Due"]
+    B -->|YES| C["✓ SELECT TEMPLATE A<br/>Recoveries +<br/>Past Due Message"]
+    style A fill:#ffcdd2
+    style B fill:#ffcdd2
+    style C fill:#d32f2f,color:#fff
+                    </div>
+                </div>
+
+                <!-- CONDITION B -->
+                <div class="condition-card template-b">
+                    <div class="condition-title">Template B: Recoveries Only</div>
+                    <div class="mermaid">
+graph TD
+    A["Check Recoveries"] -->|YES| B["Check Past Due"]
+    B -->|NO| C["✓ SELECT TEMPLATE B<br/>Recoveries Only<br/>Message"]
+    style A fill:#ffe0b2
+    style B fill:#ffe0b2
+    style C fill:#ff9800,color:#fff
+                    </div>
+                </div>
+
+                <!-- CONDITION C -->
+                <div class="condition-card template-c">
+                    <div class="condition-title">Template C: Past Due Only</div>
+                    <div class="mermaid">
+graph TD
+    A["Check Recoveries"] -->|NO| B["Check Past Due"]
+    B -->|YES| C["✓ SELECT TEMPLATE C<br/>Past Due Only<br/>Message"]
+    style A fill:#bbdefb
+    style B fill:#bbdefb
+    style C fill:#1976d2,color:#fff
+                    </div>
+                </div>
+
+                <!-- CONDITION D -->
+                <div class="condition-card template-d">
+                    <div class="condition-title">Template D: Clean Account</div>
+                    <div class="mermaid">
+graph TD
+    A["Check Recoveries"] -->|NO| B["Check Past Due"]
+    B -->|NO| C["✓ SELECT TEMPLATE D<br/>Clean Account<br/>Message"]
+    style A fill:#c8e6c9
+    style B fill:#c8e6c9
+    style C fill:#388e3c,color:#fff
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Process Steps -->
+        <div class="diagram-section">
+            <div class="section-title">5-Step Process</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Report Verification & Approval</div>
+                        <div class="step-desc">VA reviews all reimbursement details in Billing Sheet. Once verified as accurate, clicks "YES" toggle to trigger automation.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">Automated Data Retrieval</div>
+                        <div class="step-desc">System automatically retrieves billing information, identifies recipients (Primary, CC, BCC), and fetches corresponding PDF reports from SharePoint.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Dynamic Email Generation</div>
+                        <div class="step-desc">System analyzes two conditions (Recoveries & Past Due Balance) and selects appropriate email template (A, B, C, or D) with customized messaging.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-title">Email Delivery via HubSpot</div>
+                        <div class="step-desc">Email automatically sent to Primary Contact with PDF attachment. CC and BCC recipients included as configured. System captures HubSpot ticket number.</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <div class="step-title">Automated Tracking & Audit Trail</div>
+                        <div class="step-desc">Ticket number automatically written back to Billing Sheet. Complete activity log maintained including timestamp, ticket ID, and delivery status.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Benefits -->
+        <div class="diagram-section">
+            <div class="section-title">Key Benefits</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Dynamic, Personalized Communication</div>
+                        <div class="step-desc">Each client receives message tailored to their account status. 4 condition-specific templates ensure relevance and consistency</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Completely Automated</div>
+                        <div class="step-desc">No manual email composition, template selection, or data entry. One click triggers full workflow</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Zero Human Error</div>
+                        <div class="step-desc">Systematic data flow eliminates manual mistakes in recipients, amounts, and attachments</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Full Audit & Compliance Trail</div>
+                        <div class="step-desc">All actions timestamped and logged. Ticket numbers automatically captured. Complete traceability for compliance</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <div class="step-title">Faster Processing</div>
+                        <div class="step-desc">Eliminates manual workflow delays. Reports sent within seconds of approval</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Print or save as PDF using your browser's print function (Ctrl+P or Cmd+P)</p>
+            <p style="margin-top: 10px; color: #ccc;">Generated for Client Review</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Wellness Tools — Serenova Clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: '#C9A96E',
+        'gold-l': '#E8D5B7',
+        'gold-d': '#A87C3F',
+        cream: '#F5F0E8',
+        'cream-l': '#FAFAF8',
+        ink: '#0A0A0A',
+      },
+      fontFamily: {
+        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#0A0A0A;overflow-x:hidden}
+  h1,h2,h3,.font-serif{font-family:'Cormorant Garamond',serif}
+
+  .glass{background:rgba(255,255,255,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(201,169,110,0.2)}
+  .glass-dark{background:rgba(10,10,10,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(201,169,110,0.3)}
+  .glass-cream{background:rgba(245,240,232,0.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(201,169,110,0.25)}
+
+  .nav-solid{background:rgba(250,250,248,0.92)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 1px 24px rgba(10,10,10,0.06)}
+  .gold-gradient-bg{background:linear-gradient(135deg,#C9A96E 0%,#E8D5B7 50%,#A87C3F 100%)}
+
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease}
+  .fade-up.visible{opacity:1;transform:translateY(0)}
+
+  @keyframes chat-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes dot{0%,80%,100%{transform:scale(0);opacity:0.3}40%{transform:scale(1);opacity:1}}
+  @keyframes progress-fill{from{width:0}to{width:var(--target-width)}}
+  @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes pulse-ring{0%{transform:scale(0.9);opacity:0.8}70%{transform:scale(1.3);opacity:0}100%{transform:scale(1.3);opacity:0}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+
+  .chat-in{animation:chat-in 0.3s ease forwards}
+  .d1{animation:dot 1.4s ease-in-out infinite}
+  .d2{animation:dot 1.4s ease-in-out infinite 0.2s}
+  .d3{animation:dot 1.4s ease-in-out infinite 0.4s}
+  .spin{animation:spin 1s linear infinite}
+  .pulse-ring{animation:pulse-ring 2s ease-out infinite}
+  .shimmer{background:linear-gradient(90deg,#f5f0e8 25%,#ede5d8 50%,#f5f0e8 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
+
+  .tool-card{transition:all 0.25s ease}
+  .tool-card:hover{transform:translateY(-2px);box-shadow:0 16px 48px rgba(201,169,110,0.15)}
+
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#C9A96E;box-shadow:0 0 0 3px rgba(201,169,110,0.12)}
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:#FAFAF8}
+  ::-webkit-scrollbar-thumb{background:#C9A96E;border-radius:99px}
+  [x-cloak]{display:none!important}
+
+  .drop-zone{border:2px dashed rgba(201,169,110,0.4);transition:all 0.2s ease}
+  .drop-zone:hover,.drop-zone.dragging{border-color:#C9A96E;background:rgba(201,169,110,0.05)}
+
+  .time-slot{transition:all 0.15s ease;cursor:pointer}
+  .time-slot:hover{background:rgba(201,169,110,0.1);border-color:#C9A96E}
+  .time-slot.selected{background:#C9A96E;color:white;border-color:#C9A96E}
+  .time-slot.booked{opacity:0.4;cursor:not-allowed}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- NAVBAR -->
+<nav x-data="{open:false,scrolled:false}" @scroll.window="scrolled=window.scrollY>60" :class="scrolled?'nav-solid':'bg-transparent'" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-full gold-gradient-bg flex items-center justify-center">
+        <span class="text-white font-serif font-semibold text-sm">S</span>
+      </div>
+      <span class="font-serif text-xl font-medium tracking-wide">Serenova <span class="text-gold">Clinic</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="index.html#services" class="text-sm text-ink/70 hover:text-gold transition-colors">Services</a>
+      <a href="index.html#ai-features" class="text-sm text-ink/70 hover:text-gold transition-colors">AI Tech</a>
+      <a href="index.html#calculators" class="text-sm text-ink/70 hover:text-gold transition-colors">Calculators</a>
+      <a href="tools.html" class="text-sm text-gold font-medium">AI Tools</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="index.html#contact" class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full gold-gradient-bg text-white text-sm font-medium hover:opacity-90 transition-opacity">Book Consultation</a>
+      <button @click="open=!open" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg hover:bg-cream transition-colors cursor-pointer">
+        <i :data-lucide="open?'x':'menu'" class="w-5 h-5"></i>
+      </button>
+    </div>
+  </div>
+  <div x-show="open" x-cloak x-transition class="md:hidden glass border-t border-gold/10 px-6 py-4 space-y-3">
+    <a href="index.html" class="block text-sm py-2 hover:text-gold transition-colors">Home</a>
+    <a href="index.html#services" class="block text-sm py-2 hover:text-gold transition-colors">Services</a>
+    <a href="index.html#contact" class="inline-flex px-5 py-2.5 rounded-full gold-gradient-bg text-white text-sm font-medium">Book Consultation</a>
+  </div>
+</nav>
+
+<!-- HERO BANNER -->
+<section class="bg-ink pt-28 pb-16 relative overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(201,169,110,0.1)_0%,transparent_60%)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(201,169,110,0.05)_0%,transparent_60%)]"></div>
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-medium mb-4">
+          <i data-lucide="sparkles" class="w-3 h-3"></i> AI-Powered Wellness Tools
+        </div>
+        <h1 class="font-serif text-4xl lg:text-6xl font-light text-cream-l leading-tight">
+          Your Personal <span class="text-gold italic">Wellness</span><br>Dashboard
+        </h1>
+        <p class="text-cream-l/40 mt-4 max-w-xl leading-relaxed">Nine intelligent tools — from AI skin analysis to personalized wellness plans — all in one place. Free to use. No sign-up required.</p>
+      </div>
+      <div class="flex gap-3">
+        <div class="glass-dark rounded-xl px-5 py-3 text-center">
+          <div class="font-serif text-2xl text-gold">9</div>
+          <div class="text-cream-l/40 text-xs">AI Tools</div>
+        </div>
+        <div class="glass-dark rounded-xl px-5 py-3 text-center">
+          <div class="font-serif text-2xl text-gold">Free</div>
+          <div class="text-cream-l/40 text-xs">Always</div>
+        </div>
+        <div class="glass-dark rounded-xl px-5 py-3 text-center">
+          <div class="font-serif text-2xl text-gold">AI</div>
+          <div class="text-cream-l/40 text-xs">Powered</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Jump Pills -->
+    <div class="flex flex-wrap gap-2 mt-8">
+      <a href="#skin" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Skin Analysis</a>
+      <a href="#bmi" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">BMI</a>
+      <a href="#cost" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Cost Estimator</a>
+      <a href="#wellness" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Wellness Tracker</a>
+      <a href="#facial" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Facial Assessment</a>
+      <a href="#chatbot" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">AI Chatbot</a>
+      <a href="#hydration" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Hydration</a>
+      <a href="#booking" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Booking</a>
+      <a href="#plan" class="text-xs px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-cream-l/60 hover:border-gold/40 hover:text-gold transition-all">Wellness Plan</a>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY STRIP -->
+<section class="bg-ink py-6 border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer col-span-1 lg:col-span-2 row-span-1">
+        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=700&q=80" alt="Skin Treatment" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">Advanced Skin Care</span>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=500&q=80" alt="Facial Treatment" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">Facial Therapy</span>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=500&q=80" alt="Wellness Massage" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">Wellness Therapy</span>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer hidden lg:block">
+        <img src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=500&q=80" alt="IV Therapy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">IV Therapy</span>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer">
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=500&q=80" alt="Skin Analysis" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">Skin Analysis</span>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden h-44 group cursor-pointer hidden sm:block">
+        <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=500&q=80" alt="Skincare Products" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+          <span class="text-cream-l text-xs font-medium">Premium Products</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS GRID -->
+<section class="py-16 px-6 max-w-7xl mx-auto space-y-6">
+
+  <!-- Row 1: Skin Analysis + BMI -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- 1. AI SKIN ANALYSIS -->
+    <div id="skin" class="tool-card glass rounded-3xl p-7 fade-up" x-data="skinTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="scan-face" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">AI Skin Analysis</h2><p class="text-xs text-ink/40">Upload photo for instant assessment</p></div>
+        <span class="ml-auto text-xs px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">AI</span>
+      </div>
+
+      <!-- Drop zone -->
+      <div x-show="!analyzing && !results" class="drop-zone rounded-2xl p-10 text-center cursor-pointer" @dragover.prevent="dragging=true" @dragleave="dragging=false" @drop.prevent="handleDrop($event)" :class="dragging?'dragging':''" @click="$refs.fileInput.click()">
+        <i data-lucide="upload-cloud" class="w-10 h-10 text-gold/50 mx-auto mb-3"></i>
+        <p class="text-sm text-ink/50">Drag & drop your photo here</p>
+        <p class="text-xs text-ink/30 mt-1">or click to browse</p>
+        <input x-ref="fileInput" type="file" accept="image/*" class="hidden" @change="handleFile($event)">
+      </div>
+
+      <!-- Analyzing -->
+      <div x-show="analyzing" x-cloak class="text-center py-10">
+        <div class="w-14 h-14 rounded-full border-2 border-gold border-t-transparent spin mx-auto mb-4"></div>
+        <p class="text-sm font-medium text-ink/70 mb-1">Analyzing your skin...</p>
+        <div class="h-1.5 bg-ink/10 rounded-full max-w-xs mx-auto overflow-hidden mt-3">
+          <div class="h-full gold-gradient-bg rounded-full transition-all duration-300" :style="'width:'+progress+'%'"></div>
+        </div>
+        <p class="text-xs text-ink/40 mt-2" x-text="progressLabel"></p>
+      </div>
+
+      <!-- Results -->
+      <div x-show="results" x-cloak x-transition class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-serif text-lg">Analysis Complete</h3>
+          <button @click="reset()" class="text-xs text-gold hover:underline cursor-pointer">Analyze Again</button>
+        </div>
+
+        <!-- Mini before/after comparison -->
+        <div class="relative rounded-2xl overflow-hidden h-36 select-none cursor-ew-resize"
+          x-data="{pos:40, drag:false}"
+          @mousedown.prevent="drag=true" @mouseup="drag=false" @mouseleave="drag=false"
+          @mousemove="if(drag){ const r=$el.getBoundingClientRect(); pos=Math.min(95,Math.max(5,($event.clientX-r.left)/r.width*100)) }"
+          @touchstart.prevent="drag=true" @touchend="drag=false"
+          @touchmove.prevent="const r=$el.getBoundingClientRect(); pos=Math.min(95,Math.max(5,($event.touches[0].clientX-r.left)/r.width*100))">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=700&h=300&q=80" class="absolute inset-0 w-full h-full object-cover object-top" alt="Before" style="filter:saturate(0.45) brightness(0.72) contrast(1.1)">
+          <div class="absolute top-2 left-2 z-20 px-2 py-0.5 bg-ink/75 text-cream-l text-[9px] rounded-full font-medium tracking-wider">BEFORE</div>
+          <div class="absolute inset-0" :style="`clip-path: inset(0 ${100-pos}% 0 0)`">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=700&h=300&q=80" class="w-full h-full object-cover object-top" alt="After" style="filter:saturate(1.35) brightness(1.12)">
+            <div class="absolute top-2 right-2 z-20 px-2 py-0.5 gold-gradient-bg text-white text-[9px] rounded-full font-medium tracking-wider">AFTER</div>
+          </div>
+          <div class="absolute top-0 bottom-0 w-px bg-white/80 z-10" :style="`left:${pos}%`">
+            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full gold-gradient-bg flex items-center justify-center shadow-lg">
+              <i data-lucide="move-horizontal" class="w-3 h-3 text-white"></i>
+            </div>
+          </div>
+          <div class="absolute bottom-2 left-1/2 -translate-x-1/2 text-[9px] text-white/60 bg-ink/40 px-2 py-0.5 rounded-full whitespace-nowrap">Drag to compare</div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-2xl text-gold mb-1" x-text="scores.hydration+'%'"></div>
+            <div class="text-[10px] text-ink/50">Hydration</div>
+          </div>
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-2xl text-gold mb-1" x-text="scores.clarity+'%'"></div>
+            <div class="text-[10px] text-ink/50">Clarity</div>
+          </div>
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-2xl text-gold mb-1" x-text="scores.collagen+'%'"></div>
+            <div class="text-[10px] text-ink/50">Collagen</div>
+          </div>
+        </div>
+        <template x-for="m in metrics" :key="m.name">
+          <div>
+            <div class="flex justify-between text-xs mb-1"><span x-text="m.name" class="text-ink/60"></span><span :class="m.color" x-text="m.status"></span></div>
+            <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full transition-all duration-700" :style="'width:'+m.val+'%'"></div></div>
+          </div>
+        </template>
+        <div class="glass-cream rounded-xl p-4">
+          <div class="text-xs font-medium text-ink/70 mb-1">AI Recommendation</div>
+          <p class="text-xs text-ink/50 leading-relaxed" x-text="recommendation"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. BMI CALCULATOR -->
+    <div id="bmi" class="tool-card glass rounded-3xl p-7 fade-up" x-data="bmiTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="activity" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">BMI Calculator</h2><p class="text-xs text-ink/40">Body Mass Index analysis</p></div>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-xs text-ink/50 uppercase tracking-wider mb-1.5">Height (cm)</label>
+          <input type="number" x-model="height" placeholder="170" class="w-full border border-ink/15 rounded-xl px-4 py-3 text-sm bg-white/80 transition-all">
+        </div>
+        <div>
+          <label class="block text-xs text-ink/50 uppercase tracking-wider mb-1.5">Weight (kg)</label>
+          <input type="number" x-model="weight" placeholder="65" class="w-full border border-ink/15 rounded-xl px-4 py-3 text-sm bg-white/80 transition-all">
+        </div>
+      </div>
+      <button @click="calc()" class="w-full py-3 rounded-xl gold-gradient-bg text-white font-medium mb-5 cursor-pointer hover:opacity-90 transition-opacity">Calculate BMI</button>
+
+      <div class="flex gap-4 items-center">
+        <canvas id="bmiChartT" width="140" height="140"></canvas>
+        <div class="flex-1 space-y-3">
+          <div x-show="result" class="glass-cream rounded-xl p-4">
+            <div class="text-xs text-ink/50 mb-1">Your BMI</div>
+            <div class="font-serif text-4xl font-light text-gold" x-text="result"></div>
+            <div class="text-sm font-medium mt-1" :class="color" x-text="category"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[10px]">
+            <div class="text-center p-1.5 bg-blue-50 rounded-lg"><div class="font-medium text-blue-600">Underweight</div><div class="text-ink/40">&lt;18.5</div></div>
+            <div class="text-center p-1.5 bg-emerald-50 rounded-lg"><div class="font-medium text-emerald-600">Normal</div><div class="text-ink/40">18.5–24.9</div></div>
+            <div class="text-center p-1.5 bg-amber-50 rounded-lg"><div class="font-medium text-amber-600">Overweight</div><div class="text-ink/40">25–29.9</div></div>
+            <div class="text-center p-1.5 bg-red-50 rounded-lg"><div class="font-medium text-red-500">Obese</div><div class="text-ink/40">&gt;30</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Treatment Cost + Wellness Tracker -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- 3. TREATMENT COST ESTIMATOR -->
+    <div id="cost" class="tool-card glass rounded-3xl p-7 fade-up" x-data="costTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="calculator" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">Treatment Cost Estimator</h2><p class="text-xs text-ink/40">Build your treatment package</p></div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="space-y-2 max-h-72 overflow-y-auto pr-1">
+          <template x-for="svc in services" :key="svc.name">
+            <label class="flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all" :class="svc.selected?'border-gold bg-gold/5':'border-ink/10 hover:border-gold/30'">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" x-model="svc.selected" @change="updateTotal()" class="accent-[#C9A96E]">
+                <div>
+                  <div class="text-xs font-medium" x-text="svc.name"></div>
+                  <div class="text-[10px] text-ink/40" x-text="svc.desc"></div>
+                </div>
+              </div>
+              <span class="text-xs font-medium text-gold ml-2 flex-shrink-0" x-text="'$'+svc.price.toLocaleString()"></span>
+            </label>
+          </template>
+        </div>
+        <div class="glass-cream rounded-2xl p-5 flex flex-col">
+          <div class="text-xs text-ink/50 uppercase tracking-wider mb-3">Your Quote</div>
+          <div class="flex-1 space-y-2 mb-4 min-h-[100px]">
+            <template x-for="svc in services.filter(s=>s.selected)" :key="svc.name">
+              <div class="flex justify-between text-xs"><span x-text="svc.name" class="text-ink/60"></span><span x-text="'$'+svc.price.toLocaleString()" class="font-medium"></span></div>
+            </template>
+            <div x-show="!services.some(s=>s.selected)" class="text-xs text-ink/30 text-center py-4">Select treatments to see estimate</div>
+          </div>
+          <div class="border-t border-ink/10 pt-3">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-sm font-medium">Total</span>
+              <span class="font-serif text-2xl text-gold" x-text="'$'+total.toLocaleString()"></span>
+            </div>
+            <div x-show="total>20000" class="text-[10px] text-emerald-600 font-medium mb-2">Package discount available!</div>
+            <p class="text-[10px] text-ink/40 mb-3">*Estimates only. Final pricing confirmed at consultation.</p>
+            <a href="index.html#contact" class="block w-full text-center py-2.5 rounded-xl gold-gradient-bg text-white text-xs font-medium cursor-pointer hover:opacity-90 transition-opacity">Book Consultation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. WELLNESS TRACKER -->
+    <div id="wellness" class="tool-card glass rounded-3xl p-7 fade-up" x-data="wellnessTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="heart-pulse" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">Wellness Tracker</h2><p class="text-xs text-ink/40">Your 7-day wellness trend</p></div>
+      </div>
+      <canvas id="wellnessLineChart" height="140" class="mb-5"></canvas>
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="glass-cream rounded-xl p-3">
+          <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-ink/50">Hydration</span><span class="text-[10px] font-medium text-gold">78%</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:78%"></div></div>
+        </div>
+        <div class="glass-cream rounded-xl p-3">
+          <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-ink/50">Sleep</span><span class="text-[10px] font-medium text-gold">85%</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:85%"></div></div>
+        </div>
+        <div class="glass-cream rounded-xl p-3">
+          <div class="flex justify-between items-center mb-1"><span class="text-[10px] text-ink/50">Activity</span><span class="text-[10px] font-medium text-gold">62%</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:62%"></div></div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between glass-cream rounded-xl p-4">
+        <div>
+          <div class="text-xs text-ink/50 mb-1">Overall Wellness Score</div>
+          <div class="font-serif text-3xl text-gold font-light">75</div>
+          <div class="text-xs text-emerald-600 font-medium">Good — On Track</div>
+        </div>
+        <canvas id="wellnessRing" width="80" height="80"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Facial Assessment + Chatbot -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- 5. AI FACIAL ASSESSMENT -->
+    <div id="facial" class="tool-card glass rounded-3xl p-7 fade-up" x-data="facialTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="sparkles" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">AI Facial Assessment</h2><p class="text-xs text-ink/40">Symmetry & aesthetics analysis</p></div>
+        <span class="ml-auto text-xs px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">AI</span>
+      </div>
+
+      <div x-show="!analyzing && !results" class="drop-zone rounded-2xl p-8 text-center cursor-pointer" @click="$refs.facialInput.click()">
+        <i data-lucide="camera" class="w-10 h-10 text-gold/50 mx-auto mb-3"></i>
+        <p class="text-sm text-ink/50">Upload a front-facing photo</p>
+        <p class="text-xs text-ink/30 mt-1">Best results with neutral expression, good lighting</p>
+        <input x-ref="facialInput" type="file" accept="image/*" class="hidden" @change="analyze()">
+      </div>
+
+      <div x-show="analyzing" x-cloak class="text-center py-8">
+        <div class="w-14 h-14 rounded-full border-2 border-gold border-t-transparent spin mx-auto mb-4"></div>
+        <p class="text-sm text-ink/70">Mapping facial features...</p>
+        <p class="text-xs text-ink/40 mt-1" x-text="steps[step]"></p>
+      </div>
+
+      <div x-show="results" x-cloak x-transition class="space-y-4">
+        <div class="flex justify-between items-center">
+          <h3 class="font-serif text-lg">Facial Report</h3>
+          <button @click="results=false;analyzing=false" class="text-xs text-gold hover:underline cursor-pointer">Re-analyze</button>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-xl text-gold mb-1">91%</div>
+            <div class="text-[10px] text-ink/50">Symmetry</div>
+          </div>
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-xl text-gold mb-1">88%</div>
+            <div class="text-[10px] text-ink/50">Skin Tone</div>
+          </div>
+          <div class="glass-cream rounded-xl p-3 text-center">
+            <div class="font-serif text-xl text-gold mb-1">79%</div>
+            <div class="text-[10px] text-ink/50">Texture</div>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs"><span class="text-ink/60">Jawline Definition</span><span class="text-emerald-500">Excellent</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:90%"></div></div>
+          <div class="flex justify-between text-xs"><span class="text-ink/60">Cheekbone Prominence</span><span class="text-amber-500">Moderate</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:68%"></div></div>
+          <div class="flex justify-between text-xs"><span class="text-ink/60">Under-eye Area</span><span class="text-amber-500">Mild fatigue</span></div>
+          <div class="h-1.5 bg-ink/10 rounded-full"><div class="h-full gold-gradient-bg rounded-full" style="width:55%"></div></div>
+        </div>
+        <div class="glass-cream rounded-xl p-4">
+          <div class="text-xs font-medium mb-1">Recommended Treatments</div>
+          <div class="flex flex-wrap gap-1.5 mt-2">
+            <span class="text-[10px] px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">Cheek Fillers</span>
+            <span class="text-[10px] px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">Undereye Filler</span>
+            <span class="text-[10px] px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">Skin Booster</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. AI CHATBOT -->
+    <div id="chatbot" class="tool-card glass rounded-3xl p-7 fade-up" x-data="fullChatbot()">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="bot" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">AI Consultation Chatbot</h2><p class="text-xs text-ink/40">Chat with Sera — your wellness AI</p></div>
+        <div class="ml-auto flex items-center gap-1 text-[10px] text-emerald-600"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online</div>
+      </div>
+
+      <div class="h-64 overflow-y-auto space-y-3 mb-4 pr-1" id="fullChatMessages">
+        <template x-for="(msg,i) in messages" :key="i">
+          <div :class="msg.role==='bot'?'flex items-end gap-2':'flex items-end gap-2 flex-row-reverse'" class="chat-in">
+            <div x-show="msg.role==='bot'" class="w-7 h-7 rounded-full gold-gradient-bg flex-shrink-0 flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-3 h-3 text-white"></i>
+            </div>
+            <div :class="msg.role==='bot'?'bg-white text-ink shadow-sm':'gold-gradient-bg text-white'" class="max-w-[82%] px-4 py-2.5 rounded-2xl text-xs leading-relaxed" x-text="msg.text"></div>
+          </div>
+        </template>
+        <div x-show="typing" class="flex items-end gap-2">
+          <div class="w-7 h-7 rounded-full gold-gradient-bg flex-shrink-0 flex items-center justify-center"><i data-lucide="sparkles" class="w-3 h-3 text-white"></i></div>
+          <div class="bg-white rounded-2xl px-4 py-3 shadow-sm flex gap-1 items-center"><span class="w-1.5 h-1.5 rounded-full bg-ink/40 d1"></span><span class="w-1.5 h-1.5 rounded-full bg-ink/40 d2"></span><span class="w-1.5 h-1.5 rounded-full bg-ink/40 d3"></span></div>
+        </div>
+      </div>
+
+      <!-- Quick replies -->
+      <div x-show="quickReplies.length>0 && !typing" class="flex flex-wrap gap-1.5 mb-3">
+        <template x-for="(qr,i) in quickReplies" :key="i">
+          <button @click="sendQuick(qr)" class="text-[10px] border border-gold/40 rounded-full px-2.5 py-1.5 hover:bg-gold/10 hover:border-gold transition-colors cursor-pointer text-ink/70" x-text="qr.label"></button>
+        </template>
+      </div>
+
+      <!-- Lead capture -->
+      <div x-show="leadCapture" x-cloak class="space-y-2 mb-3">
+        <input x-model="lead.name" type="text" placeholder="Your name" class="w-full border border-ink/15 rounded-xl px-3 py-2 text-xs bg-white transition-all focus:border-gold focus:outline-none">
+        <input x-model="lead.email" type="email" placeholder="Email address" class="w-full border border-ink/15 rounded-xl px-3 py-2 text-xs bg-white transition-all focus:border-gold focus:outline-none">
+        <button @click="submitLead()" class="w-full py-2 rounded-xl gold-gradient-bg text-white text-xs font-medium cursor-pointer hover:opacity-90 transition-opacity">Submit & Book</button>
+      </div>
+
+      <div x-show="!leadCapture" class="flex gap-2">
+        <input x-model="userInput" type="text" placeholder="Ask anything about our services..." @keydown.enter="send()" class="flex-1 border border-ink/15 rounded-xl px-3 py-2.5 text-xs bg-white transition-all focus:border-gold focus:outline-none">
+        <button @click="send()" class="w-9 h-9 rounded-xl gold-gradient-bg flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0">
+          <i data-lucide="send" class="w-3.5 h-3.5 text-white"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: Hydration + Booking -->
+  <div class="grid lg:grid-cols-2 gap-6">
+
+    <!-- 7. HYDRATION CALCULATOR -->
+    <div id="hydration" class="tool-card glass rounded-3xl p-7 fade-up" x-data="hydrationTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="droplets" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">Hydration Calculator</h2><p class="text-xs text-ink/40">Daily water intake by lifestyle</p></div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        <div>
+          <label class="block text-xs text-ink/50 uppercase tracking-wider mb-1.5">Weight (kg)</label>
+          <input type="number" x-model="weight" placeholder="65" class="w-full border border-ink/15 rounded-xl px-3 py-2.5 text-sm bg-white/80 transition-all">
+        </div>
+        <div>
+          <label class="block text-xs text-ink/50 uppercase tracking-wider mb-1.5">Activity</label>
+          <select x-model="activity" class="w-full border border-ink/15 rounded-xl px-3 py-2.5 text-sm bg-white/80 transition-all cursor-pointer">
+            <option value="0">Low</option>
+            <option value="0.5">Medium</option>
+            <option value="1">High</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs text-ink/50 uppercase tracking-wider mb-1.5">Climate</label>
+          <select x-model="climate" class="w-full border border-ink/15 rounded-xl px-3 py-2.5 text-sm bg-white/80 transition-all cursor-pointer">
+            <option value="0">Cool</option>
+            <option value="0.3">Tropical</option>
+            <option value="0.6">Hot</option>
+          </select>
+        </div>
+      </div>
+      <button @click="calc()" class="w-full py-3 rounded-xl gold-gradient-bg text-white font-medium mb-5 cursor-pointer hover:opacity-90 transition-opacity">Calculate Intake</button>
+      <canvas id="hydrationBarT" height="180"></canvas>
+      <div x-show="total" x-transition class="mt-4 grid grid-cols-3 gap-3 text-center">
+        <div class="glass-cream rounded-xl p-3">
+          <div class="font-serif text-xl text-gold" x-text="total+'L'"></div>
+          <div class="text-[10px] text-ink/50">Daily Target</div>
+        </div>
+        <div class="glass-cream rounded-xl p-3">
+          <div class="font-serif text-xl text-gold" x-text="Math.ceil(parseFloat(total)/0.25)"></div>
+          <div class="text-[10px] text-ink/50">Glasses (250ml)</div>
+        </div>
+        <div class="glass-cream rounded-xl p-3">
+          <div class="font-serif text-xl text-gold" x-text="(parseFloat(total)/16).toFixed(2)+'L'"></div>
+          <div class="text-[10px] text-ink/50">Per Hour (awake)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. APPOINTMENT BOOKING ASSISTANT -->
+    <div id="booking" class="tool-card glass rounded-3xl p-7 fade-up" x-data="bookingTool()">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="calendar-check" class="w-5 h-5 text-white"></i></div>
+        <div><h2 class="font-serif text-xl font-medium">Booking Assistant</h2><p class="text-xs text-ink/40">AI-guided appointment scheduling</p></div>
+      </div>
+
+      <!-- Step indicators -->
+      <div class="flex items-center gap-2 mb-6">
+        <template x-for="(s,i) in ['Service','Date & Time','Confirm']" :key="i">
+          <div class="flex items-center gap-1.5">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-medium transition-all" :class="step>i?'gold-gradient-bg text-white':step===i?'border-2 border-gold text-gold':'border border-ink/20 text-ink/30'" x-text="step>i?'✓':(i+1)"></div>
+            <span class="text-[10px]" :class="step===i?'text-ink/70':'text-ink/30'" x-text="s"></span>
+            <div x-show="i<2" class="flex-1 h-px bg-ink/10 w-4"></div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Step 1: Service -->
+      <div x-show="step===0" x-transition>
+        <label class="block text-xs text-ink/50 uppercase tracking-wider mb-2">Select Treatment</label>
+        <div class="grid grid-cols-2 gap-2 mb-4">
+          <template x-for="svc in services" :key="svc">
+            <button @click="selected.service=svc" class="text-xs p-2.5 rounded-xl border cursor-pointer text-left transition-all" :class="selected.service===svc?'border-gold bg-gold/10 text-gold':'border-ink/10 hover:border-gold/40'" x-text="svc"></button>
+          </template>
+        </div>
+        <button @click="step=1" :disabled="!selected.service" class="w-full py-3 rounded-xl gold-gradient-bg text-white text-sm font-medium cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40">Next: Choose Date</button>
+      </div>
+
+      <!-- Step 2: Date + Time -->
+      <div x-show="step===1" x-cloak x-transition>
+        <label class="block text-xs text-ink/50 uppercase tracking-wider mb-2">Preferred Date</label>
+        <input type="date" x-model="selected.date" class="w-full border border-ink/15 rounded-xl px-4 py-3 text-sm bg-white/80 mb-4 transition-all">
+        <label class="block text-xs text-ink/50 uppercase tracking-wider mb-2">Available Slots</label>
+        <div class="grid grid-cols-3 gap-2 mb-4">
+          <template x-for="slot in timeSlots" :key="slot.time">
+            <button @click="!slot.booked && (selected.time=slot.time)" class="time-slot text-xs py-2.5 rounded-xl border text-center" :class="slot.booked?'booked border-ink/10':selected.time===slot.time?'selected border-gold':'border-ink/10'" x-text="slot.time"></button>
+          </template>
+        </div>
+        <div class="flex gap-2">
+          <button @click="step=0" class="flex-1 py-3 rounded-xl border border-ink/15 text-sm cursor-pointer hover:border-gold/40 transition-colors">Back</button>
+          <button @click="step=2" :disabled="!selected.time || !selected.date" class="flex-1 py-3 rounded-xl gold-gradient-bg text-white text-sm font-medium cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40">Confirm</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Confirmation -->
+      <div x-show="step===2" x-cloak x-transition>
+        <div x-show="!confirmed" class="space-y-4">
+          <div class="glass-cream rounded-xl p-4 space-y-2">
+            <div class="flex justify-between text-sm"><span class="text-ink/50">Treatment</span><span class="font-medium" x-text="selected.service"></span></div>
+            <div class="flex justify-between text-sm"><span class="text-ink/50">Date</span><span class="font-medium" x-text="selected.date"></span></div>
+            <div class="flex justify-between text-sm"><span class="text-ink/50">Time</span><span class="font-medium" x-text="selected.time"></span></div>
+          </div>
+          <input x-model="selected.name" type="text" placeholder="Your full name" class="w-full border border-ink/15 rounded-xl px-4 py-3 text-sm bg-white/80 transition-all">
+          <input x-model="selected.email" type="email" placeholder="Email address" class="w-full border border-ink/15 rounded-xl px-4 py-3 text-sm bg-white/80 transition-all">
+          <div class="flex gap-2">
+            <button @click="step=1" class="flex-1 py-3 rounded-xl border border-ink/15 text-sm cursor-pointer hover:border-gold/40 transition-colors">Back</button>
+            <button @click="confirmBooking()" :disabled="!selected.name||!selected.email" class="flex-1 py-3 rounded-xl gold-gradient-bg text-white text-sm font-medium cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40">Book Now</button>
+          </div>
+        </div>
+        <div x-show="confirmed" x-transition class="text-center py-8">
+          <div class="w-14 h-14 rounded-full gold-gradient-bg flex items-center justify-center mx-auto mb-4">
+            <i data-lucide="check" class="w-7 h-7 text-white"></i>
+          </div>
+          <h3 class="font-serif text-xl mb-2">Appointment Confirmed!</h3>
+          <p class="text-sm text-ink/50 mb-1" x-text="selected.service + ' on ' + selected.date"></p>
+          <p class="text-sm text-ink/50" x-text="'at ' + selected.time""></p>
+          <p class="text-xs text-ink/40 mt-3">Check your email for confirmation details.</p>
+          <button @click="reset()" class="mt-4 text-xs text-gold hover:underline cursor-pointer">Book Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 5: Wellness Plan Generator (Full Width) -->
+  <div id="plan" class="tool-card glass rounded-3xl p-7 fade-up" x-data="planTool()">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center"><i data-lucide="layout-dashboard" class="w-5 h-5 text-white"></i></div>
+      <div><h2 class="font-serif text-xl font-medium">Personalized Wellness Plan Generator</h2><p class="text-xs text-ink/40">AI creates your custom 30-day wellness roadmap</p></div>
+      <span class="ml-auto text-xs px-2 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">AI Plan</span>
+    </div>
+
+    <div x-show="!planResult" class="grid lg:grid-cols-2 gap-8">
+      <div class="space-y-5">
+        <template x-for="(q,i) in questions" :key="i">
+          <div>
+            <label class="block text-sm text-ink/70 mb-2 font-medium" x-text="(i+1)+'. '+q.label"></label>
+            <div class="grid grid-cols-3 gap-2">
+              <template x-for="opt in q.opts" :key="opt.val">
+                <button @click="answers[i]=opt.val" class="text-xs py-2.5 px-2 rounded-xl border cursor-pointer transition-all" :class="answers[i]===opt.val?'border-gold bg-gold/10 text-gold':'border-ink/10 hover:border-gold/30'" x-text="opt.label"></button>
+              </template>
+            </div>
+          </div>
+        </template>
+        <button @click="generatePlan()" :disabled="answers.filter(a=>a!==null).length<5" class="w-full py-3.5 rounded-xl gold-gradient-bg text-white font-medium cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40">
+          Generate My Wellness Plan
+        </button>
+      </div>
+      <div class="hidden lg:flex flex-col justify-center items-center text-center">
+        <div class="w-32 h-32 rounded-full bg-gold/5 border border-gold/20 flex items-center justify-center mb-4">
+          <i data-lucide="brain" class="w-14 h-14 text-gold/40"></i>
+        </div>
+        <p class="text-ink/40 text-sm max-w-xs">Answer 5 questions and our AI will craft a personalized 30-day wellness roadmap tailored to your lifestyle and goals.</p>
+      </div>
+    </div>
+
+    <div x-show="generating" x-cloak class="text-center py-12">
+      <div class="w-16 h-16 rounded-full border-2 border-gold border-t-transparent spin mx-auto mb-4"></div>
+      <p class="text-sm font-medium text-ink/70">Crafting your personalized plan...</p>
+      <p class="text-xs text-ink/40 mt-1">Analyzing lifestyle data and treatment options</p>
+    </div>
+
+    <div x-show="planResult" x-cloak x-transition class="space-y-5">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-2xl">Your 30-Day Wellness Roadmap</h3>
+        <button @click="planResult=false;generating=false;answers=Array(5).fill(null)" class="text-xs text-gold hover:underline cursor-pointer">Start Over</button>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="glass-cream rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg gold-gradient-bg flex items-center justify-center"><i data-lucide="calendar" class="w-4 h-4 text-white"></i></div><span class="font-medium text-sm">Week 1–2</span></div>
+          <p class="text-xs text-ink/60 leading-relaxed" x-text="plan.week1"></p>
+        </div>
+        <div class="glass-cream rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg gold-gradient-bg flex items-center justify-center"><i data-lucide="trending-up" class="w-4 h-4 text-white"></i></div><span class="font-medium text-sm">Week 3–4</span></div>
+          <p class="text-xs text-ink/60 leading-relaxed" x-text="plan.week2"></p>
+        </div>
+        <div class="glass-cream rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3"><div class="w-8 h-8 rounded-lg gold-gradient-bg flex items-center justify-center"><i data-lucide="star" class="w-4 h-4 text-white"></i></div><span class="font-medium text-sm">Long-Term</span></div>
+          <p class="text-xs text-ink/60 leading-relaxed" x-text="plan.longTerm"></p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="glass-cream rounded-2xl p-5">
+          <div class="text-xs font-medium uppercase tracking-wider text-gold mb-3">Recommended Treatments</div>
+          <div class="flex flex-wrap gap-2">
+            <template x-for="t in plan.treatments" :key="t">
+              <span class="text-xs px-3 py-1.5 rounded-full bg-gold/10 text-gold border border-gold/20" x-text="t"></span>
+            </template>
+          </div>
+        </div>
+        <div class="glass-cream rounded-2xl p-5">
+          <div class="text-xs font-medium uppercase tracking-wider text-gold mb-3">Daily Habits</div>
+          <ul class="space-y-1.5">
+            <template x-for="h in plan.habits" :key="h">
+              <li class="flex items-center gap-2 text-xs text-ink/60"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-gold flex-shrink-0"></i><span x-text="h"></span></li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full gold-gradient-bg text-white font-medium cursor-pointer hover:opacity-90 transition-opacity shadow-lg">
+          <i data-lucide="calendar-check" class="w-4 h-4"></i> Book Your First Session
+        </a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- FOOTER CTA -->
+<section class="py-16 bg-ink mt-6">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-gold text-xs uppercase tracking-widest mb-3">Ready to Begin?</p>
+    <h2 class="font-serif text-3xl lg:text-4xl font-light text-cream-l mb-4">Experience Serenova's <em class="text-gold not-italic">Premium Care</em></h2>
+    <p class="text-cream-l/40 mb-8 max-w-lg mx-auto">Complimentary consultation. No pressure. Just clarity on the best path to your wellness goals.</p>
+    <a href="index.html#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full gold-gradient-bg text-white font-medium hover:opacity-90 transition-opacity shadow-lg">
+      <i data-lucide="calendar" class="w-4 h-4"></i> Book Free Consultation
+    </a>
+  </div>
+</section>
+
+<footer class="bg-ink border-t border-white/5 py-8">
+  <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4 text-xs text-cream-l/30">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-full gold-gradient-bg flex items-center justify-center"><span class="text-white font-serif font-semibold text-[10px]">S</span></div>
+      <span>&copy; 2025 Serenova Clinic</span>
+    </div>
+    <div class="flex gap-6">
+      <a href="index.html" class="hover:text-gold transition-colors">Home</a>
+      <a href="#" class="hover:text-gold transition-colors">Privacy</a>
+      <a href="#" class="hover:text-gold transition-colors">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============ SKIN TOOL ============
+function skinTool() {
+  return {
+    analyzing: false, results: false, dragging: false, progress: 0, progressLabel: '',
+    scores: { hydration: 0, clarity: 0, collagen: 0 },
+    metrics: [], recommendation: '',
+
+    handleFile() { this.startAnalysis(); },
+    handleDrop(e) {
+      this.dragging = false;
+      if (e.dataTransfer.files.length) this.startAnalysis();
+    },
+    startAnalysis() {
+      this.analyzing = true; this.progress = 0;
+      const steps = ['Detecting skin regions...','Analyzing texture...','Measuring hydration...','Scoring clarity...','Generating report...'];
+      let i = 0;
+      const interval = setInterval(() => {
+        this.progress = Math.min(this.progress + 20, 100);
+        this.progressLabel = steps[i++] || 'Finalizing...';
+        if (this.progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => this.showResults(), 400);
+        }
+      }, 500);
+    },
+    showResults() {
+      this.analyzing = false; this.results = true;
+      this.scores = { hydration: Math.floor(75 + Math.random() * 20), clarity: Math.floor(78 + Math.random() * 18), collagen: Math.floor(65 + Math.random() * 25) };
+      const h = this.scores.hydration;
+      this.metrics = [
+        {name:'Acne Presence', val: 100-Math.floor(h*0.4+30), status: h>85?'Minimal':'Moderate', color: h>85?'text-emerald-500':'text-amber-500'},
+        {name:'Wrinkle Depth', val: Math.floor(60+Math.random()*30), status: 'Mild', color: 'text-amber-500'},
+        {name:'Pore Size', val: Math.floor(50+Math.random()*40), status: h>80?'Normal':'Enlarged', color: h>80?'text-emerald-500':'text-amber-500'},
+        {name:'Oil Balance', val: Math.floor(55+Math.random()*40), status: 'Balanced', color: 'text-emerald-500'},
+      ];
+      this.recommendation = h > 85 ? 'Your skin is in excellent condition. Maintain with HydraFacial every 6 weeks and a Vitamin C booster serum.' : 'We recommend a Skin Rejuvenation Protocol — 3 sessions of chemical peel plus hyaluronic acid IV booster to restore optimal hydration and clarity.';
+      this.$nextTick(() => lucide.createIcons());
+    },
+    reset() { this.analyzing = false; this.results = false; this.progress = 0; }
+  }
+}
+
+// ============ BMI TOOL ============
+function bmiTool() {
+  return {
+    height: '', weight: '', result: '', category: '', color: '', chart: null,
+    init() {
+      this.$nextTick(() => this.initChart(0));
+    },
+    initChart(val) {
+      const el = document.getElementById('bmiChartT');
+      if (!el) return;
+      if (this.chart) this.chart.destroy();
+      const v = Math.min(val || 0, 40);
+      this.chart = new Chart(el, {
+        type: 'doughnut',
+        data: { datasets: [{ data: [v, 40-v], backgroundColor: ['#C9A96E','rgba(10,10,10,0.07)'], borderWidth: 0, circumference: 270, rotation: 225 }] },
+        options: { cutout: '78%', plugins: { legend: { display: false }, tooltip: { enabled: false } }, animation: { duration: 600 } }
+      });
+    },
+    calc() {
+      const h = parseFloat(this.height)/100, w = parseFloat(this.weight);
+      if (!h||!w) return;
+      const b = w/(h*h);
+      this.result = b.toFixed(1);
+      if (b<18.5){this.category='Underweight';this.color='text-blue-500';}
+      else if (b<25){this.category='Normal Weight';this.color='text-emerald-500';}
+      else if (b<30){this.category='Overweight';this.color='text-amber-500';}
+      else{this.category='Obese';this.color='text-red-500';}
+      this.initChart(b);
+    }
+  }
+}
+
+// ============ COST TOOL ============
+function costTool() {
+  return {
+    total: 0,
+    services: [
+      {name:'Botox (1 area)',desc:'Forehead / Crow\'s feet',price:600,selected:false},
+      {name:'Dermal Fillers',desc:'Lips, cheeks, or jaw',price:1800,selected:false},
+      {name:'Skin Rejuvenation',desc:'Chemical peel + serum',price:550,selected:false},
+      {name:'HydraFacial',desc:'Deep cleanse + hydration',price:450,selected:false},
+      {name:'Cryolipolysis',desc:'Fat reduction per zone',price:1200,selected:false},
+      {name:'IV Drip — Glow',desc:'Glutathione + Vitamin C',price:350,selected:false},
+      {name:'Laser Peel',desc:'Skin resurfacing',price:700,selected:false},
+      {name:'Wellness Consult',desc:'1-hour specialist session',price:200,selected:false},
+      {name:'Anti-Aging Booster',desc:'PRP + collagen protocol',price:1500,selected:false},
+      {name:'Body Contouring',desc:'RF sculpting per session',price:950,selected:false},
+    ],
+    updateTotal() { this.total = this.services.filter(s=>s.selected).reduce((a,s)=>a+s.price,0); }
+  }
+}
+
+// ============ WELLNESS TRACKER ============
+document.addEventListener('DOMContentLoaded', () => {
+  const wlCtx = document.getElementById('wellnessLineChart');
+  if (wlCtx) {
+    new Chart(wlCtx, {
+      type: 'line',
+      data: {
+        labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        datasets: [{
+          label: 'Wellness Score',
+          data: [62,68,71,65,74,80,75],
+          borderColor: '#C9A96E',
+          backgroundColor: 'rgba(201,169,110,0.08)',
+          fill: true,
+          tension: 0.45,
+          pointBackgroundColor: '#C9A96E',
+          pointRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { min: 0, max: 100, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 9 } } },
+          x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+        }
+      }
+    });
+  }
+  const ringCtx = document.getElementById('wellnessRing');
+  if (ringCtx) {
+    new Chart(ringCtx, {
+      type: 'doughnut',
+      data: { datasets: [{ data: [75,25], backgroundColor: ['#C9A96E','rgba(10,10,10,0.07)'], borderWidth: 0 }] },
+      options: { cutout: '80%', plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+    });
+  }
+});
+
+// ============ FACIAL TOOL ============
+function facialTool() {
+  return {
+    analyzing: false, results: false, step: 0,
+    steps: ['Detecting facial landmarks...','Measuring symmetry...','Analyzing skin texture...','Generating report...'],
+    analyze() {
+      this.analyzing = true; this.step = 0;
+      const next = setInterval(() => {
+        this.step++;
+        if (this.step >= this.steps.length) {
+          clearInterval(next);
+          setTimeout(() => { this.analyzing = false; this.results = true; this.$nextTick(()=>lucide.createIcons()); }, 400);
+        }
+      }, 700);
+    }
+  }
+}
+
+// ============ FULL CHATBOT ============
+function fullChatbot() {
+  return {
+    messages: [{ role: 'bot', text: 'Hi! I\'m Sera. Ask me anything about our treatments, pricing, or wellness tips!' }],
+    quickReplies: [{label:'Treatments',key:'services'},{label:'Pricing',key:'price'},{label:'Book Now',key:'book'},{label:'Wellness Tips',key:'tips'}],
+    typing: false, userInput: '', leadCapture: false, lead: {name:'',email:''},
+
+    scrollBottom() { this.$nextTick(()=>{ const el=document.getElementById('fullChatMessages'); if(el) el.scrollTop=el.scrollHeight; }); },
+
+    botReply(text, rq, lead) {
+      this.typing = true; this.quickReplies = []; this.scrollBottom();
+      setTimeout(()=>{
+        this.typing=false; this.messages.push({role:'bot',text});
+        if(rq) this.quickReplies=rq;
+        if(lead) this.leadCapture=true;
+        this.scrollBottom(); this.$nextTick(()=>lucide.createIcons());
+      }, 1000+Math.random()*600);
+    },
+
+    sendQuick(qr) {
+      this.messages.push({role:'user',text:qr.label}); this.quickReplies=[]; this.scrollBottom();
+      const map = {
+        services: ['We offer Botox, Fillers, Skin Rejuvenation, IV Therapy, Laser, Body Contouring, and more — all by board-certified specialists.', [{label:'Pricing',key:'price'},{label:'Book Consult',key:'book'}]],
+        price: ['Consultations from $200. Botox from $600, Fillers from $1,800, IV Drip from $350. Package deals available for multiple treatments!', [{label:'Custom Quote',key:'book'},{label:'All Services',key:'services'}]],
+        book: ['I\'ll need your details to get you booked! Fill in the form below.', null, true],
+        tips: ['Top 3 daily wellness tips: (1) Drink 2–3L of water, (2) SPF 50 every morning, (3) 7–8 hours sleep for optimal skin regeneration. Want a personalized plan?', [{label:'Wellness Plan',key:'plan'},{label:'Book Consult',key:'book'}]],
+        plan: ['Our AI Wellness Plan Generator can create a 30-day roadmap tailored to your goals. Scroll up to find it in the Tools section!', [{label:'Book Consult',key:'book'}]],
+      };
+      const r = map[qr.key]||['Happy to help! Tell me more, or pick an option below.',[ {label:'Book Consult',key:'book'},{label:'Treatments',key:'services'}]];
+      this.botReply(r[0], r[1], r[2]);
+    },
+
+    send() {
+      if (!this.userInput.trim()) return;
+      this.messages.push({role:'user',text:this.userInput});
+      const input = this.userInput.toLowerCase();
+      this.userInput=''; this.scrollBottom();
+      let reply='Let me help with that! Could you elaborate, or choose from the options?';
+      let rq=[{label:'Treatments',key:'services'},{label:'Pricing',key:'price'},{label:'Book',key:'book'}];
+      if(input.includes('book')||input.includes('appoint')){reply='Great! Fill your details below and we\'ll confirm within 24 hours.';this.typing=true;this.quickReplies=[];setTimeout(()=>{this.typing=false;this.messages.push({role:'bot',text:reply});this.leadCapture=true;this.scrollBottom();},1000);return;}
+      else if(input.includes('price')||input.includes('cost')||input.includes('how much')){reply='Botox from $600, Fillers from $1,800, IV Drip from $350. Want me to build a custom package quote?';}
+      else if(input.includes('skin')||input.includes('acne')||input.includes('face')){reply='For skin concerns, we recommend our AI Skin Analysis first (free, above on this page), then a consultation with our dermatologist.';}
+      this.botReply(reply, rq);
+    },
+
+    submitLead() {
+      if (!this.lead.name||!this.lead.email) return;
+      this.leadCapture=false;
+      this.messages.push({role:'user',text:'Name: '+this.lead.name+', Email: '+this.lead.email});
+      this.botReply('Done! We\'ll reach out to '+this.lead.name+' at '+this.lead.email+' within 24 hours to confirm your consultation. See you soon!', [{label:'Explore Services',key:'services'}]);
+    }
+  }
+}
+
+// ============ HYDRATION TOOL ============
+function hydrationTool() {
+  return {
+    weight: '', activity: '0', climate: '0', total: '', chart: null,
+
+    calc() {
+      const w = parseFloat(this.weight);
+      if (!w) return;
+      const t = (w*0.033 + parseFloat(this.activity) + parseFloat(this.climate)).toFixed(1);
+      this.total = t;
+      const v = parseFloat(t);
+      const spread = [v*0.15,v*0.10,v*0.18,v*0.15,v*0.14,v*0.15,v*0.13].map(x=>parseFloat(x.toFixed(2)));
+      this.$nextTick(() => {
+        const el = document.getElementById('hydrationBarT');
+        if (!el) return;
+        if (this.chart) this.chart.destroy();
+        this.chart = new Chart(el, {
+          type: 'bar',
+          data: {
+            labels: ['Morning','Mid-AM','Lunch','Afternoon','Evening','Night','Bedtime'],
+            datasets: [{ label: 'L', data: spread, backgroundColor: 'rgba(201,169,110,0.75)', borderRadius: 6 }]
+          },
+          options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 9 } } }, x: { grid: { display: false }, ticks: { font: { size: 9 } } } } }
+        });
+      });
+    }
+  }
+}
+
+// ============ BOOKING TOOL ============
+function bookingTool() {
+  return {
+    step: 0, confirmed: false,
+    services: ['Botox Treatment','Dermal Fillers','Skin Rejuvenation','HydraFacial','IV Drip Therapy','Laser Treatment','Body Contouring','Wellness Consult'],
+    timeSlots: [
+      {time:'9:00 AM',booked:false},{time:'9:30 AM',booked:true},{time:'10:00 AM',booked:false},
+      {time:'10:30 AM',booked:false},{time:'11:00 AM',booked:true},{time:'11:30 AM',booked:false},
+      {time:'1:00 PM',booked:false},{time:'1:30 PM',booked:false},{time:'2:00 PM',booked:true},
+      {time:'2:30 PM',booked:false},{time:'3:00 PM',booked:false},{time:'3:30 PM',booked:true},
+    ],
+    selected: { service: '', date: '', time: '', name: '', email: '' },
+
+    confirmBooking() {
+      if (!this.selected.name || !this.selected.email) return;
+      this.confirmed = true;
+      this.$nextTick(() => lucide.createIcons());
+    },
+    reset() { this.step = 0; this.confirmed = false; this.selected = { service:'',date:'',time:'',name:'',email:'' }; }
+  }
+}
+
+// ============ WELLNESS PLAN ============
+function planTool() {
+  return {
+    answers: Array(5).fill(null), generating: false, planResult: false, plan: {},
+    questions: [
+      {label:'What is your primary wellness goal?', opts:[{label:'Weight Loss',val:'weight'},{label:'Skin Glow',val:'skin'},{label:'Anti-Aging',val:'aging'}]},
+      {label:'How active is your lifestyle?', opts:[{label:'Sedentary',val:'low'},{label:'Moderately Active',val:'mid'},{label:'Very Active',val:'high'}]},
+      {label:'How is your current diet?', opts:[{label:'Poor',val:'poor'},{label:'Average',val:'avg'},{label:'Excellent',val:'good'}]},
+      {label:'How many hours do you sleep?', opts:[{label:'< 6 hrs',val:'low'},{label:'6–8 hrs',val:'mid'},{label:'8+ hrs',val:'high'}]},
+      {label:'Budget for monthly treatments?', opts:[{label:'$500–$1,500',val:'low'},{label:'$1,500–$3,000',val:'mid'},{label:'$3,000+',val:'high'}]},
+    ],
+
+    generatePlan() {
+      this.generating = true;
+      setTimeout(() => {
+        this.generating = false;
+        this.planResult = true;
+        const goal = this.answers[0];
+        const budget = this.answers[4];
+        const plans = {
+          skin: {
+            week1: 'Begin with AI Skin Analysis session and baseline HydraFacial. Start retinol serum PM routine and SPF50 AM. Increase water intake to 2.5L/day.',
+            week2: 'Glutathione IV Drip (Week 3) for internal brightening. Follow-up HydraFacial. Introduce Vitamin C ampoule serum.',
+            longTerm: 'Monthly Skin Booster injections + quarterly Picosecond laser for pigmentation maintenance. Annual AI Skin reassessment.',
+            treatments: budget==='high'?['HydraFacial x3','Skin Booster','Gluta IV Drip','Pico Laser']:budget==='mid'?['HydraFacial x2','Gluta IV Drip','Chemical Peel']:['HydraFacial','Chemical Peel'],
+            habits: ['SPF50 every morning (no exceptions)','Vitamin C serum at night','2.5L water daily','No processed sugar for 30 days','8-hour sleep minimum'],
+          },
+          aging: {
+            week1: 'Start with comprehensive Anti-Aging consultation. Baseline skin analysis + NAD+ IV Drip for cellular rejuvenation.',
+            week2: 'Botox (1–2 areas) for dynamic wrinkle prevention. Begin collagen-boosting diet. Add peptide moisturizer to routine.',
+            longTerm: 'Quarterly Botox maintenance + bi-annual PRP facial. Annual full Anti-Aging program review with specialist.',
+            treatments: budget==='high'?['Botox','PRP Facial','NAD+ IV Drip','Skin Booster','Dermal Fillers']:budget==='mid'?['Botox','Skin Booster','Anti-Aging IV']:['Botox Consult','Skin Booster'],
+            habits: ['Collagen peptide supplement daily','Retinol every 3rd night','Screen time reduction (blue light aging)','Antioxidant-rich diet','7–8 hours deep sleep'],
+          },
+          weight: {
+            week1: 'Body composition analysis + nutrition consultation. Begin Cryolipolysis (target zones). High-protein, low-carb meal prep.',
+            week2: 'RF Body Contouring session + lymphatic drainage massage. Add resistance training 3x/week. Slimming IV Drip.',
+            longTerm: 'Monthly body contouring maintenance + quarterly body composition check. Gradual transition to intuitive eating.',
+            treatments: budget==='high'?['Cryolipolysis x2','RF Contouring','Slimming IV','Lymphatic Drainage']:budget==='mid'?['Cryolipolysis','RF Contouring']:['Body Consult','RF Contouring'],
+            habits: ['Protein at every meal (30g+)','10,000 steps daily','2L+ water','Limit alcohol to 1x/week','Sleep 7+ hours for cortisol control'],
+          },
+        };
+        this.plan = plans[goal] || plans.skin;
+        this.$nextTick(() => lucide.createIcons());
+      }, 2200);
+    }
+  }
+}
+
+// ============ FADE-UP + ICONS ============
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  setTimeout(() => lucide.createIcons(), 80);
+  setTimeout(() => lucide.createIcons(), 400);
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+});
+</script>
+</body>
+</html>
