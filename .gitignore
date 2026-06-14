@@ -26,3 +26,7 @@ desktop.ini
 
 # Dependencies (regenerate with npm install)
 node_modules/
+
+# Local backup zips (OneDrive-synced, not for github)
+secrets_backup.zip
+claude_config_backup.zip
